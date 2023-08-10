@@ -31,16 +31,20 @@ export default function Header() {
 			</button>
 			<div className="flex flex-col mt-16 rounded-lg">
 				{routes.map((route, id) => (
-					<Button
-						style="flex my-2 dark:bg-graydark hover:bg-primary"
-						key={`${route.id}-${id}`}
-					>
-						<LayoutLink
-							title={route.id}
-							to={route.path}
-							icon={route.icon}
-						/>
-					</Button>
+					<>
+						{!route.hidden ? (
+							<Button
+								style="flex my-2 dark:bg-graydark hover:bg-primary hover:text-button"
+								key={`${route.id}-${id}`}
+							>
+								<LayoutLink
+									title={route.id}
+									to={route.path}
+									icon={route.icon}
+								/>
+							</Button>
+						) : null}
+					</>
 				))}
 			</div>
 		</div>

@@ -1,4 +1,4 @@
-import { UserTypesMutations } from "../../store/user/user-types";
+// import { UserTypesMutations } from "../../store/user/user-types";
 import { api } from "../api";
 
 interface IUserLogin {
@@ -10,21 +10,21 @@ export class UserService {
 	async GetUserCurrent(id: string) {
 		const user = await api
 			.get(`user/${id}`)
-			.then((value) => value.data)
-			.catch((err) => console.log(err));
+			.then((value: any) => value.data)
+			.catch((err: string) => console.log(err));
 
 		return user;
 	}
 
-	async UpdateUser(form: any, toast: any, commit: any) {
+	async UpdateUser(form: any, toast: any) {
 		const vuex = JSON.parse(localStorage.getItem("vuex") as string);
 		await api
 			.patch(`user/${vuex.user.id}`, form)
 			.then(() => {
-				commit(UserTypesMutations.SET_USER_INFO, form);
+				// commit(UserTypesMutations.SET_USER_INFO, form);
 				toast.success("Usuário foi alterado com sucesso");
 			})
-			.catch((err) => {
+			.catch((err: string) => {
 				toast.error(`${err}`);
 				return new Error(err);
 			});
@@ -38,7 +38,7 @@ export class UserService {
 					localStorage.setItem("Authorization", value.data.token);
 					return value;
 				})
-				.catch((err) => console.log(err));
+				.catch((err: string) => console.log(err));
 
 			return user.data.user;
 		} catch (err) {

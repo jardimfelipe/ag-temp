@@ -7,7 +7,7 @@ export function Layout() {
 			<div className="fixed">
 				<Header></Header>
 			</div>
-			<span className="flex justify-center w-screen">
+			<span className="flex justify-center h-screen w-screen">
 				<Outlet></Outlet>
 			</span>
 		</div>

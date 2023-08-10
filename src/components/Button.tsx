@@ -1,7 +1,7 @@
-import { ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-type IButton = {
+type IButton = HTMLAttributes<HTMLButtonElement> & {
 	color?: "primary" | "secondary" | "success" | "warning" | "error" | "info";
 	size?: "sm" | "md" | "lg" | "xl";
 	children: ReactNode;
