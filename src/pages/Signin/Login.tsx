@@ -1,18 +1,24 @@
 import { useState, useEffect } from "react";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
-import { userStore } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/main.store";
+import { login } from "../../store/reducer/user.reducer";
 
 // type Props = {}
 
 export default function Login() {
 	const [email, setEmail] = useState<string>("");
-	const [pass, setPass] = useState<string>("");
-	const { user, login } = userStore();
+	const [password, setPassword] = useState<string>("");
+	const dispatch = useAppDispatch();
+	const user = useAppSelector((state) => state.user);
+
+	function onSubmit() {
+		dispatch(login({ email, password }));
+	}
 
 	useEffect(() => {
-		user.email = email;
-	}, [email]);
+		//TODO fazer uma lógica de reação a um login bem sucedido navegar diretamente ao feed
+	}, [user]);
 
 	return (
 		<section className="flex justify-center items-center h-full">
@@ -20,7 +26,7 @@ export default function Login() {
 				<span className="mb-10 text-base md:text-lg dark:text-light">
 					Login
 				</span>
-				<span>
+				<div>
 					<Input
 						title="Email"
 						value={email}
@@ -29,27 +35,12 @@ export default function Login() {
 					<Input
 						title="Senha"
 						type="password"
-						value={pass}
-						fnChange={(e) => setPass(e.currentTarget.value)}
+						value={password}
+						fnChange={(e) => setPassword(e.currentTarget.value)}
 					></Input>
-				</span>
-				{/* <div className="flex flex-col gap-2">
-				<Input :data-input="form.email" title="Email" placeholder="Exemplo@Email.com"
-					@update="(email) => form.email = email"></Input>
-				<div className="flex">
-					<div className="flex flex-col">
-						<label>Senha</label>
-						<Input :type-input="handleVisibility ? 'text' : 'password'" :data-input="form.password"
-							placeholder="Sua Senha" @update="(password) => form.password = password"></Input>
-					</div>
-					<button className="p-2 ml-2 bg-darkness-plus rounded-lg"
-						onClick="() => handleVisibility = !handleVisibility">
-						<font-awesome-icon icon="fa-solid fa-eye" />
-					</button>
-				</div>
-			</div> */}
-				<div className="mt-10">
-					<Button style="py-3 px-8">Login</Button>
+					<Button style="ml-2 mt-10 py-3 px-8" onClick={onSubmit}>
+						Login
+					</Button>
 				</div>
 			</div>
 		</section>
