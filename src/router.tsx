@@ -4,6 +4,7 @@ import { Layout } from "./components/Layout";
 import { Feeds } from "./pages/Feeds/Basic";
 import { House } from "@phosphor-icons/react";
 import Login from "./pages/Signin/Login";
+import ErrorPage from "./pages/Error";
 
 export const routes = [
 	{
@@ -27,5 +28,6 @@ export const router = createBrowserRouter([
 		path: "/",
 		element: <Layout />,
 		children: routes,
+		errorElement: <ErrorPage />,
 	},
 ]);

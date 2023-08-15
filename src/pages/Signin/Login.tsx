@@ -3,6 +3,7 @@ import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { useAppDispatch, useAppSelector } from "../../store/main.store";
 import { login } from "../../store/reducer/user.reducer";
+import { useNavigate } from "react-router-dom";
 
 // type Props = {}
 
@@ -11,13 +12,16 @@ export default function Login() {
 	const [password, setPassword] = useState<string>("");
 	const dispatch = useAppDispatch();
 	const user = useAppSelector((state) => state.user);
+	const navigate = useNavigate();
 
 	function onSubmit() {
 		dispatch(login({ email, password }));
 	}
 
 	useEffect(() => {
-		//TODO fazer uma lógica de reação a um login bem sucedido navegar diretamente ao feed
+		if (user.id != "") {
+			navigate("/feed");
+		}
 	}, [user]);
 
 	return (

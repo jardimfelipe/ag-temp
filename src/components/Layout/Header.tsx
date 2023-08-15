@@ -8,6 +8,7 @@ import Button from "../Button";
 
 export default function Header() {
 	const [handleMenu, setHandleMenu] = useState(false);
+
 	if (!handleMenu) {
 		return (
 			<div className="h-screen px-4 bg-darkness">
