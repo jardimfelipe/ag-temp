@@ -31,7 +31,7 @@ export default function Header() {
 			</button>
 			<div className="flex flex-col mt-16 rounded-lg">
 				{routes.map((route, id) => (
-					<>
+					<span key={`key-${id}`}>
 						{!route.hidden ? (
 							<Button
 								style="flex my-2 dark:bg-graydark hover:bg-primary hover:text-button"
@@ -44,7 +44,7 @@ export default function Header() {
 								/>
 							</Button>
 						) : null}
-					</>
+					</span>
 				))}
 			</div>
 		</div>
