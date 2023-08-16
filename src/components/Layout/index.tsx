@@ -10,7 +10,7 @@ export function Layout() {
 			<div className="fixed">
 				<Header></Header>
 			</div>
-			<span className="flex justify-center h-screen w-screen">
+			<span className="flex justify-center mt-16 h-screen w-screen">
 				{user.id != "" ? <Outlet></Outlet> : <Login />}
 			</span>
 		</div>
