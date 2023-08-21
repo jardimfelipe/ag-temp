@@ -67,6 +67,7 @@ export const userSlice = createSlice({
 		});
 
 		builder.addCase(alterUser.fulfilled, (state, action) => {
+			//TODO resolver a atualização em tempo real, pode quebrar a aplicação inteira, faça backup
 			// state.name = action.payload.name;
 			// state.email = action.payload.email;
 			// state.age = action.payload.age;

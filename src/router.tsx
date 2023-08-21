@@ -6,6 +6,7 @@ import { House, User } from "@phosphor-icons/react";
 import Login from "./pages/Signin/Login";
 import ErrorPage from "./pages/Error";
 import { PerfilBase } from "./pages/Perfil/Base";
+import { BaseSchedule } from "./pages/Schedules/Base";
 
 export const routes = [
 	{
@@ -26,6 +27,12 @@ export const routes = [
 		path: "/user/:userId",
 		Component: PerfilBase,
 		hidden: false,
+	},
+	{
+		id: "Schedule",
+		path: "/feed/schedule/:barbershopId",
+		Component: BaseSchedule,
+		hidden: true,
 	},
 ];
 export const router = createBrowserRouter([

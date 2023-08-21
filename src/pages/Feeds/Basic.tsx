@@ -1,6 +1,7 @@
 import { MapPin } from "@phosphor-icons/react";
 import React from "react";
 import Button from "../../components/Button";
+import { Link } from "react-router-dom";
 
 // type Props = {}
 
@@ -22,11 +23,13 @@ export function Feeds() {
 									Barbearia Exemplar
 								</span>
 							</div>
-							<Button>
-								{/* <!-- O Id do path é da barbearia --> */}
-								Agendar
-								{/* <router-link to="/schedule/a6d4da48-5b5e-4051-a395-70f314e9c74a">Agendar</router-link> */}
-							</Button>
+							<Link to="schedule/123456">
+								<Button>
+									{/* <!-- O Id do path é da barbearia --> */}
+									Agendar
+									{/* <router-link to="/schedule/a6d4da48-5b5e-4051-a395-70f314e9c74a">Agendar</router-link> */}
+								</Button>
+							</Link>
 						</div>
 						<figure>
 							<img src="https://i.pinimg.com/564x/b1/bc/cc/b1bccc53502e6b53f38e29f9dac13afd.jpg" />
