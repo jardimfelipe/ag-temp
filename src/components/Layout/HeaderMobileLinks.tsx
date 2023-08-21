@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { routes } from "../../router";
-import { useAppSelector } from "../../store/main.store";
+import { useAppDispatch, useAppSelector } from "../../store/main.store";
 import { Link } from "react-router-dom";
 import { List } from "@phosphor-icons/react";
+import { logon } from "../../store/reducer/user.reducer";
 
 function MobileLink({ icon, to, title }: any) {
 	return (
@@ -16,6 +17,8 @@ function MobileLink({ icon, to, title }: any) {
 export default function HeaderMobileLinks() {
 	const user = useAppSelector((state) => state.user);
 	const [handleMenu, setHandleMenu] = useState(false);
+	const intialName = `${user.name.split(" ")[0]} ${user.name.split(" ")[1]}`;
+	const dispatch = useAppDispatch();
 
 	return (
 		<div>
@@ -38,7 +41,11 @@ export default function HeaderMobileLinks() {
 											key={`${route.id}-${id}`}
 										>
 											<MobileLink
-												title={route.id}
+												title={
+													route.id == "Perfil"
+														? intialName
+														: route.id
+												}
 												to={
 													// verificar se é rota dinamica
 													route.path.split(":")[1]
@@ -59,6 +66,12 @@ export default function HeaderMobileLinks() {
 									) : null}
 								</span>
 							))}
+							<button
+								className="w-96 py-4"
+								onClick={() => dispatch(logon())}
+							>
+								deslogar
+							</button>
 						</>
 					) : null}
 				</div>

@@ -5,7 +5,7 @@ import { Feeds } from "./pages/Feeds/Basic";
 import { House, User } from "@phosphor-icons/react";
 import Login from "./pages/Signin/Login";
 import ErrorPage from "./pages/Error";
-import PerfilBase from "./pages/Perfil/Base";
+import { PerfilBase } from "./pages/Perfil/Base";
 
 export const routes = [
 	{

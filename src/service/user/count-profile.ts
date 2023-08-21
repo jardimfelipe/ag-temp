@@ -17,17 +17,18 @@ export class UserService {
 	}
 
 	async UpdateUser(form: any, toast: any) {
-		const vuex = JSON.parse(localStorage.getItem("vuex") as string);
-		await api
-			.patch(`user/${vuex.user.id}`, form)
-			.then(() => {
-				// commit(UserTypesMutations.SET_USER_INFO, form);
+		const newUser = await api
+			.patch(`user/${form.id}`, form)
+			.then((data) => {
 				toast.success("Usuário foi alterado com sucesso");
+				return data;
 			})
 			.catch((err: string) => {
 				toast.error(`${err}`);
 				return new Error(err);
 			});
+
+		return newUser;
 	}
 
 	async Login({ email, password }: IUserLogin) {

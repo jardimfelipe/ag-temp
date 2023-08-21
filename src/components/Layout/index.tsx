@@ -9,11 +9,13 @@ export function Layout() {
 
 	return (
 		<div className="flex">
-			<div className="fixed">
-				<Header></Header>
-			</div>
-			<span className="flex justify-center h-screen w-screen">
-				{user.id != "" ? <Outlet></Outlet> : <Login />}
+			{user.isLogged ? (
+				<div className="fixed">
+					<Header></Header>
+				</div>
+			) : null}
+			<span className=" justify-center h-screen w-screen">
+				{user.isLogged ? <Outlet></Outlet> : <Login />}
 			</span>
 		</div>
 	);

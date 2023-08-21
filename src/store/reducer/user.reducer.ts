@@ -1,9 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import { UserService } from "../../service/user/count-profile";
 
 interface IUserRequestData {
 	email: string;
 	password: string;
+}
+
+interface IAlterUserRequest {
+	id: string;
+	name: string;
+	email: string;
+	age: number;
+	cpf: string;
 }
 
 const service = new UserService();
@@ -15,9 +24,19 @@ export const login = createAsyncThunk(
 	}
 );
 
+export const alterUser = createAsyncThunk(
+	"user/alter",
+	async (intialState: IAlterUserRequest) => {
+		const response = await service.UpdateUser(intialState, toast);
+		console.log(response);
+		return response;
+	}
+);
+
 export const userSlice = createSlice({
 	name: "user",
 	initialState: {
+		name: "",
 		isLogged: false,
 		id: "",
 		email: "",
@@ -25,14 +44,36 @@ export const userSlice = createSlice({
 		cpf: "",
 	},
 
-	reducers: {},
+	reducers: {
+		logon: (state) => {
+			localStorage.clear();
+
+			state.name = "";
+			state.isLogged = false;
+			state.id = "";
+			state.email = "";
+			state.cpf = "";
+			state.age = 0;
+		},
+	},
 	extraReducers(builder) {
 		builder.addCase(login.fulfilled, (state, action) => {
+			state.name = action.payload.name;
 			state.email = action.payload.email;
 			state.age = action.payload.age;
 			state.cpf = action.payload.cpf;
 			state.id = action.payload.id;
 			state.isLogged = action.payload.password != null ?? false;
 		});
+
+		builder.addCase(alterUser.fulfilled, (state, action) => {
+			// state.name = action.payload.name;
+			// state.email = action.payload.email;
+			// state.age = action.payload.age;
+			// state.cpf = action.payload.cpf;
+			state.isLogged = true;
+		});
 	},
 });
+
+export const { logon } = userSlice.actions;

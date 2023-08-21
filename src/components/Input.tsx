@@ -2,12 +2,11 @@ import { HTMLAttributes } from "react";
 
 type IInput = HTMLAttributes<HTMLInputElement> & {
 	title?: string;
-	value: string;
+	value: string | number;
 	type?: "text" | "password";
-	fnChange: (e: any) => any;
 };
 
-export default function Input({ title, value, type, fnChange }: IInput) {
+export default function Input({ title, value, type, onChange }: IInput) {
 	return (
 		<div className="flex flex-col">
 			{title ? (
@@ -18,7 +17,7 @@ export default function Input({ title, value, type, fnChange }: IInput) {
 			<input
 				value={value}
 				type={type ?? "text"}
-				onChange={fnChange}
+				onChange={onChange}
 				className="rounded-lg placeholder:text-placeholder p-2 m-2 text-white dark:bg-darkness-plus border-2 ring-2 ring-transparent border-graydark base-an focus:border-primary focus:ring-primary"
 			></input>
 		</div>

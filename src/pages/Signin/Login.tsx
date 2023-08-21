@@ -34,15 +34,15 @@ export default function Login() {
 					<Input
 						title="Email"
 						value={email}
-						fnChange={(e) => setEmail(e.currentTarget.value)}
+						onChange={(e) => setEmail(e.currentTarget.value)}
 					></Input>
 					<Input
 						title="Senha"
 						type="password"
 						value={password}
-						fnChange={(e) => setPassword(e.currentTarget.value)}
+						onChange={(e) => setPassword(e.currentTarget.value)}
 					></Input>
-					<Button style="ml-2 mt-10 py-3 px-8" onClick={onSubmit}>
+					<Button className="ml-2 mt-10 py-3 px-8" onClick={onSubmit}>
 						Login
 					</Button>
 				</div>
