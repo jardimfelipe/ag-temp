@@ -28,7 +28,6 @@ export const alterUser = createAsyncThunk(
 	"user/alter",
 	async (intialState: IAlterUserRequest) => {
 		const response = await service.UpdateUser(intialState, toast);
-		console.log(response);
 		return response;
 	}
 );
@@ -47,7 +46,6 @@ export const userSlice = createSlice({
 	reducers: {
 		logon: (state) => {
 			localStorage.clear();
-
 			state.name = "";
 			state.isLogged = false;
 			state.id = "";

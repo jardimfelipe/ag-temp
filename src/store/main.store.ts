@@ -4,6 +4,7 @@ import { userSlice } from "./reducer/user.reducer";
 import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { serviceListSlice } from "./reducer/servicesList.reducer";
 
 const persistConfig = {
 	key: "root",
@@ -12,6 +13,7 @@ const persistConfig = {
 
 const reducers = combineReducers({
 	user: userSlice.reducer,
+	serviceList: serviceListSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

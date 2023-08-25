@@ -1,9 +1,9 @@
 import { api } from "../api";
 
 export class ServiceBarbersService {
-	async getService(id: string) {
+	async getAllService() {
 		const service = await api
-			.get(`/service/barber/${id}`)
+			.get(`/service`)
 			.then((data) => data.data)
 			.catch((err) => new Error(err));
 
