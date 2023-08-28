@@ -81,3 +81,47 @@ export function getCalendar(year: number): IMonth[] {
 
 	return calendar;
 }
+
+// Função que organiza a lista de acordo com os dados da interface IMonth
+function organizarListaDeAcordoComInterface(mes: any) {
+	const diasDaSemana = [
+		"monday",
+		"tuesday",
+		"wednesday",
+		"thursday",
+		"friday",
+		"saturday",
+		"sunday",
+	];
+	const listaOrganizada = [];
+
+	// Iterar sobre os dias da semana na ordem desejada
+	for (const diaDaSemana of diasDaSemana) {
+		const ids = mes.dayForWeek[diaDaSemana];
+
+		// Adicionar os IDs dos dias da semana à lista organizada
+		for (const id of ids) {
+			listaOrganizada.push(id);
+		}
+	}
+
+	return listaOrganizada;
+}
+
+// Exemplo de uso
+const mes = {
+	name: "Junho",
+	DayMax: 30,
+	dayForWeek: {
+		monday: [1, 8, 15, 22, 29],
+		tuesday: [2, 9, 16, 23, 30],
+		wednesday: [3, 10, 17, 24],
+		thursday: [4, 11, 18, 25],
+		friday: [5, 12, 19, 26],
+		saturday: [6, 13, 20, 27],
+		sunday: [7, 14, 21, 28],
+	},
+};
+
+const listaOrganizada = organizarListaDeAcordoComInterface(mes);
+console.log(listaOrganizada);
