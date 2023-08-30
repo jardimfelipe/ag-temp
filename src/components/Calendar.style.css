@@ -22,7 +22,7 @@ abbr[title] {
  text-decoration: none;
 }
 .react-calendar__month-view__days__day--weekend {
-	@apply text-info
+	@apply text-placeholder
 }
 
 .react-calendar__tile {
@@ -59,16 +59,17 @@ abbr[title] {
 .react-calendar__tile--active {
 	@apply bg-darkness text-light rounded-lg
 
- background: #6f48eb;
+ /* background: #6f48eb;
  border-radius: 6px;
  font-weight: bold;
- color: white;
+ color: white; */
 }
+
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
- background: #6f48eb;
- color: white;
+ @apply bg-primary text-dark
 }
+/*
 .react-calendar--selectRange .react-calendar__tile--hover {
  background-color: #f8f8fa;
 }
@@ -92,4 +93,4 @@ abbr[title] {
  border-bottom-right-radius: 6px;
  background: #6f48eb;
  color: white;
-}
+} */
