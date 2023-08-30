@@ -18,7 +18,7 @@ export function Calendar({}: Props) {
 				<span
 					className={`flex flex-col mx-2 ${
 						arrayDate[month].dayForWeek.monday.length == 4
-							? "first:mt-6"
+							? "mt-6"
 							: undefined
 					}`}
 				>
@@ -26,9 +26,9 @@ export function Calendar({}: Props) {
 						return (
 							<button
 								key={`monday-${day}`}
-								onClick={() => setDay(day)}
+								onClick={() => setDay(day.day)}
 							>
-								<li>{day}</li>
+								<li>{day.day}</li>
 							</button>
 						);
 					})}
@@ -36,7 +36,7 @@ export function Calendar({}: Props) {
 				<span
 					className={`flex flex-col mx-2 ${
 						arrayDate[month].dayForWeek.tuesday.length == 4
-							? "first:mt-6"
+							? "mt-6"
 							: undefined
 					}`}
 				>
@@ -44,9 +44,9 @@ export function Calendar({}: Props) {
 						return (
 							<button
 								key={`tuesday-${day}`}
-								onClick={() => setDay(day)}
+								onClick={() => setDay(day.day)}
 							>
-								<li>{day}</li>
+								<li>{day.day}</li>
 							</button>
 						);
 					})}
@@ -54,7 +54,7 @@ export function Calendar({}: Props) {
 				<span
 					className={`flex flex-col mx-2 ${
 						arrayDate[month].dayForWeek.wednesday.length == 4
-							? "first:mt-6"
+							? "mt-6"
 							: undefined
 					}`}
 				>
@@ -62,9 +62,9 @@ export function Calendar({}: Props) {
 						return (
 							<button
 								key={`wednesday-${day}`}
-								onClick={() => setDay(day)}
+								onClick={() => setDay(day.day)}
 							>
-								<li>{day}</li>
+								<li>{day.day}</li>
 							</button>
 						);
 					})}
@@ -72,7 +72,7 @@ export function Calendar({}: Props) {
 				<span
 					className={`flex flex-col mx-2 ${
 						arrayDate[month].dayForWeek.thursday.length == 4
-							? "first:mt-6"
+							? "mt-6"
 							: undefined
 					}`}
 				>
@@ -80,9 +80,9 @@ export function Calendar({}: Props) {
 						return (
 							<button
 								key={`thursday-${day}`}
-								onClick={() => setDay(day)}
+								onClick={() => setDay(day.day)}
 							>
-								<li>{day}</li>
+								<li>{day.day}</li>
 							</button>
 						);
 					})}
@@ -90,7 +90,7 @@ export function Calendar({}: Props) {
 				<span
 					className={`flex flex-col mx-2 ${
 						arrayDate[month].dayForWeek.friday.length == 4
-							? "first:mt-6"
+							? "mt-6"
 							: undefined
 					}`}
 				>
@@ -98,9 +98,9 @@ export function Calendar({}: Props) {
 						return (
 							<button
 								key={`friday-${day}`}
-								onClick={() => setDay(day)}
+								onClick={() => setDay(day.day)}
 							>
-								<li>{day}</li>
+								<li>{day.day}</li>
 							</button>
 						);
 					})}
@@ -108,17 +108,17 @@ export function Calendar({}: Props) {
 				<span
 					className={`flex flex-col mx-2 ${
 						arrayDate[month].dayForWeek.saturday.length == 4
-							? "first:mt-6"
+							? "mt-6"
 							: undefined
 					}`}
 				>
 					{arrayDate[month].dayForWeek.saturday.map((day) => {
 						return (
 							<button
-								key={`saturday-${day}`}
-								onClick={() => setDay(day)}
+								key={`saturday-${day.day}`}
+								onClick={() => setDay(day.day)}
 							>
-								<li>{day}</li>
+								<li>{day.day}</li>
 							</button>
 						);
 					})}
@@ -126,7 +126,7 @@ export function Calendar({}: Props) {
 				<span
 					className={`flex flex-col mx-2 ${
 						arrayDate[month].dayForWeek.sunday.length == 4
-							? "first:mt-6"
+							? "mt-6"
 							: undefined
 					}`}
 				>
@@ -134,9 +134,9 @@ export function Calendar({}: Props) {
 						return (
 							<button
 								key={`sunday-${day}`}
-								onClick={() => setDay(day)}
+								onClick={() => setDay(day.day)}
 							>
-								<li>{day}</li>
+								<li>{day.day}</li>
 							</button>
 						);
 					})}

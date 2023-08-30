@@ -35,13 +35,10 @@ export class UserService {
 		try {
 			const user = await api
 				.post<string>("login/client", { email, password })
-				.then((value: any) => {
-					localStorage.setItem("Authorization", value.data.token);
-					return value;
-				})
+				.then((value: any) => value)
 				.catch((err: string) => console.log(err));
 
-			return user.data.user;
+			return { user: user.data.user, token: user.data.token };
 		} catch (err) {
 			return new Error(`Algo deu muito errado: ${err}`);
 		}

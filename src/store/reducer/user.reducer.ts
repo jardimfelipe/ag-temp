@@ -20,7 +20,9 @@ export const login = createAsyncThunk(
 	"login",
 	async (intialState: IUserRequestData) => {
 		const response = await service.Login(intialState);
-		return response;
+		console.log(response);
+		//@ts-ignore
+		return { userData: response.user, token: response.token };
 	}
 );
 
@@ -41,6 +43,7 @@ export const userSlice = createSlice({
 		email: "",
 		age: 0,
 		cpf: "",
+		token: "",
 	},
 
 	reducers: {
@@ -52,16 +55,19 @@ export const userSlice = createSlice({
 			state.email = "";
 			state.cpf = "";
 			state.age = 0;
+			state.token = "";
 		},
 	},
 	extraReducers(builder) {
 		builder.addCase(login.fulfilled, (state, action) => {
-			state.name = action.payload.name;
-			state.email = action.payload.email;
-			state.age = action.payload.age;
-			state.cpf = action.payload.cpf;
-			state.id = action.payload.id;
-			state.isLogged = action.payload.password != null ?? false;
+			state.name = action.payload.userData.name;
+			state.email = action.payload.userData.email;
+			state.age = action.payload.userData.age;
+			state.cpf = action.payload.userData.cpf;
+			state.id = action.payload.userData.id;
+			state.isLogged = action.payload.userData.password != null ?? false;
+			state.token = action.payload.token;
+			localStorage.setItem("Authorization", action.payload.token);
 		});
 
 		builder.addCase(alterUser.fulfilled, (state, action) => {

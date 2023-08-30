@@ -1,24 +1,28 @@
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 
+interface IDayForCalendar {
+	type: "present" | "before";
+	day: number;
+}
+
 interface IMonth {
 	name: string;
 	DayMax: number;
 	dayForWeek: {
-		monday: number[];
-		tuesday: number[];
-		wednesday: number[];
-		thursday: number[];
-		friday: number[];
-		saturday: number[];
-		sunday: number[];
+		monday: IDayForCalendar[];
+		tuesday: IDayForCalendar[];
+		wednesday: IDayForCalendar[];
+		thursday: IDayForCalendar[];
+		friday: IDayForCalendar[];
+		saturday: IDayForCalendar[];
+		sunday: IDayForCalendar[];
 	};
 }
 
 export function getCalendar(year: number): IMonth[] {
 	dayjs.locale("pt-br");
 	const calendar: IMonth[] = [];
-
 	for (let month = 0; month < 12; month++) {
 		const monthName = dayjs().year(year).month(month).format("MMMM");
 		const daysInMonth = dayjs().year(year).month(month).daysInMonth();
@@ -31,39 +35,55 @@ export function getCalendar(year: number): IMonth[] {
 			saturday: [],
 			sunday: [],
 		};
-
+		let previousMonthDays: number[] = [];
 		for (let day = 1; day <= daysInMonth; day++) {
 			const date = dayjs().year(year).month(month).date(day);
 			const dayOfWeek = date.day() as any;
+			let dayType: "present" | "before" = "present";
+
+			if (dayOfWeek === 1 && dayForWeek.monday.length === 4) {
+				dayType = "before";
+				//@ts-ignore
+				dayForWeek.monday.map((day, id) => {
+					if (id > 1) {
+						// @ts-ignore
+						dayForWeek.monday.unshift({ type: dayType, day }); // Remove the first Monday from the array
+					}
+				});
+			}
 
 			switch (dayOfWeek) {
 				case 1:
+					// if (dayType == "before") {
+					// 	//@ts-ignore
+					// 	dayForWeek.monday.push({ type: "before", day });
+					// }
 					//@ts-ignore
-					dayForWeek.monday.push(day);
+					dayForWeek.monday.push({ type: dayType, day });
 					break;
 				case 2:
 					//@ts-ignore
-					dayForWeek.tuesday.push(day);
+					dayForWeek.tuesday.push({ type: dayType, day });
 					break;
 				case 3:
 					//@ts-ignore
-					dayForWeek.wednesday.push(day);
+					dayForWeek.wednesday.push({ type: dayType, day });
 					break;
 				case 4:
 					//@ts-ignore
-					dayForWeek.thursday.push(day);
+					dayForWeek.thursday.push({ type: dayType, day });
 					break;
 				case 5:
 					//@ts-ignore
-					dayForWeek.friday.push(day);
+					dayForWeek.friday.push({ type: dayType, day });
 					break;
 				case 6:
 					//@ts-ignore
-					dayForWeek.saturday.push(day);
+					dayForWeek.saturday.push({ type: dayType, day });
 					break;
 				case 0:
 					//@ts-ignore
-					dayForWeek.sunday.push(day);
+					dayForWeek.sunday.push({ type: dayType, day });
 					break;
 				default:
 					break;
@@ -75,53 +95,7 @@ export function getCalendar(year: number): IMonth[] {
 			DayMax: daysInMonth,
 			dayForWeek,
 		};
-
 		calendar.push(monthObj);
 	}
-
 	return calendar;
 }
-
-// Função que organiza a lista de acordo com os dados da interface IMonth
-function organizarListaDeAcordoComInterface(mes: any) {
-	const diasDaSemana = [
-		"monday",
-		"tuesday",
-		"wednesday",
-		"thursday",
-		"friday",
-		"saturday",
-		"sunday",
-	];
-	const listaOrganizada = [];
-
-	// Iterar sobre os dias da semana na ordem desejada
-	for (const diaDaSemana of diasDaSemana) {
-		const ids = mes.dayForWeek[diaDaSemana];
-
-		// Adicionar os IDs dos dias da semana à lista organizada
-		for (const id of ids) {
-			listaOrganizada.push(id);
-		}
-	}
-
-	return listaOrganizada;
-}
-
-// Exemplo de uso
-const mes = {
-	name: "Junho",
-	DayMax: 30,
-	dayForWeek: {
-		monday: [1, 8, 15, 22, 29],
-		tuesday: [2, 9, 16, 23, 30],
-		wednesday: [3, 10, 17, 24],
-		thursday: [4, 11, 18, 25],
-		friday: [5, 12, 19, 26],
-		saturday: [6, 13, 20, 27],
-		sunday: [7, 14, 21, 28],
-	},
-};
-
-const listaOrganizada = organizarListaDeAcordoComInterface(mes);
-console.log(listaOrganizada);
