@@ -1,4 +1,4 @@
-import { MapPin,WhatsappLogo } from "@phosphor-icons/react";
+import { MapPin, WhatsappLogo } from "@phosphor-icons/react";
 import React from "react";
 import Button from "../../components/Button";
 import { Link } from "react-router-dom";
@@ -40,9 +40,13 @@ export function Feeds() {
 						<div className="flex-1 p-1">
 							<WhatsappLogo size={20} />
 						</div>
-						<div className="flex-1 p-1 text-right">
-							<MapPin className="inline" style={{marginTop:"-7px"}} size={20}/>
-							<span >2km</span>
+						<div className="flex-1 items-center p-1 text-right">
+							<MapPin
+								className="inline"
+								style={{ marginTop: "-4px" }}
+								size={20}
+							/>
+							<span className="ml-1 mb-2">2km</span>
 						</div>
 						{/* <div className="flex gap-4 justify-between">
 							icone do whats
