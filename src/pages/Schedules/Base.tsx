@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllServices } from "../../store/reducer/servicesList.reducer";
 import { useAppDispatch, useAppSelector } from "../../store/main.store";
 import Button from "../../components/Button";
-import { Calendar } from "../../components/Calendar";
+import { MyCalendar } from "../../components/Calendar";
 
 type Props = {};
 
@@ -59,7 +59,7 @@ export function BaseSchedule({}: Props) {
 				<aside>{/* Tempo de cada serviço a mostra aqui */}</aside>
 			</header>
 			<main>
-				<Calendar />
+				<MyCalendar />
 			</main>
 			<footer>
 				{/* Barbeiro responsável ou barbeiro randomico */}
