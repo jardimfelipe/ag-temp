@@ -1,4 +1,4 @@
-import { MapPin } from "@phosphor-icons/react";
+import { MapPin,WhatsappLogo } from "@phosphor-icons/react";
 import React from "react";
 import Button from "../../components/Button";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ export function Feeds() {
 		<div>
 			<main className="flex flex-col items-center">
 				{/* <Search className="w-96 mt-4 mb-8" /> */}
-				<section className="first:p-0 first:overflow-hidden bg-darkness rounded-lg shadow-lg w-96">
+				<section className="first:p-0 first:overflow-hidden bg-darkness rounded-lg shadow-lg w-72 m-14 sm:m-10">
 					{/* <!-- Image of feed --> */}
 					<div className="flex flex-col">
 						<div className="flex justify-between">
@@ -35,15 +35,22 @@ export function Feeds() {
 							<img src="https://i.pinimg.com/564x/b1/bc/cc/b1bccc53502e6b53f38e29f9dac13afd.jpg" />
 						</figure>
 					</div>
-					<div className="flex justify-between items-center py-2 px-3">
+					<div className="flex py-1 px-1">
 						{/* <!-- actions in feed --> */}
-						<div className="flex items-center gap-4">
+						<div className="flex-1 p-1">
+							<WhatsappLogo size={20} />
+						</div>
+						<div className="flex-1 p-1 text-right">
+							<MapPin className="inline" style={{marginTop:"-7px"}} size={20}/>
+							<span >2km</span>
+						</div>
+						{/* <div className="flex gap-4 justify-between">
 							icone do whats
-							<span className="flex items-center">
+							<span className="flex">
 								<MapPin size={20} className="ml-4 mr-2" />
 								2km
 							</span>
-						</div>
+						</div> */}
 					</div>
 				</section>
 			</main>
