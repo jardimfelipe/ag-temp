@@ -31,7 +31,7 @@ export function BaseSchedule({}: Props) {
 		<div className="ml-44">
 			<header>
 				<div>
-					<ul className="flex">
+					<ul className="flex mt-4">
 						{serviceList.map((service) => {
 							return (
 								<button
