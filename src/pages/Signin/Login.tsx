@@ -32,7 +32,7 @@ export default function Login() {
 				</span>
 				<div>
 					<Input
-						title="Email"
+						title="Email ou Telefone"
 						value={email}
 						onChange={(e) => setEmail(e.currentTarget.value)}
 					></Input>

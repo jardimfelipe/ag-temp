@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAppSelector } from "../../store/main.store";
 import { Edit } from "./Edit";
+import { ShareNetwork } from "@phosphor-icons/react";
 
 type Props = {};
 
@@ -33,10 +34,13 @@ export function PerfilBase({}: Props) {
 							{handleEditPerfil ? "Voltar" : "Editar"}
 						</button>
 						<button
-							className="p-2 px-4 base-an hover:bg-primary rounded-lg"
+							className="flex justify-center p-2 px-4 base-an hover:bg-primary rounded-lg"
 							onClick={copyDataInClipboard}
 						>
 							Compartilhar
+							<div className="ml-2 mt-[2px]">
+								<ShareNetwork size={20} />
+							</div>
 						</button>
 					</div>
 					{handleEditPerfil ? (

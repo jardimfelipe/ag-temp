@@ -20,7 +20,6 @@ export const login = createAsyncThunk(
 	"login",
 	async (intialState: IUserRequestData) => {
 		const response = await service.Login(intialState);
-		console.log(response);
 		//@ts-ignore
 		return { userData: response.user, token: response.token };
 	}
