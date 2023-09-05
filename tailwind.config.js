@@ -14,7 +14,7 @@ export default {
 	  	textColor : "#0c0a09", // stone-950
 	  	colors: {
 		black: "#0c0a09", // stone-950
-		white: "#fafafa", // zinc-50
+		white: "#f1f5f9", // slate-200
 		light: "#D8B9FF", // gray-100
 		dark: "#101728 ", // slate-900
 		"darkness-plus": "#181850",

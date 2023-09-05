@@ -1,8 +1,8 @@
 export interface ISchedule {
 	id: string;
 	title: string;
-	start: string;
-	end: string;
+	start: Date;
+	end: Date;
 	description: string;
 	color: string;
 	recurring: boolean;

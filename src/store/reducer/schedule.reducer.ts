@@ -3,15 +3,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ISchedule } from "../types/schedule";
 
 const service = new ScheduleService();
-export const getSchedules = createAsyncThunk(
-	"get/schedule",
-	async (scheduleId: string) => {
-		const response = await service.getSchedule(scheduleId);
-		console.log(response);
-
-		return response;
-	}
-);
 
 export const postSchedule = createAsyncThunk(
 	"create/schedule",
@@ -26,7 +17,7 @@ export const postSchedule = createAsyncThunk(
 export const scheduleSlice = createSlice({
 	name: "schedule",
 	initialState: {
-		scheduleId: "",
+		id: "",
 		title: "",
 		start: new Date(), //Date Thu Jul 13 2023 11:52:47 GMT-0300
 		end: new Date(), //Date Sat Jul 15 2023 17:52:47 GMT-0300
@@ -40,7 +31,7 @@ export const scheduleSlice = createSlice({
 	},
 	reducers: {
 		clearState: (state) => {
-			state.scheduleId = "";
+			state.id = "";
 			state.title = "";
 			state.color = "white";
 			state.description = "";
@@ -55,22 +46,8 @@ export const scheduleSlice = createSlice({
 	},
 
 	extraReducers(builder) {
-		builder.addCase(getSchedules.fulfilled, (state, action) => {
-			state.scheduleId = action.payload.scheduleId;
-			state.title = action.payload.title;
-			state.color = action.payload.color ?? "white";
-			state.description = action.payload.description ?? "não informado";
-			state.end = action.payload.end;
-			state.start = action.payload.start;
-			state.recurring = action.payload.recurring ?? false;
-			state.withBarberId = action.payload.withBarberId;
-			state.withUserClientId = action.payload.withUserClientId;
-			state.withBarberId = action.payload.withBarberId;
-			state.withBarbershopId = action.payload.withBarbershopId;
-		});
-
 		builder.addCase(postSchedule.fulfilled, (state, action) => {
-			state.scheduleId = action.payload.scheduleId;
+			state.id = action.payload.scheduleId;
 			state.title = action.payload.title;
 			state.color = action.payload.color ?? "white";
 			state.description = action.payload.description ?? "não informado";

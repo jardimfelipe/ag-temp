@@ -12,7 +12,7 @@ export default function Button({ children, className, onClick }: IButton) {
 		<button
 			className={twMerge(
 				className,
-				`bg-graydark px-4 py-2 rounded-lg base-an hover:shadow-lg`
+				`bg- dark:bg-graydark px-4 py-2 rounded-lg base-an hover:shadow-lg`
 			)}
 			onClick={onClick}
 		>

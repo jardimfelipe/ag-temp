@@ -10,7 +10,7 @@ export function Feeds() {
 		<div>
 			<main className="flex flex-col items-center">
 				{/* <Search className="w-96 mt-4 mb-8" /> */}
-				<section className="first:p-0 first:overflow-hidden bg-darkness rounded-lg shadow-lg w-72 m-14 sm:m-10">
+				<section className="first:p-0 first:overflow-hidden dark:bg-darkness shadow-lg rounded-lg w-72 m-14 sm:m-10">
 					{/* <!-- Image of feed --> */}
 					<div className="flex flex-col">
 						<div className="flex justify-between">
@@ -23,7 +23,7 @@ export function Feeds() {
 									Barbearia Exemplar
 								</span>
 							</div>
-							<Link to="schedule/123456">
+							<Link to="schedule/40aade88-d0c4-49e3-a1f4-5e0cc6917c83">
 								<Button>
 									{/* <!-- O Id do path é da barbearia --> */}
 									Agendar

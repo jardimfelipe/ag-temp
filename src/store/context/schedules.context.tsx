@@ -1,22 +1,28 @@
-import React, { createContext, useEffect } from "react";
-import { useAppDispatch } from "../main.store";
-import { getSchedules } from "../reducer/schedule.reducer";
-import { IStateSchedule } from "../types/schedule";
+import React, { createContext, useEffect, useState } from "react";
+import { ISchedule } from "../types/schedule";
+import { ScheduleService } from "../../service/schedule";
 
 type Props = {
 	children: React.ReactNode;
+	barbershopId: string;
 };
 
-const scheduleContext = createContext<IStateSchedule>({} as IStateSchedule);
+export const scheduleContext = createContext<ISchedule[]>([] as ISchedule[]);
+const service = new ScheduleService();
 
-export function ContextComponentSchedule({ children }: Props) {
-	const dispatch = useAppDispatch();
+export function ContextComponentSchedule({ children, barbershopId }: Props) {
+	const [scheduleList, setScheduleList] = useState<ISchedule[]>(
+		[] as ISchedule[]
+	);
 
 	useEffect(() => {
-		dispatch(getSchedules("40aade88-d0c4-49e3-a1f4-5e0cc6917c83"));
+		(async () => {
+			setScheduleList(await service.getSchedule(barbershopId));
+		})();
 	}, []);
+
 	return (
-		<scheduleContext.Provider value={{} as IStateSchedule}>
+		<scheduleContext.Provider value={scheduleList}>
 			{children}
 		</scheduleContext.Provider>
 	);
