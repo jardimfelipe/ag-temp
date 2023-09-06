@@ -7,7 +7,12 @@ type IButton = HTMLAttributes<HTMLButtonElement> & {
 	children: ReactNode;
 };
 
-export default function Button({ children, className, onClick }: IButton) {
+export default function Button({
+	children,
+	className,
+	onClick,
+	...props
+}: IButton) {
 	return (
 		<button
 			className={twMerge(
@@ -15,6 +20,7 @@ export default function Button({ children, className, onClick }: IButton) {
 				`bg- dark:bg-graydark px-4 py-2 rounded-lg base-an hover:shadow-lg`
 			)}
 			onClick={onClick}
+			{...props}
 		>
 			{children}
 		</button>

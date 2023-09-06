@@ -12,7 +12,7 @@ type Props = {};
 export function ScheduleComponent({}: Props) {
 	const serviceList = useAppSelector((state) => state.serviceList);
 	const dispatch = useAppDispatch();
-	const schedulesList = useContext(scheduleContext);
+	const [daySelected, setDaySelected] = useState(0);
 	const [formSchedule, setFormSchedule] = useState({
 		title: "",
 		start: "", //"Date Thu Jul 13 2023 15:52:47 GMT-0300"
@@ -22,9 +22,6 @@ export function ScheduleComponent({}: Props) {
 		withBarberId: "",
 		withBarbershopId: "",
 	});
-	function HoursOptions() {
-		return { start: 0, end: 0 };
-	}
 
 	function teste() {
 		console.log(dayjs(new Date(2022, 9, 16, 14, 40)).date());
@@ -71,8 +68,8 @@ export function ScheduleComponent({}: Props) {
 			</header>
 			<main className="flex justify-center items-center gap-8">
 				<div className="flex  flex-col justify-center items-center">
-					<MyCalendar />
-					<HourList schedulesList={schedulesList} />
+					<MyCalendar onChange={setDaySelected} />
+					<HourList />
 				</div>
 			</main>
 			<footer>
