@@ -1,30 +1,33 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/main.store";
 import dayjs from "dayjs";
 import { getAllServices } from "../../store/reducer/servicesList.reducer";
 import { HourList } from "./HourList";
 import Button from "../../components/Button";
 import { MyCalendar } from "../../components/Calendar";
-import { scheduleContext } from "../../store/context/schedules.context";
+import { getBarbers } from "../../store/reducer/barber.reducer";
+import { BarberList } from "./BarberList";
 
-type Props = {};
+type Props = {
+	barbershopId: string;
+};
 
-export function ScheduleComponent({}: Props) {
+export function ScheduleComponent({ barbershopId }: Props) {
 	const serviceList = useAppSelector((state) => state.serviceList);
 	const dispatch = useAppDispatch();
 	const [daySelected, setDaySelected] = useState(0);
 	const [formSchedule, setFormSchedule] = useState({
 		title: "",
-		start: "", //"Date Thu Jul 13 2023 15:52:47 GMT-0300"
-		end: "", // "Date Thu Jul 13 2023 15:52:47 GMT-0300"
+		start: "",
+		end: "",
 		withServicesBarberId: "",
 		withUserClientId: "",
 		withBarberId: "",
-		withBarbershopId: "",
+		withBarbershopId: barbershopId,
 	});
 
 	function teste() {
-		console.log(dayjs(new Date(2022, 9, 16, 14, 40)).date());
+		dispatch(getBarbers(barbershopId));
 	}
 
 	function setServiceInForm(service: any) {
@@ -35,8 +38,11 @@ export function ScheduleComponent({}: Props) {
 	}
 
 	useEffect(() => {
+		console.log("atualizou");
 		dispatch(getAllServices());
+		dispatch(getBarbers(barbershopId));
 	}, []);
+
 	return (
 		<div className="ml-44">
 			<header>
@@ -66,14 +72,15 @@ export function ScheduleComponent({}: Props) {
 					{/* Tempo e detalhes de cada serviço a mostra aqui */}
 				</aside>
 			</header>
-			<main className="flex justify-center items-center gap-8">
-				<div className="flex  flex-col justify-center items-center">
+			<main className="mt-4 flex justify-center items-center">
+				<div className="flex justify-center gap-8 items-center">
 					<MyCalendar onChange={setDaySelected} />
-					<HourList />
+					{/* TODO reslver a situação do dia, mês e ano que n está sendo filtrado */}
+					<HourList daySelected={daySelected} />
 				</div>
 			</main>
 			<footer>
-				{/* Barbeiro responsável ou barbeiro randomico */}
+				<BarberList />
 				<Button onClick={teste}>Agendar</Button>
 			</footer>
 		</div>

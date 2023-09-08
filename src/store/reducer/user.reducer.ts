@@ -2,6 +2,17 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { UserService } from "../../service/user/count-profile";
 
+export interface IUser {
+	id: string;
+	name: string;
+	email: string;
+	age: number;
+	gender: number;
+	cpf: string;
+	privilege: number;
+	created_at: Date;
+}
+
 interface IUserRequestData {
 	email: string;
 	password: string;

@@ -7,6 +7,6 @@ export class ServiceBarbersService {
 			.then((data) => data.data)
 			.catch((err) => new Error(err));
 
-		return await service;
+		return service;
 	}
 }

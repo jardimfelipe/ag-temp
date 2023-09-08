@@ -1,11 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "../../components/Button";
 import dayjs from "dayjs";
 import { ISchedule } from "../../store/types/schedule";
 import { scheduleContext } from "../../store/context/schedules.context";
 import Input from "../../components/Input";
 
-type Props = {};
+type Props = {
+	daySelected: number;
+};
 
 interface IScheduleListReleased {
 	startDate: Date;
@@ -24,7 +26,7 @@ interface ICondition {
 	numberCondition: number;
 }
 
-export function HourList({}: Props) {
+export function HourList({ daySelected }: Props) {
 	const scheduleList = useContext(scheduleContext);
 	const [minSelected, setMinSelected] = useState(0);
 	const [hourSelected, setHourSelected] = useState(0);
@@ -57,20 +59,24 @@ export function HourList({}: Props) {
 			});
 		}
 
-		dateScheduleList.forEach((data) => {
-			list.map((date) => {
-				if (data.start.hour === date.hour) {
-					date.min.map((min) => {
-						date.isOccupied = min === data.start.minute;
-					});
+		useEffect(() => {
+			dateScheduleList.forEach((data) => {
+				if (data.start.day === daySelected) {
+					list.map((date) => {
+						if (data.start.hour === date.hour) {
+							date.min.map((min) => {
+								date.isOccupied = min === data.start.minute;
+							});
 
-					date.isOccupied = true;
-					if (date.isOccupied) {
-						date.isMinOccupied = data.start.minute;
-					}
+							date.isOccupied = true;
+							if (date.isOccupied) {
+								date.isMinOccupied = data.start.minute;
+							}
+						}
+					});
 				}
 			});
-		});
+		}, [daySelected]);
 
 		function setDateSelected(
 			hour: number,
@@ -95,7 +101,7 @@ export function HourList({}: Props) {
 						return (
 							<Button
 								key={Math.random()}
-								className={`flex justify-between w-72 my-2 ${
+								className={`flex justify-center base-an w-72 my-2 bg-darkness hover:bg-graydark ${
 									hours.isOccupied &&
 									hours.isMinOccupied === min
 										? "opacity-25"
@@ -124,9 +130,27 @@ export function HourList({}: Props) {
 	}
 
 	return (
-		<div className="p-4 w-80 rounded-lg bg-darkness-plus">
-			{hourSelected} {minSelected}
-			{fillSchedule(hourSelected)}
+		<div className="p-4 w-80 rounded-lg h-80 overflow-hidden scrollbar-thin scrollbar-rounded-lg scrollbar-thumb-graydark scrollbar-track-darkness overflow-y-scroll bg-darkness-plus">
+			<div className="flex flex-col">
+				<strong>Escolha um horário</strong>
+				{hourSelected === 0 && minSelected === 0 ? (
+					<div className="my-1">horário não informado</div>
+				) : (
+					<span className="flex p-2 py-1 base-an rounded-lg hover:bg-graydark">
+						<div className="mr-2">Horário escolhido:</div>
+						<div>
+							{hourSelected.toString().length === 1
+								? "0" + hourSelected.toString()
+								: hourSelected}
+							{":"}
+							{minSelected.toString().length === 1
+								? "0" + minSelected.toString()
+								: minSelected}
+						</div>
+					</span>
+				)}
+			</div>
+			<span className="">{fillSchedule(hourSelected)}</span>
 		</div>
 	);
 }
