@@ -7,6 +7,7 @@ import Button from "../../components/Button";
 import { MyCalendar } from "../../components/Calendar";
 import { getBarbers } from "../../store/reducer/barber.reducer";
 import { BarberList } from "./BarberList";
+import { ServiceList } from "./ServiceList";
 
 type Props = {
 	barbershopId: string;
@@ -14,6 +15,7 @@ type Props = {
 
 export function ScheduleComponent({ barbershopId }: Props) {
 	const serviceList = useAppSelector((state) => state.serviceList);
+	const user = useAppSelector((state) => state.user);
 	const dispatch = useAppDispatch();
 	const [daySelected, setDaySelected] = useState(0);
 	const [formSchedule, setFormSchedule] = useState({
@@ -21,7 +23,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 		start: "",
 		end: "",
 		withServicesBarberId: "",
-		withUserClientId: "",
+		withUserClientId: user.id,
 		withBarberId: "",
 		withBarbershopId: barbershopId,
 	});
@@ -38,8 +40,6 @@ export function ScheduleComponent({ barbershopId }: Props) {
 	}
 
 	useEffect(() => {
-		console.log("atualizou");
-		dispatch(getAllServices());
 		dispatch(getBarbers(barbershopId));
 	}, []);
 
@@ -48,24 +48,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 			<header>
 				<div>
 					<ul className="flex mt-4">
-						{serviceList.map((service, id) => {
-							return (
-								<button
-									key={`service-${id}`}
-									className="text-left"
-									onClick={() => setServiceInForm(service)}
-								>
-									<li
-										key={"key-" + service.id}
-										className="flex flex-col p-4 mx-4 rounded-lg bg-darkness hover:shadow-lg"
-									>
-										<div>Nome: {service.name}</div>
-										<div>Duração: {service.duration}</div>
-										<div>Preço: {service.price}</div>
-									</li>
-								</button>
-							);
-						})}
+						<ServiceList />
 					</ul>
 				</div>
 				<aside>
