@@ -4,9 +4,17 @@ import dayjs from "dayjs";
 import { ISchedule } from "../../store/types/schedule";
 import { scheduleContext } from "../../store/context/schedules.context";
 import Input from "../../components/Input";
+import { IDate } from "../../components/Calendar";
+
+interface IDateResponse {
+	day: number;
+	month: number;
+	year: number;
+}
 
 type Props = {
-	daySelected: number;
+	dateSelected: IDateResponse;
+	setDate: (data: IDate) => void;
 };
 
 interface IScheduleListReleased {
@@ -26,7 +34,7 @@ interface ICondition {
 	numberCondition: number;
 }
 
-export function HourList({ daySelected }: Props) {
+export function HourList({ dateSelected, setDate }: Props) {
 	const scheduleList = useContext(scheduleContext);
 	const [minSelected, setMinSelected] = useState(0);
 	const [hourSelected, setHourSelected] = useState(0);
@@ -61,7 +69,7 @@ export function HourList({ daySelected }: Props) {
 
 		useEffect(() => {
 			dateScheduleList.forEach((data) => {
-				if (data.start.day === daySelected) {
+				if (data.start.day === dateSelected.day) {
 					list.map((date) => {
 						if (data.start.hour === date.hour) {
 							date.min.map((min) => {
@@ -76,7 +84,7 @@ export function HourList({ daySelected }: Props) {
 					});
 				}
 			});
-		}, [daySelected]);
+		}, [dateSelected]);
 
 		function setDateSelected(
 			hour: number,
@@ -86,9 +94,19 @@ export function HourList({ daySelected }: Props) {
 			if (opponent.condition && opponent.numberCondition !== min) {
 				setHourSelected(hour);
 				setMinSelected(min);
+				setDate({
+					...dateSelected,
+					minute: minSelected,
+					hour: hourSelected,
+				});
 			} else if (opponent.numberCondition !== min) {
 				setHourSelected(hour);
 				setMinSelected(min);
+				setDate({
+					...dateSelected,
+					minute: minSelected,
+					hour: hourSelected,
+				});
 			} else {
 				return false;
 			}

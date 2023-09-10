@@ -1,25 +1,17 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { ServiceBarbersService } from "../../service/servicesBarber/service-barber";
+import { IBarberServices } from "../../service/schedule/types";
 
-type Props = {};
-
-interface IServiceList {
-	id: string;
-	name: string;
-	description: string;
-	duration: number;
-	price: number;
-	barbershopId: string;
-}
+type Props = {
+	setService: (date: IBarberServices) => void;
+};
 
 const serviceListService = new ServiceBarbersService();
 
-export function ServiceList({}: Props) {
-	const [serviceList, setServiceList] = useState<IServiceList[]>([]);
+export function ServiceList({ setService }: Props) {
+	const [serviceList, setServiceList] = useState<IBarberServices[]>([]);
 	const [loading, setLoading] = useState<Boolean>(true);
-	const [serviceSelected, setServiceSelected] = useState({});
 	async function getServices() {
-		console.log("passou aqui");
 		setServiceList(await serviceListService.getAllService());
 		setLoading(false);
 	}
@@ -29,9 +21,8 @@ export function ServiceList({}: Props) {
 		getServices();
 	}, []);
 
-	function selectService(service: any) {
-		setServiceSelected(service);
-		console.log(serviceSelected);
+	function selectService(service: IBarberServices) {
+		setService(service);
 	}
 
 	if (loading) {

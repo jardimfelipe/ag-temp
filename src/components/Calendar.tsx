@@ -5,8 +5,16 @@ import "./Calendar.style.css";
 import dayjs from "dayjs";
 
 type Props = {
-	onChange: any;
+	onChange: (data: any) => void;
 };
+
+export interface IDate {
+	year: number;
+	month: number;
+	day: number;
+	hour: number;
+	minute: number;
+}
 
 type ValuePiece = Date | null;
 
@@ -16,7 +24,11 @@ export function MyCalendar({ onChange }: Props) {
 	const [date, setDate] = useState<Value>(new Date());
 
 	useEffect(() => {
-		onChange(dayjs(date as Date).date());
+		onChange({
+			day: dayjs(date as Date).date(),
+			month: dayjs(date as Date).month(),
+			year: dayjs(date as Date).year(),
+		});
 	}, [date]);
 
 	return (
