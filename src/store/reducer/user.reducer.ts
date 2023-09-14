@@ -15,12 +15,18 @@ interface IAlterUserRequest {
 	cpf: string;
 }
 
+interface CreateUser {
+	name : string;
+	email : string;
+	contact : string;
+	password : string;
+}
+
 const service = new UserService();
 export const login = createAsyncThunk(
 	"login",
 	async (intialState: IUserRequestData) => {
 		const response = await service.Login(intialState);
-		console.log(response);
 		//@ts-ignore
 		return { userData: response.user, token: response.token };
 	}
@@ -34,6 +40,13 @@ export const alterUser = createAsyncThunk(
 	}
 );
 
+export const insertUser = createAsyncThunk(
+	"user/insert",
+	async (intialState: CreateUser) => {
+		await service.createUser(intialState, toast);
+	}
+);
+
 export const userSlice = createSlice({
 	name: "user",
 	initialState: {
@@ -44,6 +57,9 @@ export const userSlice = createSlice({
 		age: 0,
 		cpf: "",
 		token: "",
+		config : {
+			theme : "dark"
+		}
 	},
 
 	reducers: {
