@@ -22,7 +22,7 @@ export default function HeaderMobileLinks() {
 
 	return (
 		<div>
-			<header className="flex justify-between items-center w-screen py-2 bg-darkness">
+			<header className="flex justify-between items-center w-screen py-2 bg-darkness text-light">
 				<button
 					className="ml-4"
 					onClick={() => setHandleMenu(!handleMenu)}
@@ -41,11 +41,7 @@ export default function HeaderMobileLinks() {
 											key={`${route.id}-${id}`}
 										>
 											<MobileLink
-												title={
-													route.id == "Perfil"
-														? intialName
-														: route.id
-												}
+												title={route.id}
 												to={
 													// verificar se é rota dinamica
 													route.path.split(":")[1]

@@ -14,7 +14,7 @@ export function Layout() {
 					<Header></Header>
 				</div>
 			) : null}
-			<span className=" justify-center h-screen w-screen">
+			<span className={`justify-center h-screen w-screen ${user.config.theme === 'dark' ? 'bg-dark text-light' : 'bg-light'} `}>
 				{user.isLogged || localizacao.pathname === '/cadastro' ? <Outlet></Outlet> : <Login />}
 			</span>
 		</div>

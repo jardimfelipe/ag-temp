@@ -25,7 +25,7 @@ export function HeaderLinks() {
 	}
 
 	return (
-		<div className="w-72 h-screen bg-darkness">
+		<div className="w-72 h-screen bg-darkness text-light">
 			<div className="flex justify-between">
 				<button
 					className="p-4 ml-2 mt-2 base-an rounded-full hover:bg-darkness-plus"
@@ -49,11 +49,7 @@ export function HeaderLinks() {
 								key={`${route.id}-${id}`}
 							>
 								<LayoutLink
-									title={
-										route.id == "Perfil"
-											? intialName
-											: route.id
-									}
+									title={route.id}
 									to={
 										// verificar se é rota dinamica
 										route.path.split(":")[1]

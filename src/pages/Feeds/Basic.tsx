@@ -2,12 +2,14 @@ import { MapPin, WhatsappLogo } from "@phosphor-icons/react";
 import React from "react";
 import Button from "../../components/Button";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../store/main.store";
 
 // type Props = {}
 
 export function Feeds() {
+	const config = useAppSelector((state) => state.user.config);
 	return (
-		<div>
+		<div className={`${config.theme === 'dark' ? 'bg-dark' : 'bg-light'}`}>
 			<main className="flex flex-col items-center">
 				{/* <Search className="w-96 mt-4 mb-8" /> */}
 				<section className="first:p-0 first:overflow-hidden bg-darkness rounded-lg shadow-lg w-72 m-14 sm:m-10">
