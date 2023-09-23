@@ -44,13 +44,12 @@ export class UserService {
 		}
 	}
 
-	async GetSession() {
+	async GetSession(): Promise<boolean> {
 		if (!localStorage.getItem("Authorization")) return false;
 
 		const validation = await api.post("login/session", {
 			token: localStorage.getItem("Authorization")?.split(" ")[1],
 		});
-
 		return validation.data;
 	}
 

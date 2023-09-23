@@ -118,9 +118,12 @@ export function ScheduleComponent({ barbershopId }: Props) {
 			</header>
 			<main className="mt-4 flex justify-center items-center">
 				<div className="flex justify-center gap-8 items-center">
+					{/* O Dia, mês e ano estão sendo resolvidos nesse componente MyCalendar*/}
 					<MyCalendar onChange={setCalendar} />
-					{/* TODO reslver a situação do dia, mês e ano que n está sendo filtrado */}
-					<HourList dateSelected={calendar} setDate={setDate} />
+
+					{/* Depois do dia, mês e ano tiver ok (não tem nenhuma validação para isso), a 
+						hora e o minuto estão sendo resolvidos nesse componente HourList */}
+					<HourList setDate={setDate} calendarData={calendar} />
 				</div>
 			</main>
 			<footer>

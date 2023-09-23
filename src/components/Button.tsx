@@ -19,7 +19,7 @@ export default function Button({
 		<button
 			className={twMerge(
 				className,
-				`bg- dark:bg-graydark px-4 py-2 rounded-lg base-an hover:shadow-lg disabled:opacity-25`
+				`dark:bg-graydark px-4 py-2 rounded-lg base-an hover:shadow-lg disabled:opacity-25`
 			)}
 			onClick={onClick}
 			disabled={disabled}

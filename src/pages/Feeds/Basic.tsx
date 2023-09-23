@@ -23,7 +23,7 @@ export function Feeds() {
 									Barbearia Exemplar
 								</span>
 							</div>
-							<Link to="schedule/40aade88-d0c4-49e3-a1f4-5e0cc6917c83">
+							<Link to="schedule/8b91b6e2-a11b-47a0-95f6-b5b1e6f041ff">
 								<Button>
 									{/* <!-- O Id do path é da barbearia --> */}
 									Agendar
