@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import "./Calendar.style.css";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
+import { ThemeProvider } from "@emotion/react";
+import { themeCustom } from "../materialStyling";
+import { Box, Paper } from "@mui/material";
+import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 type Props = {
-	onChange: (data: any) => void;
+	setCalendar: (date: any) => void;
 };
 
 export interface IDate {
@@ -16,25 +18,30 @@ export interface IDate {
 	minute: number;
 }
 
-type ValuePiece = Date | null;
+export function MyCalendar({ setCalendar }: Props) {
+	const [calendarDays, setCalendarDays] = useState(dayjs());
 
-type Value = ValuePiece | [ValuePiece, ValuePiece];
-
-export function MyCalendar({ onChange }: Props) {
-	const [date, setDate] = useState<Value>(new Date());
-
-	useEffect(() => {
-		onChange({
-			day: dayjs(date as Date).date(),
-			month: dayjs(date as Date).month(),
-			year: dayjs(date as Date).year(),
+	function setCalendarDaysInState(date: any) {
+		setCalendarDays(date);
+		setCalendar({
+			day: date.date(),
+			month: date.month(),
+			year: date.year(),
 		});
-	}, [date]);
+	}
 
 	return (
-		<div className="flex flex-col">
-			{/* TODO o ano e as setas estão com estilizalação quebrada */}
-			<Calendar className="my-4" onChange={setDate} value={date} />
-		</div>
+		<ThemeProvider theme={themeCustom}>
+			<Box>
+				<LocalizationProvider dateAdapter={AdapterDayjs}>
+					<Paper elevation={0}>
+						<DateCalendar
+							value={calendarDays}
+							onChange={setCalendarDaysInState}
+						/>
+					</Paper>
+				</LocalizationProvider>
+			</Box>
+		</ThemeProvider>
 	);
 }

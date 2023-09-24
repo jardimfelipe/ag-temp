@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { HourList } from "./HourList";
 import Button from "../../components/Button";
 import { IDate, MyCalendar } from "../../components/Calendar";
+import Paper from "@mui/material/Paper";
 import { getBarbers } from "../../store/reducer/barber.reducer";
 import { BarberList } from "./BarberList";
 import { ServiceList } from "./ServiceList";
@@ -11,6 +12,11 @@ import { IBarberResponse } from "../../service/barber";
 import { IBarberServices as IBarberServiceResponse } from "../../service/schedule/types";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
+import { Box } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { ThemeProvider } from "@mui/material/styles";
+import { themeCustom } from "../../materialStyling";
 
 type Props = {
 	barbershopId: string;
@@ -33,6 +39,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 		month: 0,
 		year: dayjs().year(),
 	});
+	const [calendarDays, setCalendarDays] = useState(dayjs());
 	const [formSchedule, setFormSchedule] = useState({
 		title: "",
 		start: "",
@@ -63,27 +70,19 @@ export function ScheduleComponent({ barbershopId }: Props) {
 			return toast.error("O Profissional não foi selecionado");
 		}
 
+		const dateFormated = new Date(
+			date.year,
+			date.month,
+			date.day,
+			date.hour,
+			date.minute
+		);
+
 		setIsCorrect(true);
 		setFormSchedule({
 			...formSchedule,
-			start: dayjs(
-				new Date(
-					date.year,
-					date.month,
-					date.day,
-					date.hour,
-					date.minute
-				)
-			).toString(),
-			end: dayjs(
-				new Date(
-					date.year,
-					date.month,
-					date.day,
-					date.hour,
-					date.minute + parseInt(service.duration)
-				)
-			).toString(),
+			start: dayjs(dateFormated).toString(),
+			end: dayjs(dateFormated).toString(),
 			withBarberId: barber.id,
 			withServicesBarberId: service.id,
 		});
@@ -98,7 +97,6 @@ export function ScheduleComponent({ barbershopId }: Props) {
 	}
 
 	function setDate(date: IDate) {
-		// console.log({ ...schedule, date });
 		setSchedule({ ...schedule, date });
 	}
 
@@ -119,7 +117,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 			<main className="mt-4 flex justify-center items-center">
 				<div className="flex justify-center gap-8 items-center">
 					{/* O Dia, mês e ano estão sendo resolvidos nesse componente MyCalendar*/}
-					<MyCalendar onChange={setCalendar} />
+					<MyCalendar setCalendar={setCalendar} />
 
 					{/* Depois do dia, mês e ano tiver ok (não tem nenhuma validação para isso), a 
 						hora e o minuto estão sendo resolvidos nesse componente HourList */}

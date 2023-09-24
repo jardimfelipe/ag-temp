@@ -6,8 +6,9 @@ import { DigitalClock } from "@mui/x-date-pickers/DigitalClock";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
-import { Box } from "@mui/material";
+import { Box, ThemeProvider } from "@mui/material";
 import { IDate } from "../../components/Calendar";
+import { themeCustom } from "../../materialStyling";
 
 // interface IDateResponse {
 // 	day: number;
@@ -42,15 +43,17 @@ export function HourList({ setDate, calendarData }: Props) {
 	};
 
 	return (
-		<Box className="py-5 rounded-lg bg-darkness-plus">
-			{isScheduled.hour != undefined ? "true" : "false"}
-			<LocalizationProvider dateAdapter={AdapterDayjs}>
-				<DigitalClock
-					value={selectedDate}
-					onChange={handleDateChange}
-					timeStep={20}
-				/>
-			</LocalizationProvider>
-		</Box>
+		<ThemeProvider theme={themeCustom}>
+			<Box className="py-5 rounded-lg bg-darkness-plus">
+				{isScheduled.hour != undefined ? "true" : "false"}
+				<LocalizationProvider dateAdapter={AdapterDayjs}>
+					<DigitalClock
+						value={selectedDate}
+						onChange={handleDateChange}
+						timeStep={20}
+					/>
+				</LocalizationProvider>
+			</Box>
+		</ThemeProvider>
 	);
 }

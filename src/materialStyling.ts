@@ -45,4 +45,17 @@ const themeOptions: ThemeOptions = {
 	},
 };
 
-export const themeCustom = createTheme(themeOptions);
+export const themeCustom = createTheme({
+	...themeOptions,
+	components: {
+		MuiPaper: {
+			styleOverrides: {
+				root: {
+					backgroundImage: "none",
+					backgroundColor: "#181850",
+					borderRadius: "8px",
+				},
+			},
+		},
+	},
+});
