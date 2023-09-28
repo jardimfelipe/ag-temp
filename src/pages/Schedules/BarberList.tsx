@@ -43,7 +43,7 @@ export function BarberList({ barbershopId, setBarber }: Props) {
 
 	if (loading) {
 		return (
-			<div className="flex justify-center p-8 flex-1 bg-darkness-plus rounded-lg">
+			<div className="flex justify-center mt-4 p-8 flex-1 bg-darkness-plus rounded-lg">
 				<CircularProgress color="inherit"></CircularProgress>
 			</div>
 		);

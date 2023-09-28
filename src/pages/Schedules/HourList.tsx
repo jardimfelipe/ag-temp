@@ -51,30 +51,28 @@ export function HourList({ setDate, calendarData }: Props) {
 		})();
 	}, []);
 
-	function checkSchedule(
+	//
+	function isScheduledDate(
 		schedule: IScheduleHour[],
 		data: IScheduleHour
 	): boolean {
+		let isEqual = false;
 		for (let i = 0; i < schedule.length; i++) {
-			let isEqual = true;
-			if (
-				schedule[i].hours !== data.hours &&
-				schedule[i].minutes !== data.minutes
-			) {
-				isEqual = false;
-			}
-			if (isEqual) {
-				return false;
+			if (schedule[i].hours === data.hours) {
+				if (schedule[i].minutes === data.minutes) {
+					isEqual = true;
+				} else {
+					isEqual = false;
+				}
 			}
 		}
-		return true;
+		return isEqual;
 	}
 
 	const handleDateChange = (date: Dayjs | null) => {
-		console.log(schedules);
 		setSelectedDate(date);
-		setIsScheduled({ hours: date?.hour(), minutes: date?.minute() });
-		if (checkSchedule(schedules, isScheduled)) {
+		const IsScheduled = { hours: date?.hour(), minutes: date?.minute() };
+		if (isScheduledDate(schedules, IsScheduled) === false) {
 			setDate({
 				...calendarData,
 				hour: date?.hour(),
