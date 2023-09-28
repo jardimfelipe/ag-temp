@@ -41,6 +41,7 @@ export function MyCalendar({ setCalendar }: Props) {
 						<DateCalendar
 							value={calendarDays}
 							onChange={setCalendarDaysInState}
+							minDate={dayjs()}
 						/>
 					</Paper>
 				</LocalizationProvider>

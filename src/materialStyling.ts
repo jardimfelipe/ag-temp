@@ -1,4 +1,5 @@
 import { ThemeOptions, createTheme } from "@mui/material/styles";
+import { DateCalendar } from "@mui/x-date-pickers";
 
 declare module "@mui/material/styles" {
 	interface Theme {

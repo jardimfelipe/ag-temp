@@ -49,11 +49,7 @@ export function HeaderLinks() {
 								key={`${route.id}-${id}`}
 							>
 								<LayoutLink
-									title={
-										route.id == "Perfil"
-											? intialName
-											: route.id
-									}
+									title={route.id}
 									to={
 										// verificar se é rota dinamica
 										route.path.split(":")[1]

@@ -55,7 +55,9 @@ export function ScheduleComponent({ barbershopId }: Props) {
 
 		if (date === undefined || (date.day === 0 && date.hour === 0)) {
 			setIsCorrect(false);
-			return toast.error("A Data e hora não foram informados");
+			return toast.error(
+				"A Data e hora não foram informados ou o horário informado já está ocupado"
+			);
 		}
 
 		if (barber == undefined) {
