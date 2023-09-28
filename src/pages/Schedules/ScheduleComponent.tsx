@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/main.store";
+import React, { useState } from "react";
+import { useAppSelector } from "../../store/main.store";
 import dayjs from "dayjs";
 import { HourList } from "./HourList";
 import Button from "../../components/Button";
 import { IDate, MyCalendar } from "../../components/Calendar";
-import Paper from "@mui/material/Paper";
-import { getBarbers } from "../../store/reducer/barber.reducer";
 import { BarberList } from "./BarberList";
 import { ServiceList } from "./ServiceList";
 import { IBarberResponse } from "../../service/barber";
 import { IBarberServices as IBarberServiceResponse } from "../../service/schedule/types";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
-import { Box } from "@mui/material";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { ThemeProvider } from "@mui/material/styles";
-import { themeCustom } from "../../materialStyling";
+import { ScheduleService } from "../../service/schedule";
+import { ISchedule } from "../../store/types/schedule";
+import "dayjs/locale/pt-br";
+
+dayjs.locale("pt-br");
 
 type Props = {
 	barbershopId: string;
@@ -27,6 +25,8 @@ interface IGetDataInComponents {
 	service?: IBarberServiceResponse;
 	date?: IDate;
 }
+
+const scheduleService = new ScheduleService();
 
 export function ScheduleComponent({ barbershopId }: Props) {
 	const user = useAppSelector((state) => state.user);
@@ -39,16 +39,9 @@ export function ScheduleComponent({ barbershopId }: Props) {
 		month: 0,
 		year: dayjs().year(),
 	});
-	const [calendarDays, setCalendarDays] = useState(dayjs());
-	const [formSchedule, setFormSchedule] = useState({
-		title: "",
-		start: "",
-		end: "",
-		withServicesBarberId: "",
-		withUserClientId: user.id,
-		withBarberId: "",
-		withBarbershopId: barbershopId,
-	});
+	async function setDataInDatabase(form: ISchedule) {
+		await scheduleService.createNewSchedule(form);
+	}
 
 	function getDataInComponents({
 		barber,
@@ -70,7 +63,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 			return toast.error("O Profissional não foi selecionado");
 		}
 
-		const dateFormated = new Date(
+		const dateStartFormated = new Date(
 			date.year,
 			date.month,
 			date.day,
@@ -78,14 +71,30 @@ export function ScheduleComponent({ barbershopId }: Props) {
 			date.minute
 		);
 
-		setIsCorrect(true);
-		setFormSchedule({
-			...formSchedule,
-			start: dayjs(dateFormated).toString(),
-			end: dayjs(dateFormated).toString(),
+		const dateEndFormated = new Date(
+			date.year,
+			date.month,
+			date.day,
+			date.hour,
+			date.minute + 20
+		);
+
+		const intialName = `${user.name.split(" ")[0]} ${
+			user.name.split(" ")[1]
+		}`;
+
+		// setIsCorrect(true);
+		const form: ISchedule = {
+			title: `${intialName} ${service.name}`,
+			start: dayjs(dateStartFormated).toDate(),
+			end: dayjs(dateEndFormated).toDate(),
 			withBarberId: barber.id,
 			withServicesBarberId: service.id,
-		});
+			withUserClientId: user.id,
+			withBarbershopId: barbershopId,
+		};
+
+		(async () => await setDataInDatabase(form))();
 	}
 
 	function setBarber(barber: IBarberResponse) {
@@ -119,22 +128,17 @@ export function ScheduleComponent({ barbershopId }: Props) {
 					{/* O Dia, mês e ano estão sendo resolvidos nesse componente MyCalendar*/}
 					<MyCalendar setCalendar={setCalendar} />
 
-					{/* Depois do dia, mês e ano tiver ok (não tem nenhuma validação para isso), a 
-						hora e o minuto estão sendo resolvidos nesse componente HourList */}
+					{/* Depois do dia, mês e ano tiver ok, a hora e o minuto estão sendo resolvidos nesse componente HourList */}
 					<HourList setDate={setDate} calendarData={calendar} />
 				</div>
 			</main>
 			<footer>
 				<BarberList barbershopId={barbershopId} setBarber={setBarber} />
 				<Button
-					disabled={isCorrect}
-					className="hover:bg-primary hover:text-dark"
+					className="mt-4 bg-success hover:bg-primary hover:text-dark"
 					onClick={() => getDataInComponents(schedule)}
 				>
 					Agendar
-				</Button>
-				<Button onClick={() => console.log(formSchedule)}>
-					consultar
 				</Button>
 			</footer>
 		</div>

@@ -5,6 +5,9 @@ import { themeCustom } from "../materialStyling";
 import { Box, Paper } from "@mui/material";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/pt-br";
+
+dayjs.locale("pt-br");
 
 type Props = {
 	setCalendar: (date: any) => void;

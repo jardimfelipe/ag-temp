@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { ContextComponentSchedule } from "../../store/context/schedules.context";
 import { ScheduleComponent } from "./ScheduleComponent";
 import { Suspense, useEffect } from "react";
 import { UserService } from "../../service/user/count-profile";
@@ -25,10 +24,8 @@ export function BaseSchedule({}: Props) {
 	}, []);
 
 	return (
-		<ContextComponentSchedule barbershopId={RouteParam.barbershopId!}>
-			<Suspense fallback={<Loading />}>
-				<ScheduleComponent barbershopId={RouteParam.barbershopId!} />
-			</Suspense>
-		</ContextComponentSchedule>
+		<Suspense fallback={<Loading />}>
+			<ScheduleComponent barbershopId={RouteParam.barbershopId!} />
+		</Suspense>
 	);
 }

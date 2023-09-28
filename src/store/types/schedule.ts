@@ -1,11 +1,8 @@
 export interface ISchedule {
-	id: string;
+	id?: string;
 	title: string;
 	start: Date;
 	end: Date;
-	description: string;
-	color: string;
-	recurring: boolean;
 	withServicesBarberId: string;
 	withUserClientId: string;
 	withBarberId: string;

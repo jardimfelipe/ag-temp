@@ -6,7 +6,21 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { serviceListSlice } from "./reducer/servicesList.reducer";
 import { scheduleSlice } from "./reducer/schedule.reducer";
+import {
+	createSerializableStateInvariantMiddleware,
+	isPlain,
+} from "@reduxjs/toolkit";
 import { barberSlice } from "./reducer/barber.reducer";
+
+// Augment middleware to consider Immutable.JS iterables serializable
+const isSerializable = (value: any) => value || isPlain(value);
+
+const getEntries = (value: any) => value;
+
+const serializableMiddleware = createSerializableStateInvariantMiddleware({
+	isSerializable,
+	getEntries,
+});
 
 const persistConfig = {
 	key: "root",
@@ -24,6 +38,7 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
 	reducer: persistedReducer,
+	middleware: [serializableMiddleware],
 });
 
 // TODO Revisar o Redux Persist e substituir pelo SWR e tornar utilizar o localStorage quando for realmente necessário

@@ -4,6 +4,7 @@ import { BarberService, IBarberResponse } from "../../service/barber";
 import { UserService } from "../../service/user/count-profile";
 import Button from "../../components/Button";
 import { twMerge } from "tailwind-merge";
+import { CircularProgress } from "@mui/material";
 
 type Props = {
 	barbershopId: string;
@@ -38,11 +39,14 @@ export function BarberList({ barbershopId, setBarber }: Props) {
 
 	useEffect(() => {
 		setInBarberList();
-		console.log(barberList);
 	}, []);
 
 	if (loading) {
-		return <div className="bg-darkness">Carregando...</div>;
+		return (
+			<div className="flex justify-center p-8 flex-1 bg-darkness-plus rounded-lg">
+				<CircularProgress color="inherit"></CircularProgress>
+			</div>
+		);
 	}
 
 	function copyUserId(barber: any) {
@@ -54,9 +58,6 @@ export function BarberList({ barbershopId, setBarber }: Props) {
 	}
 
 	function selectRandomBarber() {
-		console.log(
-			((Math.random() * 100) / barberListInMemory.length).toFixed(0)
-		);
 		return ((Math.random() * 100) / barberListInMemory.length).toFixed(0);
 	}
 
@@ -71,19 +72,23 @@ export function BarberList({ barbershopId, setBarber }: Props) {
 			</div>
 			{barberListInMemory.map((barber) => {
 				return (
-					<Button
-						className="flex p-4 flex-1 rounded-lg justify-between bg-darkness"
+					<span
+						className="flex p-2 flex-1 rounded-lg justify-between bg-darkness"
 						key={Math.random()}
-						onClick={() => selectBarber(barber)}
 					>
-						<span>{barber.name}</span>
-						<button
-							className="base-an hover:bg-primary hover:text-dark"
+						<Button
+							className="hover:bg-primary hover:text-dark"
+							onClick={() => selectBarber(barber)}
+						>
+							<span>{barber.name}</span>
+						</Button>
+						<Button
+							className="hover:bg-primary hover:text-dark"
 							onClick={() => copyUserId(barber)}
 						>
 							Copiar Id
-						</button>
-					</Button>
+						</Button>
+					</span>
 				);
 			})}
 		</div>
