@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/main.store";
 import dayjs from "dayjs";
 import { HourList } from "./HourList";
-import Button from "../../components/Button";
 import { IDate, MyCalendar } from "../../components/Calendar";
 import { BarberList } from "./BarberList";
 import { ServiceList } from "./ServiceList";
@@ -13,6 +12,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { ScheduleService } from "../../service/schedule";
 import { ISchedule } from "../../store/types/schedule";
 import "dayjs/locale/pt-br";
+import { useNavigate } from "react-router-dom";
+import { Alert, Box } from "@mui/material";
+import Button from "../../components/Button";
 
 dayjs.locale("pt-br");
 
@@ -29,8 +31,9 @@ interface IGetDataInComponents {
 const scheduleService = new ScheduleService();
 
 export function ScheduleComponent({ barbershopId }: Props) {
-	const user = useAppSelector((state) => state.user);
+	const navigate = useNavigate();
 	const [isCorrect, setIsCorrect] = useState(false);
+	const user = useAppSelector((state) => state.user);
 	const [schedule, setSchedule] = useState<IGetDataInComponents>(
 		{} as IGetDataInComponents
 	);
@@ -48,20 +51,21 @@ export function ScheduleComponent({ barbershopId }: Props) {
 		service,
 		date,
 	}: IGetDataInComponents) {
+		let isCorrectForm = false;
 		if (service == undefined) {
-			setIsCorrect(false);
+			isCorrectForm = false;
 			return toast.error("O serviço não foi selecionado");
 		}
 
 		if (date === undefined || (date.day === 0 && date.hour === 0)) {
-			setIsCorrect(false);
+			isCorrectForm = false;
 			return toast.error(
 				"A Data e hora não foram informados ou o horário informado já está ocupado"
 			);
 		}
 
 		if (barber == undefined) {
-			setIsCorrect(false);
+			isCorrectForm = false;
 			return toast.error("O Profissional não foi selecionado");
 		}
 
@@ -85,7 +89,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 			user.name.split(" ")[1]
 		}`;
 
-		// setIsCorrect(true);
+		isCorrectForm = true;
 		const form: ISchedule = {
 			title: `${intialName} ${service.name}`,
 			start: dayjs(dateStartFormated).toDate(),
@@ -97,6 +101,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 		};
 
 		(async () => await setDataInDatabase(form))();
+		setIsCorrect(isCorrectForm);
 	}
 
 	function setBarber(barber: IBarberResponse) {
@@ -111,8 +116,24 @@ export function ScheduleComponent({ barbershopId }: Props) {
 		setSchedule({ ...schedule, date });
 	}
 
+	function navigateHandle() {
+		navigate("/feed");
+	}
+
 	return (
 		<div className="ml-44 mr-16">
+			<Box>
+				{isCorrect ? (
+					<div className="flex flex-1 mt-2 p-4 justify-between items-center border-2 border-darkness bg-darkness-plus rounded-lg">
+						Agendamento feito com sucesso
+						<Button className="" onClick={navigateHandle}>
+							Voltar ao Feed
+						</Button>
+					</div>
+				) : (
+					false
+				)}
+			</Box>
 			{/* TODO torna-lo em um componente com cores e estilização do sistema */}
 			<ToastContainer theme="colored"></ToastContainer>
 			<header>
