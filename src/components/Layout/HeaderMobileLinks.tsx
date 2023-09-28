@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { routes } from "../../router";
 import { useAppDispatch, useAppSelector } from "../../store/main.store";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { List } from "@phosphor-icons/react";
 import { logon } from "../../store/reducer/user.reducer";
 
@@ -16,9 +16,25 @@ function MobileLink({ icon, to, title }: any) {
 
 export default function HeaderMobileLinks() {
 	const user = useAppSelector((state) => state.user);
+	const navigate = useNavigate();
 	const [handleMenu, setHandleMenu] = useState(false);
 	const intialName = `${user.name.split(" ")[0]} ${user.name.split(" ")[1]}`;
 	const dispatch = useAppDispatch();
+
+	function handleNavigate(path: string) {
+		navigate(path);
+	}
+
+	function transformDynamicPath(route: any) {
+		// verificar se é rota dinamica
+		return route.path.split(":")[1]
+			? // verificar se a rota é de userId
+			  route.path.split(":")[1] == "userId"
+				? // adicionando uma rota do header que pega id do redux
+				  route.path.split(":")[0] + user.id
+				: route.path
+			: route.path;
+	}
 
 	return (
 		<div>
@@ -39,6 +55,11 @@ export default function HeaderMobileLinks() {
 										<button
 											className="w-96 "
 											key={`${route.id}-${id}`}
+											onClick={() =>
+												handleNavigate(
+													transformDynamicPath(route)
+												)
+											}
 										>
 											<MobileLink
 												title={
@@ -46,20 +67,7 @@ export default function HeaderMobileLinks() {
 														? intialName
 														: route.id
 												}
-												to={
-													// verificar se é rota dinamica
-													route.path.split(":")[1]
-														? // verificar se a rota é de userId
-														  route.path.split(
-																":"
-														  )[1] == "userId"
-															? // adicionando uma rota do header que pega id do redux
-															  route.path.split(
-																	":"
-															  )[0] + user.id
-															: route.path
-														: route.path
-												}
+												to={transformDynamicPath(route)}
 												icon={route.icon!}
 											/>
 										</button>

@@ -2,7 +2,6 @@ import React, { ReactElement } from "react";
 import { Link, LinkProps } from "react-router-dom";
 
 type Props = LinkProps & {
-	title: string;
 	icon: ReactElement;
 };
 

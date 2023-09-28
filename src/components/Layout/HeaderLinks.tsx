@@ -5,10 +5,12 @@ import { routes } from "../../router";
 import Button from "../Button";
 import { useAppDispatch, useAppSelector } from "../../store/main.store";
 import { logon } from "../../store/reducer/user.reducer";
+import { useNavigate } from "react-router-dom";
 export function HeaderLinks() {
 	const [handleMenu, setHandleMenu] = useState(false);
 	const user = useAppSelector((state) => state.user);
-	const intialName = `${user.name.split(" ")[0]} ${user.name.split(" ")[1]}`;
+	// const intialName = `${user.name.split(" ")[0]} ${user.name.split(" ")[1]}`;
+	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
 	if (!handleMenu) {
@@ -22,6 +24,21 @@ export function HeaderLinks() {
 				</button>
 			</div>
 		);
+	}
+
+	function handleNavigate(path: string) {
+		navigate(path);
+	}
+
+	function transformDynamicPath(route: any) {
+		// verificar se é rota dinamica
+		return route.path.split(":")[1]
+			? // verificar se a rota é de userId
+			  route.path.split(":")[1] == "userId"
+				? // adicionando uma rota do header que pega id do redux
+				  route.path.split(":")[0] + user.id
+				: route.path
+			: route.path;
 	}
 
 	return (
@@ -46,22 +63,14 @@ export function HeaderLinks() {
 						{!route.hidden ? (
 							<Button
 								className="flex w-full my-2 dark:bg-graydark hover:bg-primary hover:text-button"
+								onClick={() =>
+									handleNavigate(transformDynamicPath(route))
+								}
 								key={`${route.id}-${id}`}
 							>
 								<LayoutLink
 									title={route.id}
-									to={
-										// verificar se é rota dinamica
-										route.path.split(":")[1]
-											? // verificar se a rota é de userId
-											  route.path.split(":")[1] ==
-											  "userId"
-												? // adicionando uma rota do header que pega id do redux
-												  route.path.split(":")[0] +
-												  user.id
-												: route.path
-											: route.path
-									}
+									to={transformDynamicPath(route)}
 									icon={route.icon!}
 								/>
 							</Button>
