@@ -31,8 +31,8 @@ export const login = createAsyncThunk(
 	"login",
 	async (intialState: IUserRequestData) => {
 		const response = await service.Login(intialState);
-		//@ts-ignore
-		return { userData: response.user, token: response.token };
+
+		return { userData: response!.user, token: response!.token };
 	}
 );
 
@@ -75,7 +75,8 @@ export const userSlice = createSlice({
 			state.age = action.payload.userData.age;
 			state.cpf = action.payload.userData.cpf;
 			state.id = action.payload.userData.id;
-			state.isLogged = action.payload.userData.password != null ?? false;
+			state.isLogged =
+				(action.payload.userData as any).password != null ?? false;
 			state.token = action.payload.token;
 			localStorage.setItem("Authorization", action.payload.token);
 		});

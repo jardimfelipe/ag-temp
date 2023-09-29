@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useSelector, TypedUseSelectorHook, useDispatch } from "react-redux";
 import { userSlice } from "./reducer/user.reducer";
 import { combineReducers } from "redux";
-import { persistReducer } from "redux-persist";
+import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { serviceListSlice } from "./reducer/servicesList.reducer";
 import { scheduleSlice } from "./reducer/schedule.reducer";
@@ -11,20 +11,21 @@ import {
 	isPlain,
 } from "@reduxjs/toolkit";
 import { barberSlice } from "./reducer/barber.reducer";
+import { barbershopsSlice } from "./reducer/barbershopList.reducer";
 
 // Augment middleware to consider Immutable.JS iterables serializable
-const isSerializable = (value: any) => value || isPlain(value);
+// const isSerializable = (value: any) => value || isPlain(value);
 
 const getEntries = (value: any) => value;
 
 const serializableMiddleware = createSerializableStateInvariantMiddleware({
-	isSerializable,
+	// isSerializable,
 	getEntries,
 });
 
 const persistConfig = {
 	key: "root",
-	storage: storage,
+	storage,
 };
 
 const reducers = combineReducers({
@@ -32,13 +33,17 @@ const reducers = combineReducers({
 	serviceList: serviceListSlice.reducer,
 	schedule: scheduleSlice.reducer,
 	barber: barberSlice.reducer,
+	barbershops: barbershopsSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
 	reducer: persistedReducer,
-	middleware: [serializableMiddleware],
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: false,
+		}),
 });
 
 // TODO Revisar o Redux Persist e substituir pelo SWR e tornar utilizar o localStorage quando for realmente necessário

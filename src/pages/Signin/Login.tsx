@@ -27,6 +27,7 @@ export default function Login() {
 	return (
 		<section className="flex justify-center items-center h-full">
 			<div className="flex flex-col items-center p-5 rounded-lg border-2 border-graydark bg-darkness">
+				{/* TODO adicionar um toast */}
 				<span className="mb-10 text-base md:text-lg dark:text-light">
 					Login
 				</span>

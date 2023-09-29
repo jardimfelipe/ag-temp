@@ -1,4 +1,5 @@
 // import { UserTypesMutations } from "../../store/user/user-types";
+import { IUser } from "../../store/reducer/user.reducer";
 import { api } from "../api";
 
 interface IUserLogin {
@@ -38,9 +39,12 @@ export class UserService {
 				.then((value: any) => value)
 				.catch((err: string) => console.log(err));
 
-			return { user: user.data.user, token: user.data.token };
+			return {
+				user: user.data.user as IUser,
+				token: user.data.token as string,
+			};
 		} catch (err) {
-			return new Error(`Algo deu muito errado: ${err}`);
+			console.log(err);
 		}
 	}
 
