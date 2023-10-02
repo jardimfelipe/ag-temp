@@ -30,7 +30,7 @@ export function Layout() {
 	return (
 		<div className="flex">
 			{user.isLogged ? (
-				<div className="fixed">
+				<div className="fixed z-10">
 					<Header></Header>
 				</div>
 			) : null}
