@@ -70,27 +70,29 @@ export function BarberList({ barbershopId, setBarber }: Props) {
 				<span>Selecionar um Profissional para te atender</span>
 				<div></div>
 			</div>
-			{barberListInMemory.map((barber) => {
-				return (
-					<span
-						className="flex p-2 flex-1 rounded-lg justify-between bg-darkness"
-						key={Math.random()}
-					>
-						<Button
-							className="hover:bg-primary hover:text-dark"
-							onClick={() => selectBarber(barber)}
+			<span className="first:mt-0">
+				{barberListInMemory.map((barber) => {
+					return (
+						<span
+							className="flex p-2 flex-1 rounded-lg justify-between bg-darkness mt-2"
+							key={Math.random()}
 						>
-							<span>{barber.name}</span>
-						</Button>
-						<Button
-							className="hover:bg-primary hover:text-dark"
-							onClick={() => copyUserId(barber)}
-						>
-							Copiar Id
-						</Button>
-					</span>
-				);
-			})}
+							<Button
+								className="hover:bg-primary hover:text-dark"
+								onClick={() => selectBarber(barber)}
+							>
+								<span>{barber.name}</span>
+							</Button>
+							<Button
+								className="hover:bg-primary hover:text-dark"
+								onClick={() => copyUserId(barber)}
+							>
+								Copiar Id
+							</Button>
+						</span>
+					);
+				})}
+			</span>
 		</div>
 	);
 }
