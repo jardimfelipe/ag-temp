@@ -3,13 +3,23 @@ import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { Feeds } from "./pages/Feeds/Basic";
 import { BarbershopProfile } from "./pages/BarbershopProfile/Base";
-import { House, User } from "@phosphor-icons/react";
+import { House, Storefront, User } from "@phosphor-icons/react";
 import Login from "./pages/Signin/Login";
 import ErrorPage from "./pages/Error";
 import { PerfilBase } from "./pages/Perfil/Base";
 import { BaseSchedule } from "./pages/Schedules/Base";
+import { useAppSelector } from "./store/main.store";
 
-export const routes = [
+export interface IRoutes {
+	icon?: any;
+	id: string;
+	path: string;
+	Component: any;
+	hidden?: boolean;
+}
+
+// const user = useAppSelector((store) => store.user);
+export const routes: IRoutes[] = [
 	{
 		icon: <House size={28} />,
 		id: "Feeds",
@@ -17,10 +27,11 @@ export const routes = [
 		Component: Feeds,
 	},
 	{
-		icon: <User size={28} />,
+		icon: <Storefront size={28} />,
 		id: "Perfil Barbearia",
-		path: "/barber/:barbershopId",
+		path: "/barbershop/:barbershopId",
 		Component: BarbershopProfile,
+		hidden: false,
 	},
 	{
 		id: "Login",

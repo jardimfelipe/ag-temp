@@ -5,16 +5,17 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 type Props = {
 	setService: (date: IBarberServices) => void;
+	barbershopId: string;
 };
 
 const serviceListService = new ServiceBarbersService();
 
-export function ServiceList({ setService }: Props) {
+export function ServiceList({ setService, barbershopId }: Props) {
 	const [serviceList, setServiceList] = useState<IBarberServices[]>([]);
 	const [serviceId, setServiceId] = useState("");
 	const [loading, setLoading] = useState<Boolean>(true);
 	async function getServices() {
-		setServiceList(await serviceListService.getAllService());
+		setServiceList(await serviceListService.getAllService(barbershopId));
 		setLoading(false);
 	}
 

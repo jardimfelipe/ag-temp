@@ -21,7 +21,7 @@ export function Feeds() {
 	useEffect(() => {
 		(async () => {
 			setBarbershopsList(
-				await barbershopService.GetBarbershops(
+				await barbershopService.GetBarbershopsInLocation(
 					"-20.5223863",
 					"-47.3653937"
 				)

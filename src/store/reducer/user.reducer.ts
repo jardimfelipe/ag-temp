@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { UserService } from "../../service/user/count-profile";
+import { api } from "../../service/api";
 
 export interface IUser {
 	id: string;
@@ -11,6 +12,7 @@ export interface IUser {
 	cpf: string;
 	privilege: number;
 	created_at: Date;
+	manager: boolean | any;
 }
 
 interface IUserRequestData {
@@ -32,7 +34,10 @@ export const login = createAsyncThunk(
 	async (intialState: IUserRequestData) => {
 		const response = await service.Login(intialState);
 
-		return { userData: response!.user, token: response!.token };
+		return {
+			userData: response!.user,
+			token: response!.token,
+		};
 	}
 );
 
@@ -54,6 +59,7 @@ export const userSlice = createSlice({
 		age: 0,
 		cpf: "",
 		token: "",
+		manager: false,
 	},
 
 	reducers: {
@@ -66,6 +72,7 @@ export const userSlice = createSlice({
 			state.cpf = "";
 			state.age = 0;
 			state.token = "";
+			state.manager = false;
 		},
 	},
 	extraReducers(builder) {
@@ -75,10 +82,18 @@ export const userSlice = createSlice({
 			state.age = action.payload.userData.age;
 			state.cpf = action.payload.userData.cpf;
 			state.id = action.payload.userData.id;
+			state.manager = action.payload.userData.manager ?? false;
 			state.isLogged =
 				(action.payload.userData as any).password != null ?? false;
 			state.token = action.payload.token;
+			console.log(action.payload.userData.manager);
 			localStorage.setItem("Authorization", action.payload.token);
+			localStorage.setItem(
+				"IsManager",
+				JSON.stringify(action.payload.userData.manager) === null
+					? JSON.stringify(action.payload.userData.manager)
+					: "false"
+			);
 		});
 
 		builder.addCase(alterUser.fulfilled, (state, action) => {

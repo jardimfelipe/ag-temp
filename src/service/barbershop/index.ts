@@ -3,7 +3,7 @@ import { api } from "../api";
 import { IBarbershopsListByFeed } from "../../store/types/barbershop";
 
 export class BarbershopService {
-	async GetBarbershops(
+	async GetBarbershopsInLocation(
 		latitude: string,
 		longitude: string
 	): Promise<IBarbershopsListByFeed[]> {
@@ -15,5 +15,13 @@ export class BarbershopService {
 			.catch((err) => toast.error(err));
 
 		return barbershops;
+	}
+
+	async GetSpecificBarbershop(barbershopId: string) {
+		const barbershop = api
+			.get(`/barbershop/${barbershopId}`)
+			.catch((err) => toast.error(err));
+
+		return barbershop;
 	}
 }

@@ -38,6 +38,7 @@ export function BarbershopProfile({}: Props) {
 
 	// Get profile info
 	const barberService = new BarberService();
+
 	useEffect(() => {
 		barberService
 			.getBarber(RouteParam.barbershopId || "")
@@ -72,17 +73,17 @@ export function BarbershopProfile({}: Props) {
 	const posts = [
 		{
 			id: 1,
-			image: "https://images.ctfassets.net/hrltx12pl8hq/3Z1N8LpxtXNQhBD5EnIg8X/975e2497dc598bb64fde390592ae1133/spring-images-min.jpg",
+			url: "https://images.ctfassets.net/hrltx12pl8hq/3Z1N8LpxtXNQhBD5EnIg8X/975e2497dc598bb64fde390592ae1133/spring-images-min.jpg",
 			description: "Hello World",
 		},
 		{
 			id: 2,
-			image: "https://media.istockphoto.com/id/517188688/photo/mountain-landscape.jpg?s=612x612&w=0&k=20&c=A63koPKaCyIwQWOTFBRWXj_PwCrR4cEoOw2S9Q7yVl8=",
+			url: "https://media.istockphoto.com/id/517188688/photo/mountain-landscape.jpg?s=612x612&w=0&k=20&c=A63koPKaCyIwQWOTFBRWXj_PwCrR4cEoOw2S9Q7yVl8=",
 			description: "Green",
 		},
 		{
 			id: 3,
-			image: "https://images.ctfassets.net/hrltx12pl8hq/3Z1N8LpxtXNQhBD5EnIg8X/975e2497dc598bb64fde390592ae1133/spring-images-min.jpg",
+			url: "https://images.ctfassets.net/hrltx12pl8hq/3Z1N8LpxtXNQhBD5EnIg8X/975e2497dc598bb64fde390592ae1133/spring-images-min.jpg",
 			description: "Hello World 2",
 		},
 	];
@@ -159,7 +160,7 @@ export function BarbershopProfile({}: Props) {
 			</div>
 			<div className="flex flex-wrap gap-1">
 				{posts.map((post) => (
-					<img className="max-w-xs" key={post.id} src={post.image} />
+					<img className="max-w-xs" key={post.id} src={post.url} />
 				))}
 			</div>
 			{/* Modal create post */}

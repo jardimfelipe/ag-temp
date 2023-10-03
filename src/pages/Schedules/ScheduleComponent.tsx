@@ -139,7 +139,10 @@ export function ScheduleComponent({ barbershopId }: Props) {
 			<header>
 				<div>
 					<ul className="flex mt-4">
-						<ServiceList setService={setService} />
+						<ServiceList
+							setService={setService}
+							barbershopId={barbershopId}
+						/>
 					</ul>
 				</div>
 				<aside>

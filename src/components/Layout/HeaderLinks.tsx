@@ -30,8 +30,40 @@ export function HeaderLinks() {
 		navigate(path);
 	}
 
+	function hiddenLinkByBarbershop(route: any) {
+		const isManager = user.manager;
+		const isBarbershoLink =
+			route.path.split(":")[1] == "barbershopId" &&
+			route.path.split(":")[0] == "/barbershop/";
+		if (isBarbershoLink && isManager === false) {
+			return true;
+		}
+
+		return route.hidden;
+	}
+
 	function transformDynamicPath(route: any) {
+		const newRoute = route;
+		if (newRoute.path.split(":")[1]) {
+			if (newRoute.path.split(":")[1] == "userId") {
+				return newRoute.path.split(":")[0] + user.id;
+			} else {
+				if (newRoute.path.split(":")[1] == "barbershopId") {
+					if (user.manager !== false) {
+						return (
+							newRoute.path.split(":")[0] +
+							(user.manager as any).barbershopId
+						);
+					} else {
+					}
+				}
+				return newRoute.path;
+			}
+		}
 		// verificar se é rota dinamica
+
+		// return newRoute;
+
 		return route.path.split(":")[1]
 			? // verificar se a rota é de userId
 			  route.path.split(":")[1] == "userId"
@@ -60,7 +92,7 @@ export function HeaderLinks() {
 			<div className="flex p-2 flex-col mt-16 rounded-lg">
 				{routes.map((route, id) => (
 					<span key={`key-${id}`}>
-						{!route.hidden ? (
+						{!hiddenLinkByBarbershop(route) ? (
 							<Button
 								className="flex w-full my-2 dark:bg-graydark hover:bg-primary hover:text-button"
 								onClick={() =>
