@@ -27,7 +27,9 @@ export function Feeds() {
 				)
 			);
 
-			setloading(false);
+			setTimeout(() => {
+				setloading(false);
+			}, 1000);
 		})();
 	}, []);
 
@@ -77,7 +79,7 @@ export function Feeds() {
 							{/* Imagem do feed */}
 							<figure>
 								<img
-									src={establishment.barbershop.images[0].url}
+									src={establishment.barbershop.images[1].url}
 								/>
 							</figure>
 						</div>

@@ -47,7 +47,6 @@ export function ServiceList({ setService, barbershopId }: Props) {
 				return (
 					<button
 						key={`service-${id}`}
-						className="text-lef"
 						onClick={() => handleService(service, service.id)}
 					>
 						<li

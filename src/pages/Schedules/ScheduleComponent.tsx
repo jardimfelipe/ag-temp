@@ -23,7 +23,9 @@ type Props = {
 };
 
 interface IGetDataInComponents {
-	barber?: IBarberResponse;
+	barber?: IBarberResponse & {
+		isAllOccupied?: boolean;
+	};
 	service?: IBarberServiceResponse;
 	date?: IDate;
 }
@@ -42,6 +44,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 		month: 0,
 		year: dayjs().year(),
 	});
+
 	async function setDataInDatabase(form: ISchedule) {
 		await scheduleService.createNewSchedule(form);
 	}
@@ -113,6 +116,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 	}
 
 	function setDate(date: IDate) {
+		setCalendar({ ...calendar, ...(date as any) });
 		setSchedule({ ...schedule, date });
 	}
 
@@ -121,14 +125,12 @@ export function ScheduleComponent({ barbershopId }: Props) {
 	}
 
 	return (
-		<div className="ml-44 mr-16">
+		<div className="md:ml-44 md:mr-16">
 			<Box>
 				{isCorrect ? (
 					<div className="flex flex-1 mt-2 p-4 justify-between items-center border-2 border-darkness bg-darkness-plus rounded-lg">
 						Agendamento feito com sucesso
-						<Button className="" onClick={navigateHandle}>
-							Voltar ao Feed
-						</Button>
+						<Button onClick={navigateHandle}>Voltar ao Feed</Button>
 					</div>
 				) : (
 					false
@@ -150,7 +152,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 				</aside>
 			</header>
 			<main className="mt-4 flex justify-center items-center">
-				<div className="flex justify-center gap-8 items-center">
+				<div className="flex justify-center gap-2 md:gap-8 items-center">
 					{/* O Dia, mês e ano estão sendo resolvidos nesse componente MyCalendar*/}
 					<MyCalendar setCalendar={setCalendar} />
 
@@ -159,7 +161,11 @@ export function ScheduleComponent({ barbershopId }: Props) {
 				</div>
 			</main>
 			<footer>
-				<BarberList barbershopId={barbershopId} setBarber={setBarber} />
+				<BarberList
+					barbershopId={barbershopId}
+					setBarber={setBarber}
+					dateScheduled={calendar}
+				/>
 				<Button
 					className="mt-4 bg-success hover:bg-primary hover:text-dark"
 					onClick={() => getDataInComponents(schedule)}

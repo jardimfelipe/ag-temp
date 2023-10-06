@@ -1,6 +1,9 @@
 import { toast } from "react-toastify";
 import { api } from "../api";
-import { IBarbershopsListByFeed } from "../../store/types/barbershop";
+import {
+	IBarbershop,
+	IBarbershopsListByFeed,
+} from "../../store/types/barbershop";
 
 export class BarbershopService {
 	async GetBarbershopsInLocation(
@@ -18,10 +21,37 @@ export class BarbershopService {
 	}
 
 	async GetSpecificBarbershop(barbershopId: string) {
-		const barbershop = api
-			.get(`/barbershop/${barbershopId}`)
+		const barbershop = await api
+			.get<IBarbershop>(`/barbershop/${barbershopId}`)
 			.catch((err) => toast.error(err));
 
 		return barbershop;
+	}
+
+	async createNewPost(barbershopId: string, file: any) {
+		const message = await api
+			.post(`/images/barbershop/${barbershopId}`, {
+				file,
+			})
+			.catch((err) => toast.error(err));
+
+		return message;
+	}
+
+	async alterBarbershopAvatar(barbershopId: string, body: any) {
+		const formData = new FormData();
+		formData.append("fileimage", body.newImage);
+
+		const barbershop = await api
+			.patch(`/barbershop/${barbershopId}`, formData, {
+				headers: {
+					"Content-Type": `multipart/form-data, boundary=${
+						(formData as any)._boundary
+					}`,
+				},
+			})
+			.then((barbershop) => barbershop.data);
+
+		return barbershop.data;
 	}
 }

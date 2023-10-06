@@ -1,9 +1,9 @@
 export interface IBarbershopsListByFeed {
-	barbershop: Barbershop;
+	barbershop: IBarbershop;
 	distanceKm: number;
 }
 
-export interface Barbershop {
+export interface IBarbershop {
 	id: string;
 	name: string;
 	address: string;

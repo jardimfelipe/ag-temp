@@ -1,28 +1,27 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useAppSelector } from "../../store/main.store";
+// import { useAppSelector } from "../../store/main.store";
 import { BarberService, IBarberResponse } from "../../service/barber";
 import { UserService } from "../../service/user/count-profile";
 import Button from "../../components/Button";
-import { twMerge } from "tailwind-merge";
+// import { twMerge } from "tailwind-merge";
 import { CircularProgress } from "@mui/material";
+import { ScheduleService } from "../../service/schedule";
+import dayjs from "dayjs";
 
 type Props = {
 	barbershopId: string;
 	setBarber: (data: IBarberResponse) => void;
+	dateScheduled: any;
 };
-
-interface IBarberList {
-	id: string;
-	name: string;
-	cpf: string;
-}
 
 const barberService = new BarberService();
 const userService = new UserService();
+const scheduleService = new ScheduleService();
 
-export function BarberList({ barbershopId, setBarber }: Props) {
+export function BarberList({ barbershopId, setBarber, dateScheduled }: Props) {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [barberList, setBarberList] = useState<IBarberResponse[]>([]);
+	const [isScheduled, setIsScheduled] = useState([]);
 	const barberListInMemory = useMemo(() => barberList, [barberList]);
 
 	async function setInBarberList() {
@@ -37,9 +36,53 @@ export function BarberList({ barbershopId, setBarber }: Props) {
 		setLoading(false);
 	}
 
+	// Para verificar se determinado Barber já está ocupado
+	function filterBarberPerDateScheduled(date: any, thisSchedule: any) {
+		// Organiza os dados para serem analizados
+		const simpleSchedule = thisSchedule.map((schedule: any) => {
+			return {
+				start: {
+					year: dayjs((schedule as any).start).year(),
+					month: dayjs((schedule as any).start).month(),
+					day: dayjs((schedule as any).start).date(),
+					hour: dayjs((schedule as any).start).hour(),
+					minute: dayjs((schedule as any).start).minute(),
+				},
+				withBarberId: (schedule as any).withBarberId,
+			};
+		});
+		let isTrue: any[] = [];
+		let isAllTrue;
+
+		console.log(simpleSchedule);
+		simpleSchedule.filter((dateSchedule: any, i: number) => {
+			const dateScheduleKeys = Object.keys(dateSchedule.start);
+			console.log(dateScheduleKeys);
+
+			for (let j: number = 0; j <= dateScheduleKeys.length; j++) {
+				if (
+					dateSchedule[dateScheduleKeys[j]] ===
+					date[dateScheduleKeys[j]]
+				) {
+					return (isTrue[j] = true);
+				}
+			}
+		});
+
+		// console.log(test);
+	}
+
 	useEffect(() => {
+		scheduleService.getSchedule(barbershopId).then((response) => {
+			filterBarberPerDateScheduled(dateScheduled, response);
+			setIsScheduled(response);
+		});
 		setInBarberList();
 	}, []);
+
+	useEffect(() => {
+		filterBarberPerDateScheduled(dateScheduled, isScheduled);
+	}, [dateScheduled]);
 
 	if (loading) {
 		return (
@@ -50,6 +93,7 @@ export function BarberList({ barbershopId, setBarber }: Props) {
 	}
 
 	function copyUserId(barber: any) {
+		console.log(isScheduled, dateScheduled);
 		navigator.clipboard.writeText(barber.id);
 	}
 
@@ -57,18 +101,18 @@ export function BarberList({ barbershopId, setBarber }: Props) {
 		setBarber(barber);
 	}
 
-	function selectRandomBarber() {
-		return ((Math.random() * 100) / barberListInMemory.length).toFixed(0);
-	}
+	// function selectRandomBarber() {
+	// 	return ((Math.random() * 100) / barberListInMemory.length).toFixed(0);
+	// }
 
 	return (
 		<div className="flex flex-col p-4 pt-1 mt-4 rounded-lg bg-darkness-plus">
-			<div className="flex justify-between items-center">
-				<Button className="w-44 my-2" onClick={selectRandomBarber}>
+			<div className="flex justify-center py-4 items-center text-lg font-bold text-secondary">
+				{/* <Button className="w-44 my-2" onClick={selectRandomBarber}>
 					Selecionar Aleatoriamente
-				</Button>
+				</Button> */}
 				<span>Selecionar um Profissional para te atender</span>
-				<div></div>
+				{/* <div></div> */}
 			</div>
 			<span className="first:mt-0">
 				{barberListInMemory.map((barber) => {
@@ -80,6 +124,7 @@ export function BarberList({ barbershopId, setBarber }: Props) {
 							<Button
 								className="hover:bg-primary hover:text-dark"
 								onClick={() => selectBarber(barber)}
+								// disabled
 							>
 								<span>{barber.name}</span>
 							</Button>

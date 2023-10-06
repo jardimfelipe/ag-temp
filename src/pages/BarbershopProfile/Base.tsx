@@ -1,21 +1,27 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { X, User, ImageSquare } from "@phosphor-icons/react";
-import { BarberService } from "../../service/barber";
+// import { BarberService } from "../../service/barber";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
+import { BarbershopService } from "../../service/barbershop";
+import { CircularProgress } from "@mui/material";
+import { ImageBarbershopService } from "../../service/imageService/barbershop";
 
 type Props = {};
-
+const barbershopService = new BarbershopService();
+const imageBarbershopService = new ImageBarbershopService();
 export function BarbershopProfile({}: Props) {
 	const RouteParam = useParams();
-	const [barber, setBarber] = useState(null);
+	const [barber, setBarber] = useState({});
+	const [loading, setLoading] = useState<boolean>(true);
 	const fileInputProfileRef = useRef<HTMLInputElement | null>(null);
-	const [currentImage, setCurrentImage] = useState<string | null>(null);
-	const [selectedImage, setSelectedImage] = useState<string | null>(null);
+	const [currentImage, setCurrentImage] = useState<string>("");
+	const [selectedImage, setSelectedImage] = useState<string>("");
+	const [posts, setPosts] = useState([]);
 
 	// Profile
-	const handleImageChangeProfile = (
+	const handleImageChangeProfile = async (
 		e: React.ChangeEvent<HTMLInputElement>
 	) => {
 		const file = e.target.files?.[0];
@@ -25,25 +31,37 @@ export function BarbershopProfile({}: Props) {
 				setSelectedImage(reader.result as string);
 			};
 			reader.readAsDataURL(file);
-			setCurrentImage(URL.createObjectURL(file));
+			barbershopService
+				.alterBarbershopAvatar(RouteParam.barbershopId ?? "", {
+					newImage: file,
+				})
+				.then((image) => setCurrentImage(image.data.avatar_url));
+			// setCurrentImage(URL.createObjectURL(file));
 		}
 	};
+
 	const handleRemoveProfileImage = () => {
-		setCurrentImage(null);
-		setSelectedImage(null);
+		setCurrentImage("");
+		setSelectedImage("");
 		if (fileInputProfileRef.current) {
 			fileInputProfileRef.current.value = "";
 		}
 	};
 
 	// Get profile info
-	const barberService = new BarberService();
 
 	useEffect(() => {
-		barberService
-			.getBarber(RouteParam.barbershopId || "")
+		barbershopService
+			.GetSpecificBarbershop(RouteParam.barbershopId ?? "")
 			.then((barber) => {
-				setBarber(barber);
+				setBarber((barber as any).data);
+				setPosts((barber as any).data.images);
+				setCurrentImage((barber as any).data.avatar_url);
+
+				// console.log(barber.data);
+				setTimeout(() => {
+					setLoading(false);
+				}, 1000);
 			});
 	}, []);
 
@@ -57,9 +75,13 @@ export function BarbershopProfile({}: Props) {
 		if (file) {
 			const reader = new FileReader();
 			reader.readAsDataURL(file);
-			setPost((post) => ({ ...post, image: URL.createObjectURL(file) }));
+			setPost((post) => ({
+				...post,
+				image: URL.createObjectURL(file),
+			}));
 		}
 	};
+
 	const handleCancelPost = () => {
 		setPost({ description: "", image: "" });
 		if (fileInputPostRef.current) {
@@ -70,23 +92,35 @@ export function BarbershopProfile({}: Props) {
 		handleCancelPost();
 		setModalCreatePost(false);
 	};
-	const posts = [
-		{
-			id: 1,
-			url: "https://images.ctfassets.net/hrltx12pl8hq/3Z1N8LpxtXNQhBD5EnIg8X/975e2497dc598bb64fde390592ae1133/spring-images-min.jpg",
-			description: "Hello World",
-		},
-		{
-			id: 2,
-			url: "https://media.istockphoto.com/id/517188688/photo/mountain-landscape.jpg?s=612x612&w=0&k=20&c=A63koPKaCyIwQWOTFBRWXj_PwCrR4cEoOw2S9Q7yVl8=",
-			description: "Green",
-		},
-		{
-			id: 3,
-			url: "https://images.ctfassets.net/hrltx12pl8hq/3Z1N8LpxtXNQhBD5EnIg8X/975e2497dc598bb64fde390592ae1133/spring-images-min.jpg",
-			description: "Hello World 2",
-		},
-	];
+
+	function handleImageInPost(image: any) {
+		imageBarbershopService.postImage((barber as any).id, image);
+	}
+	// const postsMock = [
+	// 	{
+	// 		id: 1,
+	// 		url: "https://images.ctfassets.net/hrltx12pl8hq/3Z1N8LpxtXNQhBD5EnIg8X/975e2497dc598bb64fde390592ae1133/spring-images-min.jpg",
+	// 		description: "Hello World",
+	// 	},
+	// 	{
+	// 		id: 2,
+	// 		url: "https://media.istockphoto.com/id/517188688/photo/mountain-landscape.jpg?s=612x612&w=0&k=20&c=A63koPKaCyIwQWOTFBRWXj_PwCrR4cEoOw2S9Q7yVl8=",
+	// 		description: "Green",
+	// 	},
+	// 	{
+	// 		id: 3,
+	// 		url: "https://images.ctfassets.net/hrltx12pl8hq/3Z1N8LpxtXNQhBD5EnIg8X/975e2497dc598bb64fde390592ae1133/spring-images-min.jpg",
+	// 		description: "Hello World 2",
+	// 	},
+	// ];
+
+	if (loading) {
+		return (
+			<div className="flex justify-center mt-4 p-8 flex-1 bg-darkness-plus rounded-lg">
+				<CircularProgress color="inherit"></CircularProgress>
+			</div>
+		);
+	}
 
 	return (
 		<div className="max-w-5xl mx-auto px-5 py-10">
@@ -135,21 +169,24 @@ export function BarbershopProfile({}: Props) {
 					</div>
 					<div className="flex flex-col gap-5">
 						<div className="flex items-center gap-5">
-							<h1 className="text-xl">
-								{(barber as any)?.name || "Anônimo"}
+							<h1 className="text-2xl font-bold">
+								{(barber as any).name}
 							</h1>
 							<a
 								className="dark:bg-graydark px-4 py-2 rounded-lg cursor-pointer flex justify-center"
-								href="https://api.whatsapp.com/send?phone=16982420186&text=Olá%20from%20WhatsApp!"
+								href="https://api.whatsapp.com/send?phone=16982420186&text=Olá%20"
 								target="_blank"
 							>
 								Enviar mensagem
 							</a>
-							<Button>Seguir</Button>
+							{/* <Button>Seguir</Button> */}
 						</div>
-						<div className="flex items-center gap-7">
-							<p>12 publicações</p>
-							<p>200 seguidores</p>
+						<div className="flex items-center gap-7 text-secondary">
+							<p>{posts.length} publicações</p>
+							<p>
+								{(barber as any).clientFollowBarbershopsId ?? 0}{" "}
+								seguidores
+							</p>
 						</div>
 					</div>
 				</div>
@@ -158,9 +195,13 @@ export function BarbershopProfile({}: Props) {
 			<div className="text-right m-3">
 				<Button onClick={() => setModalCreatePost(true)}>Novo</Button>
 			</div>
-			<div className="flex flex-wrap gap-1">
+			<div className="flex flex-wrap gap-2 justify-center">
 				{posts.map((post) => (
-					<img className="max-w-xs" key={post.id} src={post.url} />
+					<img
+						className="max-w-xss rounded-lg"
+						key={(post as any).id}
+						src={(post as any).url}
+					/>
 				))}
 			</div>
 			{/* Modal create post */}
@@ -217,7 +258,11 @@ export function BarbershopProfile({}: Props) {
 						</div>
 						<div className="flex gap-2 justify-end p-4">
 							<Button onClick={onCloseModalPost}>Cancelar</Button>
-							<Button>Criar postagem</Button>
+							<Button
+								onClick={() => handleImageInPost(post.image)}
+							>
+								Criar postagem
+							</Button>
 						</div>
 					</div>
 				</div>

@@ -34,9 +34,9 @@ export function HourList({ setDate, calendarData }: Props) {
 		[] as IScheduleHour[]
 	);
 
-	const [isScheduled, setIsScheduled] = useState<IScheduleHour>(
-		{} as IScheduleHour
-	);
+	// const [isScheduled, setIsScheduled] = useState<IScheduleHour>(
+	// 	{} as IScheduleHour
+	// );
 
 	useEffect(() => {
 		(async () => {
@@ -51,7 +51,7 @@ export function HourList({ setDate, calendarData }: Props) {
 		})();
 	}, []);
 
-	//
+	// Verificar se os dados são iguais
 	function isScheduledDate(
 		schedule: IScheduleHour[],
 		data: IScheduleHour
@@ -69,6 +69,7 @@ export function HourList({ setDate, calendarData }: Props) {
 		return isEqual;
 	}
 
+	// Aplicar se os dados são iguais ou não
 	const handleDateChange = (date: Dayjs | null) => {
 		setSelectedDate(date);
 		const IsScheduled = { hours: date?.hour(), minutes: date?.minute() };
