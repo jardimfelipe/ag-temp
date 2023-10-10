@@ -7,6 +7,7 @@ import Button from "../../components/Button";
 import { CircularProgress } from "@mui/material";
 import { ScheduleService } from "../../service/schedule";
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 
 type Props = {
 	barbershopId: string;
@@ -14,31 +15,64 @@ type Props = {
 	dateScheduled: any;
 };
 
+interface ScheduleParameters {
+	year: number;
+	month: number;
+	day: number;
+	hour: number;
+	minute: number;
+}
+
+interface ScheduleItem {
+	start: ScheduleParameters;
+	withBarberId: string; // Substitua 'string' pelo tipo real do ID do barbeiro
+}
+
 const barberService = new BarberService();
 const userService = new UserService();
 const scheduleService = new ScheduleService();
 
 export function BarberList({ barbershopId, setBarber, dateScheduled }: Props) {
 	const [loading, setLoading] = useState<boolean>(true);
+	const [isFullScheduledTime, setIsFullScheduledTime] =
+		useState<boolean>(false);
 	const [barberList, setBarberList] = useState<IBarberResponse[]>([]);
 	const [isScheduled, setIsScheduled] = useState([]);
+	const [barberSelected, setBarberSelected] = useState({});
 	const barberListInMemory = useMemo(() => barberList, [barberList]);
 
-	async function setInBarberList() {
-		const userWithBarber = await barberService.getBarber(barbershopId);
-		const barberListService = [];
-		for (let barbers of userWithBarber) {
-			barberListService.push(
-				await userService.GetUserCurrent(barbers.userId)
-			);
+	// Para verificar se determinado Barber já está ocupado
+	function findBarberStatus(
+		scheduleParams: ScheduleParameters,
+		simpleSchedule: ScheduleItem[]
+	): { withBarberId: string; isOccupied: boolean } | null {
+		// Percorre o array simpleSchedule
+		for (const schedule of simpleSchedule) {
+			// Compara os parâmetros fornecidos com a data de início do agendamento
+			if (
+				schedule.start.year === scheduleParams.year &&
+				schedule.start.month === scheduleParams.month &&
+				schedule.start.day === scheduleParams.day &&
+				schedule.start.hour === scheduleParams.hour &&
+				schedule.start.minute === scheduleParams.minute
+			) {
+				// Retorna o objeto com o ID do barbeiro e se está ocupado
+				return {
+					withBarberId: schedule.withBarberId,
+					isOccupied: true,
+				};
+			}
 		}
-		setBarberList(barberListService);
-		setLoading(false);
+
+		// Se nenhum agendamento correspondente for encontrado, retorna null
+		return null;
 	}
 
-	// Para verificar se determinado Barber já está ocupado
-	function filterBarberPerDateScheduled(date: any, thisSchedule: any) {
-		// Organiza os dados para serem analizados
+	function filterBarberPerDateScheduled(
+		thisSchedule: any,
+		scheduleParamsToCheck: ScheduleParameters
+	) {
+		// Organiza os dados para serem analisados
 		const simpleSchedule = thisSchedule.map((schedule: any) => {
 			return {
 				start: {
@@ -51,37 +85,53 @@ export function BarberList({ barbershopId, setBarber, dateScheduled }: Props) {
 				withBarberId: (schedule as any).withBarberId,
 			};
 		});
-		let isTrue: any[] = [];
-		let isAllTrue;
 
-		console.log(simpleSchedule);
-		simpleSchedule.filter((dateSchedule: any, i: number) => {
-			const dateScheduleKeys = Object.keys(dateSchedule.start);
-			console.log(dateScheduleKeys);
+		// Encontrar o status do barbeiro para a data fornecida
+		const barberStatus = findBarberStatus(
+			scheduleParamsToCheck,
+			simpleSchedule
+		);
 
-			for (let j: number = 0; j <= dateScheduleKeys.length; j++) {
-				if (
-					dateSchedule[dateScheduleKeys[j]] ===
-					date[dateScheduleKeys[j]]
-				) {
-					return (isTrue[j] = true);
-				}
-			}
-		});
+		if (barberStatus) {
+			return {
+				barbershopId: barberStatus.withBarberId,
+				isOccupied: barberStatus.isOccupied,
+			};
+		} else {
+			return {
+				barbershopId: simpleSchedule.withBarberId,
+				isOccupied: false,
+			};
+		}
+	}
 
-		// console.log(test);
+	async function setInBarberList() {
+		const userWithBarber = await barberService.getBarber(barbershopId);
+		const barberListService = [];
+		for (let barbers of userWithBarber) {
+			barberListService.push(
+				await userService.GetUserCurrent(barbers.userId)
+			);
+		}
+
+		console.log(filterBarberPerDateScheduled(isScheduled, dateScheduled));
+		setBarberList(barberListService);
+		setLoading(false);
 	}
 
 	useEffect(() => {
 		scheduleService.getSchedule(barbershopId).then((response) => {
-			filterBarberPerDateScheduled(dateScheduled, response);
+			/* filterBarberPerDateScheduled(response); */
 			setIsScheduled(response);
 		});
 		setInBarberList();
 	}, []);
 
 	useEffect(() => {
-		filterBarberPerDateScheduled(dateScheduled, isScheduled);
+		/* filterBarberPerDateScheduled(isScheduled); */
+		if (dateScheduled.hour != null) {
+			setIsFullScheduledTime(true);
+		}
 	}, [dateScheduled]);
 
 	if (loading) {
@@ -93,12 +143,18 @@ export function BarberList({ barbershopId, setBarber, dateScheduled }: Props) {
 	}
 
 	function copyUserId(barber: any) {
-		console.log(isScheduled, dateScheduled);
+		console.log(isScheduled);
 		navigator.clipboard.writeText(barber.id);
 	}
 
 	function selectBarber(barber: IBarberResponse) {
+		/* verifyBarberId(barber.id);
+		toast.info(
+			`${barber.name} ${verifyBarberId(barber.id) ? "true" : "false"}`
+		); */
+		setBarberSelected(barber);
 		setBarber(barber);
+		filterBarberPerDateScheduled(isScheduled, dateScheduled);
 	}
 
 	// function selectRandomBarber() {

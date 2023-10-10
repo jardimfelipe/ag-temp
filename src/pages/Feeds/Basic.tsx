@@ -79,7 +79,7 @@ export function Feeds() {
 							{/* Imagem do feed */}
 							<figure>
 								<img
-									src={establishment.barbershop.images[1].url}
+									src={establishment.barbershop.images[0].url}
 								/>
 							</figure>
 						</div>

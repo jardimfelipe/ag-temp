@@ -81,6 +81,11 @@ export function HourList({ setDate, calendarData }: Props) {
 			});
 		} else {
 			toast.warn("Este horário já está agendado para outra pessoa");
+			setDate({
+				...calendarData,
+				hour: date?.hour(),
+				minute: date?.minute(),
+			});
 		}
 	};
 

@@ -40,7 +40,7 @@ export class BarbershopService {
 
 	async alterBarbershopAvatar(barbershopId: string, body: any) {
 		const formData = new FormData();
-		formData.append("fileimage", body.newImage);
+		formData.append("file", body.newImage);
 
 		const barbershop = await api
 			.patch(`/barbershop/${barbershopId}`, formData, {
