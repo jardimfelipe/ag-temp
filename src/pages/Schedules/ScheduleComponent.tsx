@@ -13,7 +13,7 @@ import { ScheduleService } from "../../service/schedule";
 import { ISchedule } from "../../store/types/schedule";
 import "dayjs/locale/pt-br";
 import { useNavigate } from "react-router-dom";
-import { Alert, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import Button from "../../components/Button";
 
 dayjs.locale("pt-br");
@@ -43,6 +43,8 @@ export function ScheduleComponent({ barbershopId }: Props) {
 		day: 0,
 		month: 0,
 		year: dayjs().year(),
+		hour: 0,
+		minute: 0,
 	});
 
 	async function setDataInDatabase(form: ISchedule) {
