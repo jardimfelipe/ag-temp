@@ -21,7 +21,7 @@ export default function Header() {
 	}, []);
 
 	useEffect(() => {
-		if (widthWindow <= 414) {
+		if (widthWindow <= 767) {
 			setIsMobile(true);
 		} else {
 			setIsMobile(false);

@@ -13,7 +13,7 @@ import { ScheduleService } from "../../service/schedule";
 import { ISchedule } from "../../store/types/schedule";
 import "dayjs/locale/pt-br";
 import { useNavigate } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import Button from "../../components/Button";
 
 dayjs.locale("pt-br");
@@ -90,9 +90,8 @@ export function ScheduleComponent({ barbershopId }: Props) {
 			date.minute + 20
 		);
 
-		const intialName = `${user.name.split(" ")[0]} ${
-			user.name.split(" ")[1]
-		}`;
+		const intialName = `${user.name.split(" ")[0]} ${user.name.split(" ")[1]
+			}`;
 
 		isCorrectForm = true;
 		const form: ISchedule = {
@@ -127,7 +126,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 	}
 
 	return (
-		<div className="md:ml-44 md:mr-16">
+		<div className="sm:ml-44 sm:mr-16">
 			<Box>
 				{isCorrect ? (
 					<div className="flex flex-1 mt-2 p-4 justify-between items-center border-2 border-darkness bg-darkness-plus rounded-lg">
@@ -142,7 +141,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 			<ToastContainer theme="colored"></ToastContainer>
 			<header>
 				<div>
-					<ul className="flex mt-4">
+					<ul className="flex mt-24 md:mt-4">
 						<ServiceList
 							setService={setService}
 							barbershopId={barbershopId}
@@ -154,15 +153,19 @@ export function ScheduleComponent({ barbershopId }: Props) {
 				</aside>
 			</header>
 			<main className="mt-4 flex justify-center items-center">
-				<div className="flex justify-center gap-2 md:gap-8 items-center">
-					{/* O Dia, mês e ano estão sendo resolvidos nesse componente MyCalendar*/}
-					<MyCalendar setCalendar={setCalendar} />
+				<Grid spacing={1} container>
+					<Grid item xs={12} md={10}>
+						{/* O Dia, mês e ano estão sendo resolvidos nesse componente MyCalendar*/}
+						<MyCalendar setCalendar={setCalendar} />
+					</Grid>
 
-					{/* Depois do dia, mês e ano tiver ok, a hora e o minuto estão sendo resolvidos nesse componente HourList */}
-					<HourList setDate={setDate} calendarData={calendar} />
-				</div>
+					<Grid item xs={12} md={2}>
+						{/* Depois do dia, mês e ano tiver ok, a hora e o minuto estão sendo resolvidos nesse componente HourList */}
+						<HourList setDate={setDate} calendarData={calendar} />
+					</Grid>
+				</Grid>
 			</main>
-			<footer>
+			<footer className="mb-4">
 				<BarberList
 					barbershopId={barbershopId}
 					setBarber={setBarber}

@@ -5,6 +5,7 @@ import Login from "../../pages/Signin/Login";
 import { useEffect, useState } from "react";
 import { UserService } from "../../service/user/count-profile";
 import { logon } from "../../store/reducer/user.reducer";
+import { Container } from "@mui/material";
 
 const service = new UserService();
 export function Layout() {
@@ -34,9 +35,9 @@ export function Layout() {
 					<Header></Header>
 				</div>
 			) : null}
-			<span className=" justify-center h-screen w-screen">
+			<Container>
 				{user.isLogged ? <Outlet></Outlet> : <Login />}
-			</span>
+			</Container>
 		</div>
 	);
 }
