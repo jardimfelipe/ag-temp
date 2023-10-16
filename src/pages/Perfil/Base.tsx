@@ -5,7 +5,7 @@ import { ShareNetwork } from "@phosphor-icons/react";
 
 type Props = {};
 
-export function PerfilBase({}: Props) {
+export function PerfilBase({ }: Props) {
 	const [handleEditPerfil, setHandleEditPerfil] = useState(false);
 	const user = useAppSelector((state) => state.user);
 
@@ -14,7 +14,7 @@ export function PerfilBase({}: Props) {
 	}
 
 	return (
-		<div className="flex flex-col ml-32 h-full">
+		<div className="flex flex-col h-full md:ml-32 mt-24 md:mt-4">
 			{/* <!-- TODO preciso fazer uma forma do menu no header desaparecer no modo mobile --> */}
 			<figure className="flex items-center md:p-3 p-2 md:mx-20 md:bg-darkness md:rounded-full">
 				{/* <!-- Imagem de usuário --> */}
