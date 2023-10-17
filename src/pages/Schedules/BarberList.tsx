@@ -39,7 +39,22 @@ export function BarberList({ barbershopId, setBarber, dateScheduled }: Props) {
 	const [barberList, setBarberList] = useState<IBarberResponse[]>([]);
 	const [isScheduled, setIsScheduled] = useState([]);
 	const [barberSelected, setBarberSelected] = useState({});
-	const barberListInMemory = useMemo(() => barberList, [barberList]);
+
+	const compareDates = (date: any) => {
+		const { year, month, day, hour, minute } = dateScheduled
+		const scheduledDate = dayjs(`${year}/${month + 1}/${day} ${hour}:${minute}`)
+		return dayjs(date).isSame(dayjs(scheduledDate))
+	}
+	const barberListInMemory = useMemo(() => {
+		const isNotAllSelected = Object.keys(dateScheduled).some(key => key !== 'minute' && dateScheduled[key] === 0)
+		if (!isScheduled.length || isNotAllSelected) return barberList
+		const filteredBarbesBySchedule = barberList.filter(barber => {
+			const barderHasSchedule = !!isScheduled.find(({ withUserClientId }) => barber.id === withUserClientId)
+			if (!barderHasSchedule) return true
+			return !isScheduled.some(({ start }) => compareDates(start))
+		})
+		return filteredBarbesBySchedule
+	}, [barberList, dateScheduled]);
 
 	// Para verificar se determinado Barber já está ocupado
 	function findBarberStatus(
@@ -121,7 +136,6 @@ export function BarberList({ barbershopId, setBarber, dateScheduled }: Props) {
 
 	useEffect(() => {
 		scheduleService.getSchedule(barbershopId).then((response) => {
-			/* filterBarberPerDateScheduled(response); */
 			setIsScheduled(response);
 		});
 		setInBarberList();
@@ -180,7 +194,7 @@ export function BarberList({ barbershopId, setBarber, dateScheduled }: Props) {
 							<Button
 								className="hover:bg-primary hover:text-dark"
 								onClick={() => selectBarber(barber)}
-								// disabled
+							// disabled
 							>
 								<span>{barber.name}</span>
 							</Button>

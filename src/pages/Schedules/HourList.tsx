@@ -72,21 +72,11 @@ export function HourList({ setDate, calendarData }: Props) {
 	// Aplicar se os dados são iguais ou não
 	const handleDateChange = (date: Dayjs | null) => {
 		setSelectedDate(date);
-		const IsScheduled = { hours: date?.hour(), minutes: date?.minute() };
-		if (isScheduledDate(schedules, IsScheduled) === false) {
-			setDate({
-				...calendarData,
-				hour: date?.hour(),
-				minute: date?.minute(),
-			});
-		} else {
-			toast.warn("Este horário já está agendado para outra pessoa");
-			setDate({
-				...calendarData,
-				hour: date?.hour(),
-				minute: date?.minute(),
-			});
-		}
+		setDate({
+			...calendarData,
+			hour: date?.hour(),
+			minute: date?.minute(),
+		});
 	};
 
 	return (
