@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { UserService } from "../../service/user/count-profile";
 import { logon } from "../../store/reducer/user.reducer";
 import { Container } from "@mui/material";
+import { ToastContainer } from "react-toastify";
 
 const service = new UserService();
 export function Layout() {
@@ -30,6 +31,7 @@ export function Layout() {
 
 	return (
 		<div className="flex">
+			<ToastContainer theme="colored" />
 			{user.isLogged ? (
 				<div className="fixed z-10">
 					<Header></Header>

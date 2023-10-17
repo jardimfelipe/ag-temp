@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAppSelector } from "../../store/main.store";
 import dayjs from "dayjs";
 import { HourList } from "./HourList";
@@ -7,7 +7,7 @@ import { BarberList } from "./BarberList";
 import { ServiceList } from "./ServiceList";
 import { IBarberResponse } from "../../service/barber";
 import { IBarberServices as IBarberServiceResponse } from "../../service/schedule/types";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ScheduleService } from "../../service/schedule";
 import { ISchedule } from "../../store/types/schedule";
@@ -34,7 +34,6 @@ const scheduleService = new ScheduleService();
 
 export function ScheduleComponent({ barbershopId }: Props) {
 	const navigate = useNavigate();
-	const [isCorrect, setIsCorrect] = useState(false);
 	const user = useAppSelector((state) => state.user);
 	const [schedule, setSchedule] = useState<IGetDataInComponents>(
 		{} as IGetDataInComponents
@@ -51,7 +50,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 		await scheduleService.createNewSchedule(form);
 	}
 
-	function getDataInComponents({
+	async function getDataInComponents({
 		barber,
 		service,
 		date,
@@ -104,8 +103,8 @@ export function ScheduleComponent({ barbershopId }: Props) {
 			withBarbershopId: barbershopId,
 		};
 
-		(async () => await setDataInDatabase(form))();
-		setIsCorrect(isCorrectForm);
+		await setDataInDatabase(form)
+		navigateHandle()
 	}
 
 	function setBarber(barber: IBarberResponse) {
@@ -127,18 +126,8 @@ export function ScheduleComponent({ barbershopId }: Props) {
 
 	return (
 		<div className="sm:ml-44 sm:mr-16">
-			<Box>
-				{isCorrect ? (
-					<div className="flex flex-1 mt-2 p-4 justify-between items-center border-2 border-darkness bg-darkness-plus rounded-lg">
-						Agendamento feito com sucesso
-						<Button onClick={navigateHandle}>Voltar ao Feed</Button>
-					</div>
-				) : (
-					false
-				)}
-			</Box>
+
 			{/* TODO torna-lo em um componente com cores e estilização do sistema */}
-			<ToastContainer theme="colored"></ToastContainer>
 			<header>
 				<div>
 					<ul className="flex mt-24 md:mt-4">
