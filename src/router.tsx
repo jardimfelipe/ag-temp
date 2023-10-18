@@ -8,6 +8,7 @@ import ErrorPage from "./pages/Error";
 import { PerfilBase } from "./pages/Perfil/Base";
 import { BaseSchedule } from "./pages/Schedules/Base";
 import Cadastro from './pages/Cadastro/Basic';
+import {BaseScheduleList} from "./pages/ScheduleList/Base";
 export const routes = [
 	{
 		icon: <House size={28} />,
@@ -33,6 +34,12 @@ export const routes = [
 		path: "/feed/schedule/:barbershopId",
 		Component: BaseSchedule,
 		hidden: true,
+	},
+	{
+		id: "Agendamento",
+		path: "/schedule/",
+		Component: BaseScheduleList,
+		hidden: false,
 	},
 	{
 		id : "Cadastro",

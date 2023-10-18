@@ -6,6 +6,8 @@ import { useAppDispatch } from "../../store/main.store";
 import InputMask from "react-input-mask";
 import { insertUser } from "../../store/reducer/user.reducer";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function Login() {
 	const [email, setEmail] = useState<string>("");
     const [name, setName] = useState<string>("");
@@ -28,9 +30,28 @@ export default function Login() {
 			setWarning("Senha é obrigatório")
 			return;
 		}
-		dispatch(insertUser({email : email, name : name, contact : contact, password : password}));
-		setColorWarning("");
-		setWarning("Usuário Criado");
+
+		if (name === "") {
+			setColorWarning("text-red-500");
+			setWarning("Nome é obrigatório")
+			return;
+		}
+
+		let result =  dispatch(insertUser({ name : name, contact : contact, password : password}));
+		result.then((a )=>{
+			if (a.payload !== false) {
+				cleanFormCadastroUsuario()
+			}
+		})
+		
+	}
+
+	const cleanFormCadastroUsuario = () =>{
+		setName("");
+		setContact("")
+		setContact("")
+		setPassword("")
+		setWarning("")
 	}
 
 	const backToLogin = ()=>{
@@ -43,12 +64,18 @@ export default function Login() {
 	  };
 	return (
 		<section className={`flex justify-center items-center h-full ${theme === 'dark' ? 'bg-dark' : 'bg-light'}`}>
+			<ToastContainer/>
 			<div className={`flex flex-col items-center p-5 rounded-lg border-2 border-graydark ${theme === 'dark' ? 'bg-darkness text-light' : 'bg-lightness'}`}>
 				<span className="mb-10 text-base md:text-lg dark:text-light">
 					Cadastro
 				</span>
 				<div>
 				<div>
+					<Input
+						title="Nome*"
+						value={name}
+						onChange={(e) => setName(e.currentTarget.value)}
+					></Input>
                     <label className="ml-2 md:mb-1 md:text-lg dark:text-light">
                             Contato*
                         </label>
@@ -67,16 +94,6 @@ export default function Login() {
 						type="password"
 						value={password}
 						onChange={(e) => setPassword(e.currentTarget.value)}
-					></Input>
-                    <Input
-						title="name"
-						value={name}
-						onChange={(e) => setName(e.currentTarget.value)}
-					></Input>
-					<Input
-						title="Email"
-						value={email}
-						onChange={(e) => setEmail(e.currentTarget.value)}
 					></Input>
 					<div className={`w-48 ml-2 text-left break-all text-md ${colorWarning}`}>
 						{warning}

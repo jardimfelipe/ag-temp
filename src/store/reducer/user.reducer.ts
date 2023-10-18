@@ -17,7 +17,6 @@ interface IAlterUserRequest {
 
 interface CreateUser {
 	name : string;
-	email : string;
 	contact : string;
 	password : string;
 }
@@ -43,7 +42,7 @@ export const alterUser = createAsyncThunk(
 export const insertUser = createAsyncThunk(
 	"user/insert",
 	async (intialState: CreateUser) => {
-		await service.createUser(intialState, toast);
+		return await service.createUser(intialState, toast);
 	}
 );
 

@@ -18,15 +18,21 @@ export class UserService {
 
 	async createUser(form: any, toast: any) {
 		
-		const result = await api.post("user", form)
+		const result = await api.post("user/createUser", form)
 		.then((data)=>{
-			console.log(data)
-			toast.success("Usuário inserido com sucesso")
+			
+			if (data.status >= 200 && data.status <= 299 ) {
+				
+				toast.success("Usuário inserido com sucesso")
+			}else{
+				toast.error(data.response.data.message)
+			}
 		}).catch((err: string) => {
 			toast.error(`${err}`);
-			return new Error(err);
+			return false;
 		});
-		console.log(result)
+
+		return result;
 	}
 
 	async UpdateUser(form: any, toast: any) {
