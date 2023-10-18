@@ -4,6 +4,7 @@ import { ISchedule } from "../../store/types/schedule";
 
 export class ScheduleService {
 	async getSchedule(barbershopId: string) {
+<<<<<<< HEAD
 		const schedule = await api
 			.get(`/schedule/specific/barbershop/${barbershopId}`)
 			.then((data) => data.data)
@@ -22,5 +23,19 @@ export class ScheduleService {
 			.catch((err) => toast.error(`Ocorreu um erro, ${err}`));
 
 		return scheduleData;
+=======
+		const schedule = await api.get(
+			`/schedule/specific/barbershop/${barbershopId}`
+		);
+		return schedule.data
+	}
+
+	async getScheduleByIdUser(idUser : string){
+		const schedule = await api.get(
+			`/schedule/specific/user/${idUser}`
+		);
+		console.log(idUser)
+		return schedule.data
+>>>>>>> caio
 	}
 }

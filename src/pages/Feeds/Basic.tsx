@@ -2,47 +2,12 @@ import { MapPin, WhatsappLogo } from "@phosphor-icons/react";
 import React, { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import { Link } from "react-router-dom";
-import { BarbershopService } from "../../service/barbershop";
-import { useAppDispatch, useAppSelector } from "../../store/main.store";
-import { getBarbershopNearbyDistance } from "../../store/reducer/barbershopList.reducer";
-import { IBarbershopsListByFeed } from "../../store/types/barbershop";
-import { CircularProgress } from "@mui/material";
 
 // type Props = {}
 const barbershopService = new BarbershopService();
 export function Feeds() {
-	const dispatch = useAppDispatch();
-	const [barbershopsList, setBarbershopsList] = useState<
-		IBarbershopsListByFeed[]
-	>([] as IBarbershopsListByFeed[]);
-	const [loading, setloading] = useState(true);
-	const barbershops = useAppSelector((store) => store.barbershops);
-
-	useEffect(() => {
-		(async () => {
-			setBarbershopsList(
-				await barbershopService.GetBarbershopsInLocation(
-					"-20.5223863",
-					"-47.3653937"
-				)
-			);
-
-			setTimeout(() => {
-				setloading(false);
-			}, 1000);
-		})();
-	}, []);
-
-	if (loading) {
-		return (
-			<div className="flex justify-center mt-4 p-8 flex-1 rounded-lg">
-				<CircularProgress color="inherit"></CircularProgress>
-			</div>
-		);
-	}
-
 	return (
-		<div>
+		<div className={`${config.theme === 'dark' ? 'bg-dark' : 'bg-light'}`}>
 			<main className="flex flex-col items-center">
 				{/* <Search className="w-96 mt-4 mb-8" /> */}
 				{barbershopsList.map((establishment) => (

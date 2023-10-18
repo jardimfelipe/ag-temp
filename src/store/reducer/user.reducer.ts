@@ -28,16 +28,27 @@ interface IAlterUserRequest {
 	cpf: string;
 }
 
+interface CreateUser {
+	name : string;
+	contact : string;
+	password : string;
+}
+
 const service = new UserService();
 export const login = createAsyncThunk(
 	"login",
 	async (intialState: IUserRequestData) => {
 		const response = await service.Login(intialState);
+<<<<<<< HEAD
 
 		return {
 			userData: response!.user,
 			token: response!.token,
 		};
+=======
+		//@ts-ignore
+		return { userData: response.user, token: response.token };
+>>>>>>> caio
 	}
 );
 
@@ -46,6 +57,13 @@ export const alterUser = createAsyncThunk(
 	async (intialState: IAlterUserRequest) => {
 		const response = await service.UpdateUser(intialState, toast);
 		return response;
+	}
+);
+
+export const insertUser = createAsyncThunk(
+	"user/insert",
+	async (intialState: CreateUser) => {
+		return await service.createUser(intialState, toast);
 	}
 );
 
@@ -59,7 +77,13 @@ export const userSlice = createSlice({
 		age: 0,
 		cpf: "",
 		token: "",
+<<<<<<< HEAD
 		manager: false,
+=======
+		config : {
+			theme : "dark"
+		}
+>>>>>>> caio
 	},
 
 	reducers: {
