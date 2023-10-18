@@ -22,8 +22,8 @@ export function Feeds() {
 		(async () => {
 			setBarbershopsList(
 				await barbershopService.GetBarbershopsInLocation(
-					"-20.5223863",
-					"-47.3653937"
+					"-20.4268633",
+					"-49.983127"
 				)
 			);
 
@@ -42,7 +42,7 @@ export function Feeds() {
 	}
 
 	return (
-		<div>
+		<div className="mt-24 md:mt-4">
 			<main className="flex flex-col items-center">
 				{/* <Search className="w-96 mt-4 mb-8" /> */}
 				{barbershopsList.map((establishment) => (
@@ -51,7 +51,7 @@ export function Feeds() {
 						key={
 							establishment.barbershop.id +
 							"-" +
-							establishment.barbershop.images[0].id
+							establishment.barbershop.images[0]?.id
 						}
 					>
 						{/* <!-- Feed --> */}
@@ -79,7 +79,7 @@ export function Feeds() {
 							{/* Imagem do feed */}
 							<figure>
 								<img
-									src={establishment.barbershop.images[0].url}
+									src={establishment.barbershop.images[0]?.url}
 								/>
 							</figure>
 						</div>

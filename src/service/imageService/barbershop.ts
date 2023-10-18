@@ -6,13 +6,22 @@ export class ImageBarbershopService {
 		formData.append("file", image);
 
 		const message = await api.post(
-			`/images/barbershop/${barbershopId}`,
+			`/barbershop/post/${barbershopId}`,
 			formData,
-			{
-				headers: {
-					"Content-Type": `multipart/form-data`,
-				},
-			}
+			
+		);
+
+		return message;
+	}
+
+	async changeAvatar(barbershopId: string, image: any) {
+		const formData = new FormData();
+		formData.append("file", image);
+
+		const message = await api.patch(
+			`/barbershop/avatar/${barbershopId}`,
+			formData,
+			
 		);
 
 		return message;
