@@ -17,9 +17,6 @@
 		"@mui/material": "^5.14.10",
 		"@mui/x-data-grid": "^6.15.0",
 		"@mui/x-date-pickers": "^6.15.0",
-=======
-		"@mui/material": "^5.14.12",
->>>>>>> caio
 		"@phosphor-icons/react": "^2.0.10",
 		"@reduxjs/toolkit": "^1.9.5",
 		"axios": "^1.4.0",
