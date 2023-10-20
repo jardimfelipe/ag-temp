@@ -62,14 +62,6 @@ export default function HeaderMobileLinks() {
 											}
 										>
 											<MobileLink
-<<<<<<< HEAD
-												title={
-													route.id == "Perfil"
-														? intialName
-														: route.id
-												}
-												to={transformDynamicPath(route)}
-=======
 												title={route.id}
 												to={
 													// verificar se é rota dinamica
@@ -85,7 +77,6 @@ export default function HeaderMobileLinks() {
 															: route.path
 														: route.path
 												}
->>>>>>> caio
 												icon={route.icon!}
 											/>
 										</button>

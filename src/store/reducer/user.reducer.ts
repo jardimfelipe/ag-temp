@@ -39,16 +39,8 @@ export const login = createAsyncThunk(
 	"login",
 	async (intialState: IUserRequestData) => {
 		const response = await service.Login(intialState);
-<<<<<<< HEAD
-
-		return {
-			userData: response!.user,
-			token: response!.token,
-		};
-=======
 		//@ts-ignore
 		return { userData: response.user, token: response.token };
->>>>>>> caio
 	}
 );
 
@@ -77,13 +69,9 @@ export const userSlice = createSlice({
 		age: 0,
 		cpf: "",
 		token: "",
-<<<<<<< HEAD
-		manager: false,
-=======
 		config : {
 			theme : "dark"
 		}
->>>>>>> caio
 	},
 
 	reducers: {

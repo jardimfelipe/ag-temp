@@ -8,24 +8,9 @@ import Login from "./pages/Signin/Login";
 import ErrorPage from "./pages/Error";
 import { PerfilBase } from "./pages/Perfil/Base";
 import { BaseSchedule } from "./pages/Schedules/Base";
-<<<<<<< HEAD
-import { useAppSelector } from "./store/main.store";
-
-export interface IRoutes {
-	icon?: any;
-	id: string;
-	path: string;
-	Component: any;
-	hidden?: boolean;
-}
-
-// const user = useAppSelector((store) => store.user);
-export const routes: IRoutes[] = [
-=======
 import Cadastro from './pages/Cadastro/Basic';
 import {BaseScheduleList} from "./pages/ScheduleList/Base";
 export const routes = [
->>>>>>> caio
 	{
 		icon: <House size={28} />,
 		id: "Feeds",

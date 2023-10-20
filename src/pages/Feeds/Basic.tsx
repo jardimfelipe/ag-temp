@@ -4,7 +4,7 @@ import Button from "../../components/Button";
 import { Link } from "react-router-dom";
 
 // type Props = {}
-const barbershopService = new BarbershopService();
+// const barbershopService = new BarbershopService();
 export function Feeds() {
 	return (
 		<div className={`${config.theme === 'dark' ? 'bg-dark' : 'bg-light'}`}>

@@ -102,9 +102,6 @@ export function HeaderLinks() {
 							>
 								<LayoutLink
 									title={route.id}
-<<<<<<< HEAD
-									to={transformDynamicPath(route)}
-=======
 									to={
 										// verificar se é rota dinamica
 										route.path.split(":")[1]
@@ -117,7 +114,6 @@ export function HeaderLinks() {
 												: route.path
 											: route.path
 									}
->>>>>>> caio
 									icon={route.icon!}
 								/>
 							</Button>

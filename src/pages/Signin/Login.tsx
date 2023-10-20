@@ -20,18 +20,13 @@ export default function Login() {
 	useEffect(() => {
 		if (user.id != "") {
 			navigate("/feed");
+			console.log("aqui")
 		}
 	}, [user]);
 
 	return (
-<<<<<<< HEAD
-		<section className="flex justify-center items-center h-full">
-			<div className="flex flex-col items-center p-5 rounded-lg border-2 border-graydark bg-darkness">
-				{/* TODO adicionar um toast */}
-=======
 		<section className={`flex justify-center items-center h-full ${user.config.theme === 'dark' ? 'bg-dark' : 'bg-light'}`}>
 			<div className={`flex flex-col items-center p-5 rounded-lg border-2 border-graydark ${user.config.theme === 'dark' ? 'bg-darkness' : 'bg-lightness'}`}>
->>>>>>> caio
 				<span className="mb-10 text-base md:text-lg dark:text-light">
 					Login
 				</span>
