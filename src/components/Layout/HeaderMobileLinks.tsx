@@ -25,16 +25,38 @@ export default function HeaderMobileLinks() {
 		navigate(path);
 	}
 
+
 	function transformDynamicPath(route: any) {
+		const newRoute = route;
+		if (newRoute.path.split(":")[1]) {
+			if (newRoute.path.split(":")[1] == "userId") {
+				return newRoute.path.split(":")[0] + user.id;
+			} else {
+				if (newRoute.path.split(":")[1] == "barbershopId") {
+					if (user.manager !== false) {
+						return (
+							newRoute.path.split(":")[0] +
+							(user.manager as any).barbershopId
+						);
+					} else {
+					}
+				}
+				return newRoute.path;
+			}
+		}
 		// verificar se é rota dinamica
+
+		// return newRoute;
+
 		return route.path.split(":")[1]
 			? // verificar se a rota é de userId
-			  route.path.split(":")[1] == "userId"
+			route.path.split(":")[1] == "userId"
 				? // adicionando uma rota do header que pega id do redux
-				  route.path.split(":")[0] + user.id
+				route.path.split(":")[0] + user.id
 				: route.path
 			: route.path;
 	}
+
 
 	return (
 		<div>

@@ -92,6 +92,7 @@ export function HourList({ setDate, calendarData }: Props) {
 						minTime={dayjs().hour(9)}
 						maxTime={dayjs().hour(21)}
 						ampm={false}
+						skipDisabled
 					/>
 				</LocalizationProvider>
 			</Box>

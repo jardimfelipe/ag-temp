@@ -13,7 +13,7 @@ import { ScheduleService } from "../../service/schedule";
 import { ISchedule } from "../../store/types/schedule";
 import "dayjs/locale/pt-br";
 import { useNavigate } from "react-router-dom";
-import { Box, Grid } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 import Button from "../../components/Button";
 
 dayjs.locale("pt-br");
@@ -160,12 +160,14 @@ export function ScheduleComponent({ barbershopId }: Props) {
 					setBarber={setBarber}
 					dateScheduled={calendar}
 				/>
-				<Button
-					className="mt-4 bg-success hover:bg-primary hover:text-dark"
-					onClick={() => getDataInComponents(schedule)}
-				>
-					Agendar
-				</Button>
+				<Stack>
+					<Button
+						className="mt-4 bg-success hover:bg-primary hover:text-dark"
+						onClick={() => getDataInComponents(schedule)}
+					>
+						Agendar
+					</Button>
+				</Stack>
 			</footer>
 		</div>
 	);

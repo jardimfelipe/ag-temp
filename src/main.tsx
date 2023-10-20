@@ -8,14 +8,22 @@ import { store } from "./store/main.store.ts";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from "@mui/material";
+import { themeCustom } from "./materialStyling";
+
+
 const persistor = persistStore(store);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
-		<Provider store={store}>
-			<PersistGate loading={null} persistor={persistor}>
-				<RouterProvider router={router} />
-			</PersistGate>
-		</Provider>
+		<ThemeProvider theme={themeCustom}>
+			<CssBaseline />
+			<Provider store={store}>
+				<PersistGate loading={null} persistor={persistor}>
+					<RouterProvider router={router} />
+				</PersistGate>
+			</Provider>
+		</ThemeProvider>
 	</React.StrictMode>
 );
