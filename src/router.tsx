@@ -8,7 +8,8 @@ import Login from "./pages/Signin/Login";
 import ErrorPage from "./pages/Error";
 import { PerfilBase } from "./pages/Perfil/Base";
 import { BaseSchedule } from "./pages/Schedules/Base";
-import Cadastro from './pages/Cadastro/Basic';
+import Cadastro from './pages/Cadastro/cadastroUsuario/Basic';
+import CadastroADm from './pages/Cadastro/cadastroAdm/Basic';
 import {BaseScheduleList} from "./pages/ScheduleList/Base";
 export const routes = [
 	{
@@ -53,6 +54,12 @@ export const routes = [
 		id : "Cadastro",
 		path : "/cadastro",
 		Component : Cadastro,
+		hidden : true
+	},
+	{
+		id : "Cadastro Administrador",
+		path : "/cadastro_adm",
+		Component : CadastroADm,
 		hidden : true
 	},
 ];

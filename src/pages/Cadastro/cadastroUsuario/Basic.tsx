@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
-import { useAppSelector } from "../../store/main.store";
-import { useAppDispatch } from "../../store/main.store";
+import Button from "../../../components/Button";
+import Input from "../../../components/Input";
+import { useAppSelector } from "../../../store/main.store";
+import { useAppDispatch } from "../../../store/main.store";
 import InputMask from "react-input-mask";
-import { insertUser } from "../../store/reducer/user.reducer";
+import { insertUser } from "../../../store/reducer/user.reducer";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-export default function Login() {
-	const [email, setEmail] = useState<string>("");
+export default function CadastroUsuario() {
     const [name, setName] = useState<string>("");
     const [contact, setContact] = useState<string>("");
+	const [contactFormatado, setContactFormatadoContact] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [warning , setWarning] = useState<string>("");
 	const [colorWarning , setColorWarning] = useState<string>("");
@@ -37,7 +37,9 @@ export default function Login() {
 			return;
 		}
 
-		let result =  dispatch(insertUser({ name : name, contact : contact, password : password}));
+		const contatoFormatado = contact.replace(/[^\d]/g, '');
+		
+		let result =  dispatch(insertUser({ name : name, contact : contatoFormatado, password : password}));
 		result.then((a )=>{
 			if (a.payload !== false) {
 				cleanFormCadastroUsuario()
@@ -61,7 +63,7 @@ export default function Login() {
 	const validarcontact = (valor: any) => {
 		const regex = /^\(\d{2}\) \d{5}-\d{4}$/;
 		return regex.test(valor);
-	  };
+	};
 	return (
 		<section className={`flex justify-center items-center h-full ${theme === 'dark' ? 'bg-dark' : 'bg-light'}`}>
 			<ToastContainer/>
