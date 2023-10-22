@@ -1,16 +1,10 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Header from "./Header";
-import { useAppDispatch, useAppSelector } from "../../store/main.store";
+import { useAppSelector } from "../../store/main.store";
 import Login from "../../pages/Signin/Login";
-import { useEffect, useState } from "react";
-import { UserService } from "../../service/user/count-profile";
-import { logon } from "../../store/reducer/user.reducer";
-import { Container } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 
 export function Layout() {
-	const location = useLocation();
-	const navigate = useNavigate();
 	const user = useAppSelector((state) => state.user);
 	const localizacao = useLocation();
 
