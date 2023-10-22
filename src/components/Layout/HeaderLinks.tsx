@@ -74,7 +74,7 @@ export function HeaderLinks() {
 	}
 
 	return (
-		<div className="w-72 h-screen bg-darkness">
+		<div className="w-72 h-screen bg-darkness text-light">
 			<div className="flex justify-between">
 				<button
 					className="p-4 ml-2 mt-2 base-an rounded-full hover:bg-darkness-plus"
@@ -102,7 +102,18 @@ export function HeaderLinks() {
 							>
 								<LayoutLink
 									title={route.id}
-									to={transformDynamicPath(route)}
+									to={
+										// verificar se é rota dinamica
+										route.path.split(":")[1]
+											? // verificar se a rota é de userId
+											  route.path.split(":")[1] ==
+											  "userId"
+												? // adicionando uma rota do header que pega id do redux
+												  route.path.split(":")[0] +
+												  user.id
+												: route.path
+											: route.path
+									}
 									icon={route.icon!}
 								/>
 							</Button>

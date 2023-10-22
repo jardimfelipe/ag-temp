@@ -1,10 +1,8 @@
 import { MapPin, WhatsappLogo } from "@phosphor-icons/react";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../../components/Button";
 import { Link } from "react-router-dom";
 import { BarbershopService } from "../../service/barbershop";
-import { useAppDispatch, useAppSelector } from "../../store/main.store";
-import { getBarbershopNearbyDistance } from "../../store/reducer/barbershopList.reducer";
 import { IBarbershopsListByFeed } from "../../store/types/barbershop";
 import { CircularProgress } from "@mui/material";
 import GeolocationModal, { Coordinates } from "../../components/GeolocationModal";
@@ -12,12 +10,10 @@ import GeolocationModal, { Coordinates } from "../../components/GeolocationModal
 // type Props = {}
 const barbershopService = new BarbershopService();
 export function Feeds() {
-	const dispatch = useAppDispatch();
 	const [barbershopsList, setBarbershopsList] = useState<
 		IBarbershopsListByFeed[]
 	>([] as IBarbershopsListByFeed[]);
 	const [loading, setloading] = useState(false);
-	const barbershops = useAppSelector((store) => store.barbershops);
 
 	const fetchBarbershopsList = async ({ latitude, longitude }: Coordinates) => {
 		setloading(true)

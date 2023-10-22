@@ -8,27 +8,13 @@ import { logon } from "../../store/reducer/user.reducer";
 import { Container } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 
-const service = new UserService();
 export function Layout() {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const user = useAppSelector((state) => state.user);
-	const dispatch = useAppDispatch();
+	const localizacao = useLocation();
 
-	useEffect(() => {
-		(async () => {
-			const isLogged = await service.GetSession();
-
-			if (!isLogged) {
-				dispatch(logon());
-			} else {
-				if (location.pathname === "/") {
-					navigate("/feed");
-				}
-			}
-		})();
-	}, []);
-
+	console.log('user', user)
 	return (
 		<div className="flex">
 			<ToastContainer theme="colored" />
@@ -37,9 +23,9 @@ export function Layout() {
 					<Header></Header>
 				</div>
 			) : null}
-			<Container>
-				{user.isLogged ? <Outlet></Outlet> : <Login />}
-			</Container>
+			<span className={`justify-center h-screen w-screen ${user.config.theme === 'dark' ? 'bg-dark text-light' : 'bg-light'} `}>
+				{user.isLogged || localizacao.pathname === '/cadastro' ? <Outlet></Outlet> : <Login />}
+			</span>
 		</div>
 	);
 }

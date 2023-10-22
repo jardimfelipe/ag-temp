@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { ShareNetwork } from "@phosphor-icons/react";
 import { useAppSelector } from "../../store/main.store";
 import { Edit } from "./Edit";
-import { ShareNetwork } from "@phosphor-icons/react";
+import { useState } from "react";
 
 type Props = {};
 
@@ -16,10 +16,15 @@ export function PerfilBase({ }: Props) {
 	return (
 		<div className="flex flex-col h-full md:ml-32 mt-24 md:mt-4">
 			{/* <!-- TODO preciso fazer uma forma do menu no header desaparecer no modo mobile --> */}
-			<figure className="flex items-center md:p-3 p-2 md:mx-20 md:bg-darkness md:rounded-full">
+			<figure className="flex items-center w-11/12 p-2 rounded-full mt-20 md:w-10/12 bg-darkness">
 				{/* <!-- Imagem de usuário --> */}
-				<div className="p-6 rounded-full bg-slate-50"></div>
-				<div className="ms-2">nome de usuário</div>
+				<div className="flex w-1/2 ">
+					<div className="w-1/5 p-6 rounded-full bg-slate-50 md:w-1"></div>
+					<div className=" hidden md:block md:flex md:items-center md:ms-2 ">nome de usuário</div>
+				</div>
+				<div className=" flex w-1/2 mr-4  justify-end ">
+					<ShareNetwork onClick={() => copyDataInClipboard()} className="text-4xl" />
+				</div>
 			</figure>
 			<section className="grid md:grid-cols-3 grid-rows-8 h-full gap-4 mt-2 p-6 border-0 border-green-500">
 				<div className="md:row-start-2 md:col-span-2 row-span-5 p-6 border-0 border-sky-700">
@@ -34,13 +39,10 @@ export function PerfilBase({ }: Props) {
 							{handleEditPerfil ? "Voltar" : "Editar"}
 						</button>
 						<button
-							className="flex justify-center p-2 px-4 base-an hover:bg-primary rounded-lg"
+							className="p-2 px-4 base-an hover:bg-primary rounded-lg"
 							onClick={copyDataInClipboard}
 						>
 							Compartilhar
-							<div className="ml-2 mt-[2px]">
-								<ShareNetwork size={20} />
-							</div>
 						</button>
 					</div>
 					{handleEditPerfil ? (

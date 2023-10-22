@@ -60,7 +60,7 @@ export default function HeaderMobileLinks() {
 
 	return (
 		<div>
-			<header className="flex justify-between items-center w-screen py-2 bg-darkness">
+			<header className="flex justify-between items-center w-screen py-2 bg-darkness text-light">
 				<button
 					className="ml-4"
 					onClick={() => setHandleMenu(!handleMenu)}
@@ -84,12 +84,21 @@ export default function HeaderMobileLinks() {
 											}
 										>
 											<MobileLink
-												title={
-													route.id == "Perfil"
-														? intialName
-														: route.id
+												title={route.id}
+												to={
+													// verificar se é rota dinamica
+													route.path.split(":")[1]
+														? // verificar se a rota é de userId
+														  route.path.split(
+																":"
+														  )[1] == "userId"
+															? // adicionando uma rota do header que pega id do redux
+															  route.path.split(
+																	":"
+															  )[0] + user.id
+															: route.path
+														: route.path
 												}
-												to={transformDynamicPath(route)}
 												icon={route.icon!}
 											/>
 										</button>

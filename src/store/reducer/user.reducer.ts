@@ -13,6 +13,9 @@ export interface IUser {
 	privilege: number;
 	created_at: Date;
 	manager: boolean | any;
+	config: {
+		theme: string
+	}
 }
 
 interface IUserRequestData {
@@ -28,16 +31,19 @@ interface IAlterUserRequest {
 	cpf: string;
 }
 
+interface CreateUser {
+	name : string;
+	contact : string;
+	password : string;
+}
+
 const service = new UserService();
 export const login = createAsyncThunk(
 	"login",
 	async (intialState: IUserRequestData) => {
 		const response = await service.Login(intialState);
-
-		return {
-			userData: response!.user,
-			token: response!.token,
-		};
+		//@ts-ignore
+		return { userData: response.user, token: response.token };
 	}
 );
 
@@ -46,6 +52,13 @@ export const alterUser = createAsyncThunk(
 	async (intialState: IAlterUserRequest) => {
 		const response = await service.UpdateUser(intialState, toast);
 		return response;
+	}
+);
+
+export const insertUser = createAsyncThunk(
+	"user/insert",
+	async (intialState: CreateUser) => {
+		return await service.createUser(intialState, toast);
 	}
 );
 
@@ -59,7 +72,9 @@ export const userSlice = createSlice({
 		age: 0,
 		cpf: "",
 		token: "",
-		manager: false,
+		config : {
+			theme : "dark"
+		}
 	},
 
 	reducers: {
@@ -77,12 +92,14 @@ export const userSlice = createSlice({
 	},
 	extraReducers(builder) {
 		builder.addCase(login.fulfilled, (state, action) => {
+			console.log('acition.payload', action.payload)
 			state.name = action.payload.userData.name;
 			state.email = action.payload.userData.email;
 			state.age = action.payload.userData.age;
 			state.cpf = action.payload.userData.cpf;
 			state.id = action.payload.userData.id;
 			state.manager = action.payload.userData.manager ?? false;
+			state.config.theme = action.payload.userData.config.theme
 			state.isLogged =
 				(action.payload.userData as any).password != null ?? false;
 			state.token = action.payload.token;
