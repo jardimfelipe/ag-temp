@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Header from "./Header";
 import { useAppSelector } from "../../store/main.store";
 import Login from "../../pages/Signin/Login";
@@ -9,7 +9,6 @@ export function Layout() {
 	const user = useAppSelector((state) => state.user);
 	const localizacao = useLocation();
 
-	console.log('user', user)
 	return (
 		<div className="flex">
 			<ToastContainer theme="colored" />

@@ -131,7 +131,7 @@ export function BarbershopProfile({ }: Props) {
 
 	return (
 		<div className="max-w-5xl mx-auto md:ml-32 mt-24 md:mt-4">
-			<Fab color="primary" sx={{ position: 'absolute', bottom: '15px', right: '10px', backgroundColor: '#27267D' }} onClick={() => setModalCreatePost(true)}><Add /></Fab>
+			<Fab color="primary" sx={{ position: 'fixed', bottom: '15px', right: '10px', backgroundColor: '#27267D' }} onClick={() => setModalCreatePost(true)}><Add /></Fab>
 
 			{/* Profile */}
 			<div className="flex justify-between items-center">

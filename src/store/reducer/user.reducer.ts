@@ -6,6 +6,7 @@ import { api } from "../../service/api";
 export interface IUser {
 	id: string;
 	name: string;
+	contact: string;
 	email: string;
 	age: number;
 	gender: number;

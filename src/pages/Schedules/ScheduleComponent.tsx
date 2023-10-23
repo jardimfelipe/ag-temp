@@ -162,7 +162,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 				/>
 				<Stack>
 					<Button
-						className="mt-4 bg-success hover:bg-primary hover:text-dark"
+						className="my-4 bg-success hover:bg-primary hover:text-dark"
 						onClick={() => getDataInComponents(schedule)}
 					>
 						Agendar
