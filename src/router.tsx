@@ -3,14 +3,17 @@ import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { Feeds } from "./pages/Feeds/Basic";
 import { BarbershopProfile } from "./pages/BarbershopProfile/Base";
-import { House, Storefront, User } from "@phosphor-icons/react";
+import { House, Storefront, User, CalendarCheck, Scissors } from "@phosphor-icons/react";
 import Login from "./pages/Signin/Login";
 import ErrorPage from "./pages/Error";
 import { PerfilBase } from "./pages/Perfil/Base";
 import { BaseSchedule } from "./pages/Schedules/Base";
 import Cadastro from './pages/Cadastro/cadastroUsuario/Basic';
 import CadastroADm from './pages/Cadastro/cadastroAdm/Basic';
-import {BaseScheduleList} from "./pages/ScheduleList/Base";
+import { BaseScheduleList } from "./pages/ScheduleList/Base";
+import CreateService from "./pages/Services/Base"
+import { UserPrivileges } from "./store/reducer/user.reducer";
+
 export const routes = [
 	{
 		icon: <House size={28} />,
@@ -23,6 +26,7 @@ export const routes = [
 		id: "Perfil Barbearia",
 		path: "/barbershop/:barbershopId",
 		Component: BarbershopProfile,
+		privileges: [UserPrivileges.MANAGER, UserPrivileges.ADMIN],
 		hidden: false,
 	},
 	{
@@ -45,23 +49,31 @@ export const routes = [
 		hidden: true,
 	},
 	{
+		icon: <CalendarCheck size={28} />,
 		id: "Agendamento",
 		path: "/schedule/",
 		Component: BaseScheduleList,
 		hidden: false,
 	},
 	{
-		id : "Cadastro",
-		path : "/cadastro",
-		Component : Cadastro,
-		hidden : true
+		id: "Cadastro",
+		path: "/cadastro",
+		Component: Cadastro,
+		hidden: true
 	},
 	{
-		id : "Cadastro Administrador",
-		path : "/cadastro_adm",
-		Component : CadastroADm,
-		hidden : true
+		id: "Cadastro Administrador",
+		path: "/cadastro_adm",
+		Component: CadastroADm,
+		hidden: true
 	},
+	{
+		icon: <Scissors size={28} />,
+		id: "Serviços",
+		path: "/services",
+		Component: CreateService,
+		privileges: [UserPrivileges.MANAGER, UserPrivileges.ADMIN]
+	}
 ];
 export const router = createBrowserRouter([
 	{

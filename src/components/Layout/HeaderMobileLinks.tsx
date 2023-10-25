@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { routes } from "../../router";
 import { useAppDispatch, useAppSelector } from "../../store/main.store";
 import { Link, useNavigate } from "react-router-dom";
@@ -18,11 +18,18 @@ export default function HeaderMobileLinks() {
 	const user = useAppSelector((state) => state.user);
 	const navigate = useNavigate();
 	const [handleMenu, setHandleMenu] = useState(false);
-	const intialName = `${user.name.split(" ")[0]} ${user.name.split(" ")[1]}`;
 	const dispatch = useAppDispatch();
 
 	function handleNavigate(path: string) {
 		navigate(path);
+	}
+
+	function isAllowedRoute(route: any) {
+		const { hidden, privileges } = route
+
+		if (!privileges) return !hidden
+
+		return privileges.includes(user.privilege)
 	}
 
 
@@ -73,7 +80,7 @@ export default function HeaderMobileLinks() {
 						<>
 							{routes.map((route, id) => (
 								<span key={`key-${id}`}>
-									{!route.hidden ? (
+									{isAllowedRoute(route) ? (
 										<button
 											className="w-96 "
 											key={`${route.id}-${id}`}
@@ -89,13 +96,13 @@ export default function HeaderMobileLinks() {
 													// verificar se é rota dinamica
 													route.path.split(":")[1]
 														? // verificar se a rota é de userId
-														  route.path.split(
-																":"
-														  )[1] == "userId"
+														route.path.split(
+															":"
+														)[1] == "userId"
 															? // adicionando uma rota do header que pega id do redux
-															  route.path.split(
-																	":"
-															  )[0] + user.id
+															route.path.split(
+																":"
+															)[0] + user.id
 															: route.path
 														: route.path
 												}

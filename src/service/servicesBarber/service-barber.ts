@@ -9,4 +9,8 @@ export class ServiceBarbersService {
 
 		return service;
 	}
+
+	async createService(service: any) {
+			return await api.post('/service', service)
+	}
 }

@@ -8,17 +8,17 @@ import { useNavigate } from "react-router-dom";
 // type Props = {}
 
 export default function Login() {
-	const [email, setEmail] = useState<string>("");
+	const [contactFormat, setContactFormat] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const dispatch = useAppDispatch();
 	const user = useAppSelector((state) => state.user);
 	const navigate = useNavigate();
 	function onSubmit() {
-		dispatch(login({ email, password }));
+		dispatch(login({ contactFormat, password }));
 	}
 
 	useEffect(() => {
-		if (user.id != "") {
+		if (user.id !== "") {
 			navigate("/feed");
 			console.log("aqui")
 		}
@@ -32,9 +32,9 @@ export default function Login() {
 				</span>
 				<div>
 					<Input
-						title="Email ou Telefone"
-						value={email}
-						onChange={(e) => setEmail(e.currentTarget.value)}
+						title="Telefone"
+						value={contactFormat}
+						onChange={(e) => setContactFormat(e.currentTarget.value)}
 					></Input>
 					<Input
 						title="Senha"
@@ -46,11 +46,11 @@ export default function Login() {
 						<Button className="flex ml-2 mt-10 ml-2 py-3 px-8" onClick={onSubmit}>
 							Login
 						</Button>
-						<Button className="flex  ml-2 mt-10 mr-2 py-3 px-8" onClick={()=> navigate('/cadastro')}>
+						<Button className="flex  ml-2 mt-10 mr-2 py-3 px-8" onClick={() => navigate('/cadastro')}>
 							Cadastrar
 						</Button>
 					</div>
-					
+
 				</div>
 			</div>
 		</section>

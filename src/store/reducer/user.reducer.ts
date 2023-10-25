@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { UserService } from "../../service/user/count-profile";
-import { api } from "../../service/api";
 
 export interface IUser {
 	id: string;
@@ -11,7 +10,7 @@ export interface IUser {
 	age: number;
 	gender: number;
 	cpf: string;
-	privilege: number;
+	privilege?: UserPrivileges;
 	created_at: Date;
 	manager: boolean | any;
 	config: {
@@ -19,8 +18,15 @@ export interface IUser {
 	}
 }
 
+export enum UserPrivileges {
+	CLIENT = 'Client',
+	MANAGER = 'Manager',
+	BARBER = 'Barber',
+	ADMIN = 'Admin'
+}
+
 interface IUserRequestData {
-	email: string;
+	contactFormat: string;
 	password: string;
 }
 
@@ -43,8 +49,10 @@ export const login = createAsyncThunk(
 	"login",
 	async (intialState: IUserRequestData) => {
 		const response = await service.Login(intialState);
+		const privilege = await service.GetPrivilege(response?.token as unknown as string)
+		console.log('privilege', privilege)
 		//@ts-ignore
-		return { userData: response.user, token: response.token };
+		return { userData: {...response.user, privilege}, token: response.token };
 	}
 );
 
@@ -73,6 +81,8 @@ export const userSlice = createSlice({
 		age: 0,
 		cpf: "",
 		token: "",
+		privilege:UserPrivileges.CLIENT,
+			manager: false,
 		config : {
 			theme : "dark"
 		}
@@ -89,11 +99,12 @@ export const userSlice = createSlice({
 			state.age = 0;
 			state.token = "";
 			state.manager = false;
+			state.privilege = UserPrivileges.CLIENT
 		},
 	},
 	extraReducers(builder) {
 		builder.addCase(login.fulfilled, (state, action) => {
-			console.log('acition.payload', action.payload)
+			console.log(action.payload)
 			state.name = action.payload.userData.name;
 			state.email = action.payload.userData.email;
 			state.age = action.payload.userData.age;
@@ -101,6 +112,7 @@ export const userSlice = createSlice({
 			state.id = action.payload.userData.id;
 			state.manager = action.payload.userData.manager ?? false;
 			state.config.theme = "dark"
+			state.privilege = action.payload.userData.privilege
 			state.isLogged =
 				(action.payload.userData as any).password != null ?? false;
 			state.token = action.payload.token;
@@ -114,7 +126,7 @@ export const userSlice = createSlice({
 			);
 		});
 
-		builder.addCase(alterUser.fulfilled, (state, action) => {
+		builder.addCase(alterUser.fulfilled, (state) => {
 			//TODO resolver a atualização em tempo real, pode quebrar a aplicação inteira, faça backup
 			// state.name = action.payload.name;
 			// state.email = action.payload.email;

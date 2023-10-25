@@ -4,7 +4,7 @@ import { IBarberServices } from "../../service/schedule/types";
 import CircularProgress from "@mui/material/CircularProgress";
 
 type Props = {
-	setService: (date: IBarberServices) => void;
+	setService?: (date: IBarberServices) => void;
 	barbershopId: string;
 };
 
@@ -25,7 +25,7 @@ export function ServiceList({ setService, barbershopId }: Props) {
 	}, []);
 
 	function selectService(service: IBarberServices) {
-		setService(service);
+		setService?.(service);
 	}
 
 	function handleService(data: any, id: string) {
@@ -51,15 +51,14 @@ export function ServiceList({ setService, barbershopId }: Props) {
 					>
 						<li
 							key={"key-" + service.id}
-							className={`flex flex-col p-4 m-4 base-an rounded-lg bg-darkness hover:shadow-lg ${
-								service.id === serviceId
-									? "bg-graydark font-semibold"
-									: undefined
-							}`}
+							className={`flex flex-col p-4 m-4 base-an rounded-lg bg-darkness hover:shadow-lg ${service.id === serviceId
+								? "bg-graydark font-semibold"
+								: undefined
+								}`}
 						>
 							<div>Nome: {service.name}</div>
-							<div>Duração: {service.duration}</div>
-							<div>Preço: {service.price}</div>
+							<div>Duração: {service.duration} minutos</div>
+							<div>Preço: R${service.price}</div>
 						</li>
 					</button>
 				);

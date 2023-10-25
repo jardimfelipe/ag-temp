@@ -1,4 +1,5 @@
-import { ISchedule } from "../../store/types/schedule";
+import { toast } from "react-toastify";
+import { ISchedule, IScheduleModel } from "../../store/types/schedule";
 import { api } from "../api";
 
 export class ScheduleService {
@@ -9,10 +10,10 @@ export class ScheduleService {
 		return schedule.data
 	}
 
-	async createNewSchedule(schedule:ISchedule) {
+	async createNewSchedule(schedule:IScheduleModel) {
 		try {
 			const scheduleData = await api.post(`/schedule`, schedule)
-
+			toast.success("Agendamento Feito!");
 			return scheduleData
 		} catch (error) {
 			return error

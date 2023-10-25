@@ -13,6 +13,8 @@ export interface ISchedule {
 	withUserClient: IUser
 }
 
+export interface IScheduleModel extends Omit<ISchedule, "description" | "withUserClient">{}
+
 export interface IStateSchedule {
 	main: ISchedule;
 	scheduleExternal: ISchedule[];

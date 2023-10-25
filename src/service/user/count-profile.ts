@@ -1,10 +1,10 @@
 // import { UserTypesMutations } from "../../store/user/user-types";
 import { toast } from "react-toastify";
-import { IUser } from "../../store/reducer/user.reducer";
+import { IUser, UserPrivileges } from "../../store/reducer/user.reducer";
 import { api } from "../api";
 
 interface IUserLogin {
-	email: string;
+	contactFormat: string;
 	password: string;
 }
 
@@ -52,10 +52,10 @@ export class UserService {
 		return newUser;
 	}
 
-	async Login({ email, password }: IUserLogin) {
+	async Login({ contactFormat, password }: IUserLogin) {
 		try {
 			const user = await api
-				.post<string>("login/client", { email, password })
+				.post<string>("login/client", { contactFormat, password })
 				.then((value: any) => value)
 				.catch((err: string) => console.log(err));
 
@@ -75,6 +75,15 @@ export class UserService {
 			token: localStorage.getItem("Authorization")?.split(" ")[1],
 		});
 		return validation.data;
+	}
+
+	async GetPrivilege(token: string):Promise<UserPrivileges> {
+		const {data} = await api.get("login/get/privilege", {
+			headers: {
+				Authorization: token,
+			},
+		})
+		return data
 	}
 
 	logon() {

@@ -33,11 +33,11 @@ export function Feeds() {
 					<CircularProgress color="inherit"></CircularProgress>
 				</div>
 			) : (
-				<main className="flex flex-col items-center">
+				<main className="flex flex-col items-center gap-5">
 					{/* <Search className="w-96 mt-4 mb-8" /> */}
 					{barbershopsList.map((establishment) => (
 						<section
-							className="first:p-0 first:overflow-hidden dark:bg-darkness shadow-lg rounded-lg w-72 m-14 sm:m-10"
+							className="first:p-0 first:overflow-hidden dark:bg-darkness shadow-lg rounded-lg w-72 sm:m-10"
 							key={
 								establishment.barbershop.id +
 								"-" +

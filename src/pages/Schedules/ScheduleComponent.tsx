@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAppSelector } from "../../store/main.store";
 import dayjs from "dayjs";
 import { HourList } from "./HourList";
@@ -10,7 +10,7 @@ import { IBarberServices as IBarberServiceResponse } from "../../service/schedul
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ScheduleService } from "../../service/schedule";
-import { ISchedule } from "../../store/types/schedule";
+import { IScheduleModel } from "../../store/types/schedule";
 import "dayjs/locale/pt-br";
 import { useNavigate } from "react-router-dom";
 import { Grid, Stack } from "@mui/material";
@@ -46,7 +46,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 		minute: 0,
 	});
 
-	async function setDataInDatabase(form: ISchedule) {
+	async function setDataInDatabase(form: IScheduleModel) {
 		await scheduleService.createNewSchedule(form);
 	}
 
@@ -93,7 +93,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 			}`;
 
 		isCorrectForm = true;
-		const form: ISchedule = {
+		const form: IScheduleModel = {
 			title: `${intialName} ${service.name}`,
 			start: dayjs(dateStartFormated).toDate(),
 			end: dayjs(dateEndFormated).toDate(),
@@ -121,7 +121,7 @@ export function ScheduleComponent({ barbershopId }: Props) {
 	}
 
 	function navigateHandle() {
-		navigate("/feed");
+		navigate("/schedule");
 	}
 
 	return (
