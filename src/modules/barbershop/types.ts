@@ -59,7 +59,7 @@ export interface ServiceModel {
 	name: string;
 	description: string;
 	duration: string | number;
-	price: string | number;
+	price: string;
   }
 
   export interface BarberModel {

@@ -10,10 +10,18 @@ import {
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { NavLink, useSearchParams } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 import { LoginPayload } from "../modules/auth/types";
 import useLogin from "../modules/auth/services/useLogin";
 import { Lock, Phone } from "@mui/icons-material";
+import { phoneSchema } from "../utils/schemaValidations";
+
+const schema = yup.object({
+  contactFormat: phoneSchema.required("Por favor, informe seu número"),
+  password: yup.string().required("Insira sua senha"),
+});
 
 const Login = () => {
   const login = useLogin();
@@ -23,6 +31,7 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm({
+    resolver: yupResolver(schema),
     defaultValues: {
       contactFormat: searchParams.get("phone") || "",
       password: "",
@@ -48,9 +57,6 @@ const Login = () => {
             <Controller
               name="contactFormat"
               control={control}
-              rules={{
-                required: "Insira um telefone válido",
-              }}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -69,9 +75,6 @@ const Login = () => {
             />
             <Controller
               name="password"
-              rules={{
-                required: "Por favor, informe sua senha",
-              }}
               control={control}
               render={({ field }) => (
                 <TextField

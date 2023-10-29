@@ -1,11 +1,8 @@
 import {
-  Box,
   Button,
   Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
   Stack,
   useMediaQuery,
 } from "@mui/material";

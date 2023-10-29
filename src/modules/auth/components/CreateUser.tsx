@@ -9,13 +9,23 @@ import {
   Typography,
 } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
 import useCreateUser from "../services/useCreateUser";
 import { CreateUserPayload, IUser } from "../types";
 import { toast } from "react-toastify";
+import { phoneSchema } from "../../../utils/schemaValidations";
 
 type Props = {
   onSuccess: (user: IUser) => void;
 };
+
+const schema = yup.object({
+  name: yup.string().required("Precisamos do seu nome"),
+  contact: phoneSchema.required("Seu número é importante :)"),
+  password: yup.string().required("Insira sua senha"),
+});
 
 const CreateUser = ({ onSuccess }: Props) => {
   const createUser = useCreateUser();
@@ -24,6 +34,7 @@ const CreateUser = ({ onSuccess }: Props) => {
     formState: { errors },
     handleSubmit,
   } = useForm({
+    resolver: yupResolver(schema),
     defaultValues: {
       name: "",
       contact: "",

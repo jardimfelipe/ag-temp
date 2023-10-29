@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
   Button,
@@ -10,18 +11,30 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
-import { ServiceModel } from "../types";
-import { useParams } from "react-router-dom";
-import useCreateService from "../services/useCreateService";
 import { LoadingButton } from "@mui/lab";
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+import { ServiceModel } from "../types";
+import useCreateService from "../services/useCreateService";
 import { theme } from "../../../theme";
+import { numberSchema } from "../../../utils/schemaValidations";
+import CurrencyInput from "../../../components/CurrencyInput";
 
 type Props = {
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
 };
+
+const schema = yup.object({
+  name: yup.string().required("Campo obrigatório"),
+  description: yup.string().required("Campo obrigatório"),
+  duration: numberSchema.required(),
+  price: yup.string().required("Precisamos saber o preço"),
+});
 
 const CreateServiceModal = ({ open, onClose, onSuccess }: Props) => {
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
@@ -33,6 +46,7 @@ const CreateServiceModal = ({ open, onClose, onSuccess }: Props) => {
     handleSubmit,
     reset,
   } = useForm({
+    resolver: yupResolver(schema),
     defaultValues: {
       name: "",
       description: "",
@@ -46,7 +60,7 @@ const CreateServiceModal = ({ open, onClose, onSuccess }: Props) => {
       const model = {
         ...data,
         duration: +data.duration,
-        price: +data.price,
+        price: data.price,
         barbershopId: barbershopId as string,
       };
 
@@ -77,9 +91,6 @@ const CreateServiceModal = ({ open, onClose, onSuccess }: Props) => {
             <Controller
               name="name"
               control={control}
-              rules={{
-                required: "Campo obrigatório",
-              }}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -91,9 +102,6 @@ const CreateServiceModal = ({ open, onClose, onSuccess }: Props) => {
             />
             <Controller
               name="description"
-              rules={{
-                required: "Campo obrigatório",
-              }}
               control={control}
               render={({ field }) => (
                 <TextField
@@ -109,9 +117,6 @@ const CreateServiceModal = ({ open, onClose, onSuccess }: Props) => {
 
             <Controller
               name="duration"
-              rules={{
-                required: "Campo obrigatório",
-              }}
               control={control}
               render={({ field }) => (
                 <TextField
@@ -130,9 +135,6 @@ const CreateServiceModal = ({ open, onClose, onSuccess }: Props) => {
 
             <Controller
               name="price"
-              rules={{
-                required: "Campo obrigatório",
-              }}
               control={control}
               render={({ field }) => (
                 <TextField
@@ -141,6 +143,7 @@ const CreateServiceModal = ({ open, onClose, onSuccess }: Props) => {
                   error={!!errors.price}
                   helperText={errors.price?.message}
                   InputProps={{
+                    inputComponent: CurrencyInput as any,
                     startAdornment: (
                       <InputAdornment position="start">R$</InputAdornment>
                     ),
