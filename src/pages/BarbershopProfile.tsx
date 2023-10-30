@@ -37,7 +37,11 @@ dayjs.extend(relativeTime);
 const BarbershopProfile = () => {
   const { user } = useContext(AuthContext) as UserContextType;
   const { barbershopId } = useParams<{ barbershopId: string }>();
-  const { data: barbershop, isLoading } = useBarbershopByIdQuery(barbershopId);
+  const {
+    data: barbershop,
+    isLoading,
+    refetch,
+  } = useBarbershopByIdQuery(barbershopId);
   const uploadAvatar = useUploadBarbershopAvatar();
   const createPost = useCreatePost();
 
@@ -57,6 +61,7 @@ const BarbershopProfile = () => {
         {
           onSuccess: () => {
             toast.success("Avatar alterado com sucesso!");
+            refetch();
           },
         }
       );

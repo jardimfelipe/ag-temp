@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getSavedState } from "../utils/localStorage";
 
-
+const API_URL = import.meta.env.VITE_API_URL
 export const api = axios.create({
-	baseURL: "http://localhost:3001/",
+	baseURL: API_URL,
 });
 
 api.interceptors.request.use(function (config) {
