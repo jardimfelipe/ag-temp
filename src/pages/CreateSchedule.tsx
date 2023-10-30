@@ -20,16 +20,15 @@ import {
 import ContactButton from "../components/ContactButton";
 import ContainedIconButton from "../components/ContainedIconButton";
 import DaysButtons from "../components/DaysButtons";
+import { AuthContext } from "../modules/auth/context/auth";
+import { UserContextType } from "../modules/auth/types";
 import BarbersList from "../modules/barbershop/components/BarbersList";
+import HoursList from "../modules/barbershop/components/HoursList";
+import LocationInfo from "../modules/barbershop/components/LocationInfo";
 import { ServiceList } from "../modules/barbershop/components/ServiceList";
 import useBarbershopByIdQuery from "../modules/barbershop/services/useBarberShopByIdQuery";
 import useBarbershopServicesQuery from "../modules/barbershop/services/useBarbershopServicesQuery";
-
-import { AuthContext } from "../modules/auth/context/auth";
-import { UserContextType } from "../modules/auth/types";
 import usePostSchedule from "../modules/barbershop/services/usePostSchedule";
-import HoursList from "../modules/barbershop/components/HoursList";
-import LocationInfo from "../modules/barbershop/components/LocationInfo";
 import { SchedulesQueryKeys } from "../modules/schedules/types";
 
 type RouteParams = {

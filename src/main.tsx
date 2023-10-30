@@ -13,8 +13,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import AuthProvider from "./modules/auth/context/auth.tsx";
-import { theme } from "./theme.ts";
 import router from "./router.tsx";
+import { theme } from "./theme.ts";
 
 const queryClient = new QueryClient({
   defaultOptions: {

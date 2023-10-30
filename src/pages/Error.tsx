@@ -1,6 +1,7 @@
 import { useNavigate, useRouteError } from "react-router-dom";
-import Header from "../components/Layout/Header";
+
 import Button from "../components/Button";
+import Header from "../components/Layout/Header";
 
 export default function ErrorPage() {
 	const error: any = useRouteError();

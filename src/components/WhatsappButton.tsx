@@ -1,5 +1,6 @@
 import { WhatsApp } from '@mui/icons-material'
 import { Fab, Tooltip } from '@mui/material'
+
 import { useCurrentPath } from '../hooks/useCurrentPath'
 
 const ON_TOP_ROUTES = ['/barbershop/:barbershopId', '/services']

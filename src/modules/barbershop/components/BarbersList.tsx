@@ -6,6 +6,7 @@ import {
   CardHeader,
   Grid,
   IconButton,
+  Skeleton,
   darken,
 } from "@mui/material";
 
@@ -18,7 +19,9 @@ type Props = {
 };
 
 const BarbersList = ({ barbershopId, selectedBarberId, onSelect }: Props) => {
-  const { data: barbers = [] } = useBarbersQuery(barbershopId as string);
+  const { data: barbers = [], isLoading } = useBarbersQuery(
+    barbershopId as string
+  );
 
   const selectedBarber = selectedBarberId
     ? barbers.find((barber) => barber.id === selectedBarberId)
@@ -31,7 +34,15 @@ const BarbersList = ({ barbershopId, selectedBarberId, onSelect }: Props) => {
   }
   return (
     <>
-      {selectedBarberId ? (
+      {isLoading ? (
+        [...new Array(4)].map((_, index) => (
+          <Skeleton
+            key={index}
+            variant="rounded"
+            sx={{ borderRadius: "20px", height: "6rem" }}
+          />
+        ))
+      ) : selectedBarberId ? (
         <Grid item xs={12}>
           <Card
             sx={{
