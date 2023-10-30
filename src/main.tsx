@@ -1,29 +1,42 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { RouterProvider } from "react-router-dom";
-import "./index.css";
-import { router } from "./router.tsx";
-import { Provider } from "react-redux";
-import { store } from "./store/main.store.ts";
-import { PersistGate } from "redux-persist/integration/react";
-import { persistStore } from "redux-persist";
+import { ToastContainer } from "react-toastify";
 
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from "@mui/material";
-import { themeCustom } from "./materialStyling";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
+import "react-toastify/dist/ReactToastify.css";
+import "./global.css";
 
-const persistor = persistStore(store);
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+import AuthProvider from "./modules/auth/context/auth.tsx";
+import { theme } from "./theme.ts";
+import router from "./router.tsx";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<React.StrictMode>
-		<ThemeProvider theme={themeCustom}>
-			<CssBaseline />
-			<Provider store={store}>
-				<PersistGate loading={null} persistor={persistor}>
-					<RouterProvider router={router} />
-				</PersistGate>
-			</Provider>
-		</ThemeProvider>
-	</React.StrictMode>
+  <React.StrictMode>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <ToastContainer theme="colored" />
+          <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+            <CssBaseline />
+          </QueryClientProvider>
+        </LocalizationProvider>
+      </ThemeProvider>
+    </AuthProvider>
+  </React.StrictMode>
 );

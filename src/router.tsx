@@ -1,86 +1,103 @@
 import { createBrowserRouter } from "react-router-dom";
-// import App from "./App";
-import { Layout } from "./components/Layout";
-import { Feeds } from "./pages/Feeds/Basic";
-import { BarbershopProfile } from "./pages/BarbershopProfile/Base";
-import { House, Storefront, User, CalendarCheck, Scissors } from "@phosphor-icons/react";
-import Login from "./pages/Signin/Login";
-import ErrorPage from "./pages/Error";
-import { PerfilBase } from "./pages/Perfil/Base";
-import { BaseSchedule } from "./pages/Schedules/Base";
-import Cadastro from './pages/Cadastro/cadastroUsuario/Basic';
-import CadastroADm from './pages/Cadastro/cadastroAdm/Basic';
-import { BaseScheduleList } from "./pages/ScheduleList/Base";
-import CreateService from "./pages/Services/Base"
-import { UserPrivileges } from "./store/reducer/user.reducer";
+
+import {
+  AccessTime,
+  Business,
+  ContentCut,
+  Home,
+  PersonOutline,
+  Storefront,
+} from "@mui/icons-material";
+
+import App from "./App";
+import { UserPrivileges } from "./modules/auth/types";
+import AdminBarbershops from "./pages/AdminBarbershops";
+import Barbers from "./pages/BarbershopBarbers";
+import BarbershopProfile from "./pages/BarbershopProfile";
+import BarbershopServices from "./pages/BarbershopServices";
+import CreateSchedule from "./pages/CreateSchedule";
+import Feed from "./pages/Feed";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import Schedules from "./pages/Schedules";
+import SingUp from "./pages/SingUp";
 
 export const routes = [
-	{
-		icon: <House size={28} />,
-		id: "Feeds",
-		path: "/feed",
-		Component: Feeds,
-	},
-	{
-		icon: <Storefront size={28} />,
-		id: "Perfil Barbearia",
-		path: "/barbershop/:barbershopId",
-		Component: BarbershopProfile,
-		privileges: [UserPrivileges.MANAGER, UserPrivileges.ADMIN],
-		hidden: false,
-	},
-	{
-		id: "Login",
-		path: "/login",
-		Component: Login,
-		hidden: true,
-	},
-	{
-		icon: <User size={28} />,
-		id: "Perfil",
-		path: "/user/:userId",
-		Component: PerfilBase,
-		hidden: false,
-	},
-	{
-		id: "Schedule",
-		path: "/feed/schedule/:barbershopId",
-		Component: BaseSchedule,
-		hidden: true,
-	},
-	{
-		icon: <CalendarCheck size={28} />,
-		id: "Agendamento",
-		path: "/schedule/",
-		Component: BaseScheduleList,
-		hidden: false,
-	},
-	{
-		id: "Cadastro",
-		path: "/cadastro",
-		Component: Cadastro,
-		hidden: true
-	},
-	{
-		id: "Cadastro Administrador",
-		path: "/cadastro_adm",
-		Component: CadastroADm,
-		hidden: true
-	},
-	{
-		icon: <Scissors size={28} />,
-		id: "Serviços",
-		path: "/services",
-		Component: CreateService,
-		privileges: [UserPrivileges.MANAGER, UserPrivileges.ADMIN]
-	}
+  {
+    path: "/feed",
+    element: <Feed />,
+    icon: <Home />,
+    menu: true,
+    label: "Feed",
+    privileges: [UserPrivileges.CLIENT, UserPrivileges.ADMIN],
+  },
+  {
+    path: "/agendamento/:barbershopId",
+    element: <CreateSchedule />,
+  },
+  {
+    path: "/meu-perfil",
+    element: <Profile />,
+    icon: <PersonOutline />,
+    menu: true,
+    label: "Perfil",
+  },
+  {
+    path: "/agendamentos",
+    element: <Schedules />,
+    icon: <AccessTime />,
+    menu: true,
+    label: "Agenda",
+    privileges: [
+      UserPrivileges.BARBER,
+      UserPrivileges.MANAGER,
+      UserPrivileges.CLIENT,
+    ],
+  },
+  {
+    path: "/admin",
+    element: <AdminBarbershops />,
+    privileges: [UserPrivileges.ADMIN],
+    icon: <Business />,
+    label: "Admin",
+    menu: true,
+  },
+  {
+    path: "/barbearia/:barbershopId",
+    element: <BarbershopProfile />,
+    icon: <Storefront />,
+    menu: true,
+    label: "Barbearia",
+    privileges: [UserPrivileges.BARBER, UserPrivileges.MANAGER],
+  },
+  {
+    path: "/barbearia/serviços/:barbershopId",
+    element: <BarbershopServices />,
+    icon: <ContentCut />,
+    label: "Serviços",
+    privileges: [UserPrivileges.BARBER, UserPrivileges.MANAGER],
+  },
+  {
+    path: "/barbearia/barbeiros/:barbershopId",
+    element: <Barbers />,
+    privileges: [UserPrivileges.MANAGER],
+  },
 ];
-export const router = createBrowserRouter([
-	{
-		id: "Home",
-		path: "/",
-		element: <Layout />,
-		children: routes,
-		errorElement: <ErrorPage />,
-	},
+
+const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signUp",
+    element: <SingUp />,
+  },
+  {
+    path: "/",
+    element: <App />,
+    children: routes,
+  },
 ]);
+
+export default router;
