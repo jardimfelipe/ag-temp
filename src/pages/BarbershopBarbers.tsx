@@ -1,10 +1,12 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { Fab, Grid, Stack, Typography } from "@mui/material";
-import BarbersList from "../modules/barbershop/components/BarbersList";
-import ContainedIconButton from "../components/ContainedIconButton";
-import { Add, ChevronLeft } from "@mui/icons-material";
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { Add, ChevronLeft } from "@mui/icons-material";
+import { Fab, Grid, Stack, Typography } from "@mui/material";
+
+import ContainedIconButton from "../components/ContainedIconButton";
 import BarberCreateModal from "../modules/barbershop/components/BarberCreateModal";
+import BarbersList from "../modules/barbershop/components/BarbersList";
 
 const Barbers = () => {
   const { barbershopId } = useParams<{ barbershopId: string }>();

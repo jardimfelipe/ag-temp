@@ -1,4 +1,12 @@
+import { useContext, useMemo, useState } from "react";
+import { useQueryClient } from "react-query";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import dayjs, { Dayjs } from "dayjs";
+
 import { AccessTime, ChevronLeft, Close, Paid } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import {
   Card,
   CardContent,
@@ -8,24 +16,20 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { ServiceList } from "../modules/barbershop/components/ServiceList";
-import useBarbershopServicesQuery from "../modules/barbershop/services/useBarbershopServicesQuery";
-import { useContext, useMemo, useState } from "react";
-import dayjs, { Dayjs } from "dayjs";
+
+import ContactButton from "../components/ContactButton";
+import ContainedIconButton from "../components/ContainedIconButton";
 import DaysButtons from "../components/DaysButtons";
 import BarbersList from "../modules/barbershop/components/BarbersList";
+import { ServiceList } from "../modules/barbershop/components/ServiceList";
+import useBarbershopByIdQuery from "../modules/barbershop/services/useBarberShopByIdQuery";
+import useBarbershopServicesQuery from "../modules/barbershop/services/useBarbershopServicesQuery";
+
 import { AuthContext } from "../modules/auth/context/auth";
 import { UserContextType } from "../modules/auth/types";
 import usePostSchedule from "../modules/barbershop/services/usePostSchedule";
-import { toast } from "react-toastify";
-import { LoadingButton } from "@mui/lab";
 import HoursList from "../modules/barbershop/components/HoursList";
-import ContactButton from "../components/ContactButton";
-import ContainedIconButton from "../components/ContainedIconButton";
-import useBarbershopByIdQuery from "../modules/barbershop/services/useBarberShopByIdQuery";
 import LocationInfo from "../modules/barbershop/components/LocationInfo";
-import { useQueryClient } from "react-query";
 import { SchedulesQueryKeys } from "../modules/schedules/types";
 
 type RouteParams = {

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import useAllBarbershopQuery from "../services/useAllBarbershopQuery";
 import { Grid, Switch } from "@mui/material";
 import {
   DataGrid,
@@ -7,6 +6,8 @@ import {
   GridRowParams,
   GridToolbar,
 } from "@mui/x-data-grid";
+
+import useAllBarbershopQuery from "../services/useAllBarbershopQuery";
 import useChangeBarbershopStatus from "../services/useChangeBarbershopStatus";
 import { IBarbershop } from "../types";
 

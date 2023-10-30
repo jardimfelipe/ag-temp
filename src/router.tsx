@@ -1,9 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import Login from "./pages/Login";
-import App from "./App";
-import Feed from "./pages/Feed";
-import CreateSchedule from "./pages/CreateSchedule";
-import Profile from "./pages/Profile";
+
 import {
   AccessTime,
   Business,
@@ -12,13 +8,19 @@ import {
   PersonOutline,
   Storefront,
 } from "@mui/icons-material";
-import Schedules from "./pages/Schedules";
-import BarbershopProfile from "./pages/BarbershopProfile";
-import BarbershopServices from "./pages/BarbershopServices";
+
+import App from "./App";
 import { UserPrivileges } from "./modules/auth/types";
-import SingUp from "./pages/SingUp";
 import AdminBarbershops from "./pages/AdminBarbershops";
 import Barbers from "./pages/BarbershopBarbers";
+import BarbershopProfile from "./pages/BarbershopProfile";
+import BarbershopServices from "./pages/BarbershopServices";
+import CreateSchedule from "./pages/CreateSchedule";
+import Feed from "./pages/Feed";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import Schedules from "./pages/Schedules";
+import SingUp from "./pages/SingUp";
 
 export const routes = [
   {

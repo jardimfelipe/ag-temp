@@ -1,12 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+
+import { Box, Container, useMediaQuery } from "@mui/material";
+
+import { DRAWER_WIDTH, Navigation } from "./components/Navigation";
 import { AuthContext } from "./modules/auth/context/auth";
 import { UserContextType } from "./modules/auth/types";
-import { Outlet, useNavigate } from "react-router-dom";
-import { getSavedState } from "./utils/localStorage";
-import { DRAWER_WIDTH, Navigation } from "./components/Navigation";
-import { Box, Container, useMediaQuery } from "@mui/material";
 import { theme } from "./theme";
+import { getSavedState } from "./utils/localStorage";
+
+
 
 function App() {
   const { insertUser } = useContext(AuthContext) as UserContextType;

@@ -1,6 +1,8 @@
 import { useQuery } from "react-query"
-import { api } from "../../../services/api"
+
 import { AxiosResponse } from "axios"
+
+import { api } from "../../../services/api"
 import { AuthQueryKeys, IUser } from "../../auth/types"
 
 const useUsersQuery = () => {

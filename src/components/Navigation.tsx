@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   BottomNavigation,
   BottomNavigationAction,
@@ -11,11 +13,10 @@ import {
   Paper,
   useMediaQuery,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
-import { routes } from "../router";
 import { AuthContext } from "../modules/auth/context/auth";
 import { UserContextType } from "../modules/auth/types";
+import { routes } from "../router";
 import { theme } from "../theme";
 import { useCurrentPath } from "../utils/useCurrentPath";
 

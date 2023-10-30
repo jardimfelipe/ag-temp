@@ -1,5 +1,6 @@
-import { Stack } from "@mui/material";
 import { PropsWithChildren } from "react";
+
+import { Stack } from "@mui/material";
 
 const EmptyStateContainer = (props: PropsWithChildren) => {
   return (

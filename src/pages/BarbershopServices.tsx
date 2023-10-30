@@ -1,12 +1,15 @@
-import { Fab, Grid, Stack, Typography } from "@mui/material";
-import { ServiceList } from "../modules/barbershop/components/ServiceList";
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { Add, ChevronLeft } from "@mui/icons-material";
+import { Fab, Grid, Stack, Typography } from "@mui/material";
+
+import ContainedIconButton from "../components/ContainedIconButton";
 import { AuthContext } from "../modules/auth/context/auth";
 import { UserContextType } from "../modules/auth/types";
-import { Add, ChevronLeft } from "@mui/icons-material";
 import CreateServiceModal from "../modules/barbershop/components/ServiceCreateModal";
-import ContainedIconButton from "../components/ContainedIconButton";
-import { useNavigate } from "react-router-dom";
+import { ServiceList } from "../modules/barbershop/components/ServiceList";
+
 
 const BarbershopServices = () => {
   const navigate = useNavigate();

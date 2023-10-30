@@ -1,3 +1,8 @@
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -6,14 +11,12 @@ import {
   Stack,
   useMediaQuery,
 } from "@mui/material";
-import UsersSelect from "../../auth/components/UsersSelect";
+
 import { theme } from "../../../theme";
-import { LoadingButton } from "@mui/lab";
-import { useState } from "react";
+import UsersSelect from "../../auth/components/UsersSelect";
 import { IUser } from "../../auth/types";
-import { useParams } from "react-router-dom";
 import useCreateBarber from "../services/useCreateBarber";
-import { toast } from "react-toastify";
+
 
 type Props = {
   open: boolean;

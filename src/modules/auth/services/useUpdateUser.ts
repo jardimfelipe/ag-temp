@@ -1,7 +1,7 @@
 import { useMutation } from "react-query"
 
-import { UserPayload } from "../types";
 import { api } from "../../../services/api";
+import { UserPayload } from "../types";
 
 const useUpdateUser = () => {
     return useMutation(

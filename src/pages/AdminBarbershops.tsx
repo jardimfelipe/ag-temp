@@ -1,4 +1,5 @@
 import { Grid, Typography } from "@mui/material";
+
 import AllBarbershopsList from "../modules/barbershop/components/AllBarbershopsList";
 
 const AdminBarbershops = () => {

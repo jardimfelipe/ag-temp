@@ -1,12 +1,14 @@
+import { useContext } from "react";
 import { useMutation } from "react-query"
+import { useNavigate } from "react-router-dom";
+
 import { AxiosResponse } from "axios";
 
-import { LoginPayload, UserContextType, UserPrivileges } from "../types";
 import { api } from "../../../services/api";
-import { useContext } from "react";
-import { AuthContext } from "../context/auth";
 import { saveState } from "../../../utils/localStorage";
-import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/auth";
+import { LoginPayload, UserContextType, UserPrivileges } from "../types";
+
 
 const FEED_USER_PRIVILEGES = [
   UserPrivileges.ADMIN,

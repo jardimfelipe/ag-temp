@@ -1,5 +1,4 @@
 import { Close } from "@mui/icons-material";
-import useBarbersQuery from "../services/useBarbersQuery";
 import {
   Avatar,
   Card,
@@ -9,6 +8,8 @@ import {
   IconButton,
   darken,
 } from "@mui/material";
+
+import useBarbersQuery from "../services/useBarbersQuery";
 
 type Props = {
   barbershopId: string;

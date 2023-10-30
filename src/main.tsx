@@ -1,19 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import { RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import { theme } from "./theme.ts";
-import router from "./router.tsx";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+
 
 import "react-toastify/dist/ReactToastify.css";
 import "./global.css";
 
-import AuthProvider from "./modules/auth/context/auth.tsx";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+import AuthProvider from "./modules/auth/context/auth.tsx";
+import router from "./router.tsx";
+import { theme } from "./theme.ts";
 
 const queryClient = new QueryClient({
   defaultOptions: {

@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
   Button,
   Dialog,
@@ -5,8 +7,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Stack,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 
 import { Geolocation } from "./icons/GeolocationIcon";
 
@@ -31,8 +33,6 @@ const GeolocationModal = ({ onAgree }: Props) => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         function (position) {
-          console.log("Latitude: " + position.coords.latitude);
-          console.log("Longitude: " + position.coords.longitude);
           onAgree({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
@@ -63,14 +63,14 @@ const GeolocationModal = ({ onAgree }: Props) => {
       <DialogTitle textAlign="center" justifyContent="center">
         Precisamos da sua localização!
       </DialogTitle>
-      <DialogContent className="flex justify-center flex-col items-center">
-        <Geolocation
-          sx={{ width: "200px", height: "200px", fill: "#9aa5ce" }}
-        />
-        <DialogContentText justifyContent="center" sx={{ mt: 2 }}>
-          Para ver as barbearias mais próximas, precisamos saber a sua
-          localização
-        </DialogContentText>
+      <DialogContent>
+        <Stack justifyContent="center" alignItems="center" gap={2}>
+          <Geolocation sx={{ width: "200px", height: "200px" }} />
+          <DialogContentText justifyContent="center" sx={{ mt: 2 }}>
+            Para ver as barbearias mais próximas, precisamos saber a sua
+            localização
+          </DialogContentText>
+        </Stack>
       </DialogContent>
 
       <DialogActions>

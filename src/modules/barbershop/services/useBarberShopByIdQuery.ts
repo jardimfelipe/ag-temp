@@ -1,7 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { useQuery } from "react-query"
-import { api } from "../../../services/api"
+
 import { AxiosResponse } from "axios"
+
+import { api } from "../../../services/api"
 import { BarbershopQueryKeys, IBarbershop } from "../types"
 
 const useBarbershopByIdQuery = (barbershopId?:string) => {

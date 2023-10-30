@@ -1,8 +1,9 @@
 import { useMutation } from "react-query"
 
-import { IBarbershop, IBarbershopPayload } from "../types";
-import { api } from "../../../services/api";
 import { AxiosResponse } from "axios";
+
+import { api } from "../../../services/api";
+import { IBarbershop, IBarbershopPayload } from "../types";
 
 const useCreateBarbershop = () => {
     return useMutation(

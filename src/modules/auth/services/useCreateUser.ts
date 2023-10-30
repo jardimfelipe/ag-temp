@@ -1,8 +1,9 @@
 import { useMutation } from "react-query"
 
-import { CreateUserPayload, IUser } from "../types";
-import { api } from "../../../services/api";
 import { AxiosResponse } from "axios";
+
+import { api } from "../../../services/api";
+import { CreateUserPayload, IUser } from "../types";
 
 const useCreateUser = () => {
     return useMutation(

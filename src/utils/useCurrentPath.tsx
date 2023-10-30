@@ -1,4 +1,5 @@
 import { matchRoutes, useLocation } from "react-router-dom";
+
 import { routes } from "../router";
 
 export const useCurrentPath = () => {

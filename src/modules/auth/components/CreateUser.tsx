@@ -1,3 +1,9 @@
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
 import { Phone, Lock, Person } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -8,14 +14,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 
+import { phoneSchema } from "../../../utils/schemaValidations";
 import useCreateUser from "../services/useCreateUser";
 import { CreateUserPayload, IUser } from "../types";
-import { toast } from "react-toastify";
-import { phoneSchema } from "../../../utils/schemaValidations";
+
 
 type Props = {
   onSuccess: (user: IUser) => void;

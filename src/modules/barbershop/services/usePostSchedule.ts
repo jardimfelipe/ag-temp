@@ -1,7 +1,7 @@
 import { useMutation } from "react-query"
 
-import { SchedulePayload } from "../types";
 import { api } from "../../../services/api";
+import { SchedulePayload } from "../types";
 
 const usePostSchedule = () => {
     return useMutation(

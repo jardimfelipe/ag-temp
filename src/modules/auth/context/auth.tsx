@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { createContext, useState } from "react";
-import { ContextProps, IUser, UserContextType } from "../types";
+
 import { saveState } from "../../../utils/localStorage";
+import { ContextProps, IUser, UserContextType } from "../types";
 
 export const AuthContext = createContext<UserContextType | string>("");
 

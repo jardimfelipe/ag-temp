@@ -1,3 +1,7 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { AccessTime, LocationOff, Share } from "@mui/icons-material";
 import {
   Avatar,
   Button,
@@ -11,15 +15,12 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { AccessTime, LocationOff, Share } from "@mui/icons-material";
 
-import GeolocationModal from "../components/GeolocationModal";
-import { Coordinates } from "../modules/feed/types";
-import { useState } from "react";
-import useFeedQuery from "../modules/feed/services/useFeedQuery";
-import { useNavigate } from "react-router-dom";
-import Loader from "../components/Loader";
 import ContactButton from "../components/ContactButton";
+import GeolocationModal from "../components/GeolocationModal";
+import Loader from "../components/Loader";
+import useFeedQuery from "../modules/feed/services/useFeedQuery";
+import { Coordinates } from "../modules/feed/types";
 import AddressCard from "../modules/geolocation/components/AddressCard";
 
 const Feed = () => {
@@ -88,7 +89,7 @@ const Feed = () => {
                 >
                   <CardHeader
                     title={item.barbershop.name}
-                    subheader={`${item.distanceKm.toString().split(".")[0]} km`}
+                    subheader={`${item.distanceKm.toFixed(2)} km`}
                     avatar={<Avatar src={item.barbershop.avatar_url} />}
                   />
                   <Button

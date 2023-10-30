@@ -1,3 +1,5 @@
+import dayjs, { Dayjs } from "dayjs";
+
 import { CalendarMonth, Close } from "@mui/icons-material";
 import {
   IconButton,
@@ -6,7 +8,6 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/pt-br";
 
 type Props = {

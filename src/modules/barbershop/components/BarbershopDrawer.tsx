@@ -1,4 +1,7 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
+import { ContentCut, PeopleAlt } from "@mui/icons-material";
 import {
   Drawer,
   List,
@@ -7,8 +10,6 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import { ContentCut, PeopleAlt } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
 
 type Props = {
   open: boolean;

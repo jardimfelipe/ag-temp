@@ -1,7 +1,9 @@
+import { useNavigate, useSearchParams } from "react-router-dom";
+
 import { ChevronLeft, PersonAddAlt, Storefront } from "@mui/icons-material";
 import { Card, CardActionArea, Grid, Stack, Typography } from "@mui/material";
+
 import ContainedIconButton from "../components/ContainedIconButton";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import CreateUser from "../modules/auth/components/CreateUser";
 import { IUser } from "../modules/auth/types";
 import CreateBarbershop from "../modules/barbershop/components/CreateBarbershop";

@@ -1,7 +1,19 @@
 import { useContext, useMemo, useState } from "react";
-import { AuthContext } from "../modules/auth/context/auth";
-import { UserContextType, UserPrivileges } from "../modules/auth/types";
-import useSchedulesQuery from "../modules/schedules/services/useSchedulesQuery";
+import { NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import dayjs, { Dayjs } from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
+
+import {
+  AccessTime,
+  PersonOutline,
+  Phone,
+  CopyAll,
+  Storefront,
+  Streetview,
+  EventBusy,
+} from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -13,21 +25,15 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import {
-  AccessTime,
-  PersonOutline,
-  Phone,
-  CopyAll,
-  Storefront,
-  Streetview,
-  EventBusy,
-} from "@mui/icons-material";
-import dayjs, { Dayjs } from "dayjs";
-import isBetween from "dayjs/plugin/isBetween";
-import Loader from "../components/Loader";
-import { toast } from "react-toastify";
+
 import EmptyState from "../components/EmptyState";
-import { NavLink } from "react-router-dom";
+import Loader from "../components/Loader";
+import { AuthContext } from "../modules/auth/context/auth";
+import { UserContextType, UserPrivileges } from "../modules/auth/types";
+import useSchedulesQuery from "../modules/schedules/services/useSchedulesQuery";
+
+
+
 
 dayjs.extend(isBetween);
 

@@ -1,6 +1,7 @@
+import dayjs, { Dayjs } from "dayjs";
+
 import { DigitalClock, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs, { Dayjs } from "dayjs";
 
 dayjs.locale("pt-br");
 

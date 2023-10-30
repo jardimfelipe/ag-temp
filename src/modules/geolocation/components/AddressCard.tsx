@@ -1,7 +1,8 @@
+import { LocationOn } from "@mui/icons-material";
 import { Box, Card, Skeleton, Typography } from "@mui/material";
+
 import { Coordinates } from "../../feed/types";
 import useAddressQuery from "../services/useAddressQuery";
-import { LocationOn } from "@mui/icons-material";
 
 type Props = {
   coordinates: Coordinates;

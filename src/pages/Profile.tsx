@@ -1,3 +1,15 @@
+import { useContext } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import {
+  AssignmentInd,
+  ElderlyOutlined,
+  Email,
+  PersonOutline,
+} from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import {
   Avatar,
   Box,
@@ -8,20 +20,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useContext } from "react";
+
 import { AuthContext } from "../modules/auth/context/auth";
-import { UserContextType, UserPayload } from "../modules/auth/types";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import {
-  AssignmentInd,
-  ElderlyOutlined,
-  Email,
-  PersonOutline,
-} from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import useUpdateUser from "../modules/auth/services/useUpdateUser";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { UserContextType, UserPayload } from "../modules/auth/types";
+
 
 const Profile = () => {
   const navigate = useNavigate();

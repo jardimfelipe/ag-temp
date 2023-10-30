@@ -1,3 +1,4 @@
+import { AccessTime, Paid } from "@mui/icons-material";
 import {
   Card,
   CardActionArea,
@@ -7,8 +8,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+
 import useBarbershopServicesQuery from "../services/useBarbershopServicesQuery";
-import { AccessTime, Paid } from "@mui/icons-material";
 
 type Props = {
   barbershopId: string;

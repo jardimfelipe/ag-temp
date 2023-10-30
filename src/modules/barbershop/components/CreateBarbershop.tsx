@@ -1,5 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import dayjs from "dayjs";
+
 import { LocationOn, Storefront } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Chip,
@@ -14,14 +21,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { LoadingButton } from "@mui/lab";
-import { IBarbershopPayload } from "../types";
+
 import useCreateBarbershop from "../services/useCreateBarbershop";
-import { toast } from "react-toastify";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import dayjs from "dayjs";
+import { IBarbershopPayload } from "../types";
+
 
 const WEEKDAYS = [
   "domingo",

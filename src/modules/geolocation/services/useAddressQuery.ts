@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery } from "react-query"
-import { api } from "../../../services/api"
+
 import { AxiosResponse } from "axios"
-import { GeolocationQueryKeys } from "../types"
+
+import { api } from "../../../services/api"
 import { Coordinates } from "../../feed/types"
+import { GeolocationQueryKeys } from "../types"
 
 const useAddressQuery = (coordinates:Coordinates) => {
     return useQuery([GeolocationQueryKeys.REVERSE, coordinates], async () => {

@@ -1,3 +1,11 @@
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { NavLink, useSearchParams } from "react-router-dom";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+import { Lock, Phone } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Container,
@@ -7,15 +15,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { NavLink, useSearchParams } from "react-router-dom";
-import { LoadingButton } from "@mui/lab";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 
-import { LoginPayload } from "../modules/auth/types";
 import useLogin from "../modules/auth/services/useLogin";
-import { Lock, Phone } from "@mui/icons-material";
+import { LoginPayload } from "../modules/auth/types";
 import { phoneSchema } from "../utils/schemaValidations";
 
 const schema = yup.object({

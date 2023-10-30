@@ -1,5 +1,5 @@
-import { Skeleton, Stack, Typography } from "@mui/material";
 import { AccessTime, LocationOn, Map } from "@mui/icons-material";
+import { Skeleton, Stack, Typography } from "@mui/material";
 
 import { IBarbershop } from "../types";
 

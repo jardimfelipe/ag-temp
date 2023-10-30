@@ -1,4 +1,16 @@
 import { useContext, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+import {
+  Add,
+  AddPhotoAlternate,
+  Favorite,
+  Settings,
+} from "@mui/icons-material";
 import {
   Avatar,
   Card,
@@ -10,27 +22,17 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
 
-import useBarbershopByIdQuery from "../modules/barbershop/services/useBarberShopByIdQuery";
+import ContainedIconButton from "../components/ContainedIconButton";
+import VisuallyHiddenInput from "../components/HiddenInput";
+import Loader from "../components/Loader";
 import { AuthContext } from "../modules/auth/context/auth";
 import { UserContextType } from "../modules/auth/types";
-import Loader from "../components/Loader";
-import {
-  Add,
-  AddPhotoAlternate,
-  Favorite,
-  Settings,
-} from "@mui/icons-material";
-import useUploadBarbershopAvatar from "../modules/barbershop/services/useUploadBarbershopAvatar";
-import { toast } from "react-toastify";
-import useCreatePost from "../modules/barbershop/services/useCreatePost";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import LocationInfo from "../modules/barbershop/components/LocationInfo";
-import VisuallyHiddenInput from "../components/HiddenInput";
-import ContainedIconButton from "../components/ContainedIconButton";
 import BarbershopDrawer from "../modules/barbershop/components/BarbershopDrawer";
+import LocationInfo from "../modules/barbershop/components/LocationInfo";
+import useBarbershopByIdQuery from "../modules/barbershop/services/useBarberShopByIdQuery";
+import useCreatePost from "../modules/barbershop/services/useCreatePost";
+import useUploadBarbershopAvatar from "../modules/barbershop/services/useUploadBarbershopAvatar";
 
 dayjs.extend(relativeTime);
 
