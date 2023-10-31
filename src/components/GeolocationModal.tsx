@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import { AddLocation } from "@mui/icons-material";
 import {
   Button,
   Dialog,
@@ -9,8 +10,6 @@ import {
   DialogTitle,
   Stack,
 } from "@mui/material";
-
-import { Geolocation } from "./icons/GeolocationIcon";
 
 export type Coordinates = {
   latitude: number;
@@ -65,7 +64,7 @@ const GeolocationModal = ({ onAgree }: Props) => {
       </DialogTitle>
       <DialogContent>
         <Stack justifyContent="center" alignItems="center" gap={2}>
-          <Geolocation sx={{ width: "200px", height: "200px" }} />
+          <AddLocation sx={{ width: "100px", height: "100px" }} />
           <DialogContentText justifyContent="center" sx={{ mt: 2 }}>
             Para ver as barbearias mais próximas, precisamos saber a sua
             localização
@@ -74,7 +73,7 @@ const GeolocationModal = ({ onAgree }: Props) => {
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={handleAgree} autoFocus>
+        <Button variant="contained" onClick={handleAgree} autoFocus>
           Aceitar
         </Button>
       </DialogActions>
