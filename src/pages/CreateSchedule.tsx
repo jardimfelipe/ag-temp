@@ -36,6 +36,10 @@ type RouteParams = {
   serviceId?: string;
 };
 
+const nextSevenDays = [...new Array(7)].map((_, index) =>
+  dayjs().add(index, "day")
+);
+
 const CreateSchedule = () => {
   const navigate = useNavigate();
   const cache = useQueryClient();
@@ -61,6 +65,18 @@ const CreateSchedule = () => {
   const showSubmitButton =
     !!searchParams.get("serviceId") && !!barberId && !!dateIndex;
 
+  const nextDaysOfWork = () => {
+    if (!barbershop) return [];
+    const barbershopDays = barbershop.daysOfWork.split(",");
+
+    const workedDaysOfWeek = nextSevenDays.filter((day) => {
+      const dayOfWeekIndex = dayjs(day).day();
+      return barbershopDays.includes(dayOfWeekIndex.toString());
+    });
+
+    return workedDaysOfWeek;
+  };
+
   const goBack = () => {
     navigate("/feed");
   };
@@ -68,10 +84,6 @@ const CreateSchedule = () => {
   const selectService = (serviceId: string) => {
     setSearchParams({ serviceId });
   };
-
-  const nextSevenDays = [...new Array(7)].map((_, index) =>
-    dayjs().add(index, "day")
-  );
 
   const removeService = () => {
     setSearchParams("");
@@ -188,7 +200,7 @@ const CreateSchedule = () => {
             <DaysButtons
               selectedIndex={dateIndex}
               onSelect={setDate}
-              days={nextSevenDays}
+              days={nextDaysOfWork()}
             />
           </Grid>
         </>

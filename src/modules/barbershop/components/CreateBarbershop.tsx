@@ -1,4 +1,3 @@
- 
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -26,8 +25,7 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import useCreateBarbershop from "../services/useCreateBarbershop";
 import { IBarbershopPayload } from "../types";
 
-
-const WEEKDAYS = [
+export const WEEKDAYS = [
   "domingo",
   "segunda-feira",
   "terça-feira",
