@@ -49,7 +49,7 @@ const Barbers = () => {
       </Grid>
       <Grid item xs={12}>
         <Stack gap={2}>
-          <BarbersList barbershopId={barbershopId as string} />
+          <BarbersList showDeleteButton barbershopId={barbershopId as string} />
         </Stack>
       </Grid>
     </Grid>

@@ -10,7 +10,6 @@ import { UserContextType } from "../modules/auth/types";
 import CreateServiceModal from "../modules/barbershop/components/ServiceCreateModal";
 import { ServiceList } from "../modules/barbershop/components/ServiceList";
 
-
 const BarbershopServices = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext) as UserContextType;
