@@ -87,14 +87,17 @@ export const routes = [
 const router = createBrowserRouter([
   {
     path: "/login",
+    index: true,
     element: <Login />,
   },
   {
     path: "/signUp",
+    index: true,
     element: <SingUp />,
   },
   {
     path: "/",
+    index: true,
     element: <App />,
     children: routes,
   },
