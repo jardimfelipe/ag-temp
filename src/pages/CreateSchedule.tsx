@@ -53,7 +53,7 @@ const CreateSchedule = () => {
   const { data: barbershop } = useBarbershopByIdQuery(barbershopId);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [dateIndex, setDateIndex] = useState<number | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [barberId, setBarberId] = useState<string>("");
   const [time, setTime] = useState<string | null>(null);
 
@@ -63,7 +63,7 @@ const CreateSchedule = () => {
   }, [searchParams, services]);
 
   const showSubmitButton =
-    !!searchParams.get("serviceId") && !!barberId && !!dateIndex;
+    !!searchParams.get("serviceId") && !!barberId && !!selectedDate;
 
   const nextDaysOfWork = () => {
     if (!barbershop) return [];
@@ -89,8 +89,8 @@ const CreateSchedule = () => {
     setSearchParams("");
   };
 
-  const setDate = (index: number | null) => {
-    setDateIndex(index);
+  const setDate = (date: Dayjs | null) => {
+    setSelectedDate(date);
   };
 
   const setBarber = (barberId: string) => {
@@ -112,12 +112,13 @@ const CreateSchedule = () => {
   };
 
   const setSchedule = () => {
-    if (!selectedService || !dateIndex || !barberId || !user || !time) return;
+    if (!selectedService || !selectedDate || !barberId || !user || !time)
+      return;
     const [hour, minute] = time.split(":");
-    const dateWithHour = nextSevenDays[dateIndex].hour(+hour).minute(+minute);
+    const dateWithHour = selectedDate.hour(+hour).minute(+minute);
     const model = {
       title: selectedService.name,
-      start: nextSevenDays[dateIndex].hour(+hour).minute(+minute),
+      start: selectedDate.hour(+hour).minute(+minute),
       end: dateWithHour.add(40, "m"),
       withServicesBarberId: selectedService.id,
       withUserClientId: user.id,
@@ -198,14 +199,14 @@ const CreateSchedule = () => {
 
           <Grid item xs={12}>
             <DaysButtons
-              selectedIndex={dateIndex}
+              selectedDate={selectedDate}
               onSelect={setDate}
               days={nextDaysOfWork()}
             />
           </Grid>
         </>
       )}
-      {dateIndex !== null && !time ? (
+      {selectedDate !== null && !time ? (
         <HoursList
           startTime={getHourAsNumber().start}
           endTime={getHourAsNumber().end}

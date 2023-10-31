@@ -29,7 +29,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthProvider>
       <ThemeProvider theme={theme}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <LocalizationProvider adapterLocale="pt-br" dateAdapter={AdapterDayjs}>
           <ToastContainer theme="colored" />
           <QueryClientProvider client={queryClient}>
             <RouterProvider router={router} />

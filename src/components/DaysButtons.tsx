@@ -9,19 +9,24 @@ import {
   ListItemText,
 } from "@mui/material";
 import "dayjs/locale/pt-br";
+import { MobileDatePicker } from "@mui/x-date-pickers";
 
 type Props = {
   days: Dayjs[];
-  selectedIndex?: number | null;
-  onSelect: (index: number | null) => void;
+  selectedDate?: Dayjs | null;
+  onSelect: (date: Dayjs | null) => void;
 };
 
 dayjs.locale("pt-br");
 
-const DaysButtons = ({ days, selectedIndex, onSelect }: Props) => {
+const DaysButtons = ({ days, selectedDate, onSelect }: Props) => {
+  const checkBarbershopAvailabity = (date: Dayjs) => {
+    const daysAsIndex = days.map((day) => dayjs(day).day());
+    return !daysAsIndex.includes(dayjs(date).day());
+  };
   return (
     <List sx={{ display: "flex", flexWrap: "wrap" }}>
-      {selectedIndex !== null && selectedIndex !== undefined ? (
+      {selectedDate !== null && selectedDate !== undefined ? (
         <ListItemButton
           sx={{ position: "relative", flex: "1", width: "50%" }}
           selected
@@ -37,22 +42,32 @@ const DaysButtons = ({ days, selectedIndex, onSelect }: Props) => {
             <CalendarMonth />
           </ListItemIcon>
           <ListItemText
-            primary={dayjs(days[selectedIndex]).format("D, MMM")}
-            secondary={dayjs(days[selectedIndex]).format("dddd")}
+            primary={dayjs(selectedDate).format("D, MMM")}
+            secondary={dayjs(selectedDate).format("dddd")}
           />
         </ListItemButton>
       ) : (
-        days.map((day, index) => (
-          <ListItemButton key={index} onClick={() => onSelect(index)}>
-            <ListItemIcon>
-              <CalendarMonth />
-            </ListItemIcon>
-            <ListItemText
-              primary={dayjs(day).format("D, MMM")}
-              secondary={dayjs(day).format("ddd")}
-            />
-          </ListItemButton>
-        ))
+        <>
+          {days.map((day, index) => (
+            <ListItemButton key={index} onClick={() => onSelect(day)}>
+              <ListItemIcon>
+                <CalendarMonth />
+              </ListItemIcon>
+              <ListItemText
+                primary={dayjs(day).format("D, MMM")}
+                secondary={dayjs(day).format("ddd")}
+              />
+            </ListItemButton>
+          ))}
+          <MobileDatePicker
+            sx={{ mt: 1 }}
+            onChange={onSelect}
+            minDate={dayjs()}
+            maxDate={dayjs().add(2, "months")}
+            shouldDisableDate={checkBarbershopAvailabity}
+            label="Selecionar data"
+          />
+        </>
       )}
     </List>
   );
